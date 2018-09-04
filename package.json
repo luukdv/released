@@ -4,6 +4,8 @@
     "webpack-cli": "3.1.0"
   },
   "scripts": {
-    "start": "webpack --watch"
+    "build": "webpack --mode=production",
+    "install": "npm start",
+    "start": "webpack --mode=development --watch"
   }
 }
