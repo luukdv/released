@@ -1,7 +1,7 @@
 {
-  "dependencies": {
-    "webpack": "4.17.2"
+  "devDependencies": {
+    "webpack": "4.17.2",
+    "webpack-cli": "3.1.0"
   },
-  "devDependencies": {},
   "scripts": {}
 }
