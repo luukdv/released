@@ -12,7 +12,6 @@
   },
   "scripts": {
     "build": "webpack --mode=production",
-    "install": "npm start",
     "start": "webpack-dev-server --mode=development"
   }
 }
