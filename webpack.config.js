@@ -1,12 +1,18 @@
+const fs = require('fs');
 const path = require('path');
+const entry = { './bundle': './src/index.js' };
+
+fs.readdirSync('./src/functions/').forEach(file => {
+  entry['../functions/' + file.replace('.js', '')] = './src/functions/' + file;
+});
 
 module.exports = {
   devServer: {
     compress: true,
-    contentBase: 'dist',
+    contentBase: path.resolve(__dirname, 'public'),
     open: true,
   },
-  entry: './src/index.js',
+  entry,
   module: {
     rules: [
       {
@@ -25,7 +31,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  }
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'public'),
+  },
 };
