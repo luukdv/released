@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const entry = { './bundle': './src/index.js' };
 
-fs.readdirSync('./src/functions/').forEach(file => {
+fs.readdirSync(path.resolve(__dirname, 'src/functions')).forEach(file => {
   entry['../functions/' + file.replace('.js', '')] = './src/functions/' + file;
 });
 
