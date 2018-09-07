@@ -4,6 +4,7 @@
     "@babel/preset-env": "7.0.0",
     "@babel/preset-react": "7.0.0",
     "babel-loader": "8.0.2",
+    "netlify-lambda": "0.4.0",
     "react": "16.4.2",
     "react-dom": "16.4.2",
     "webpack": "4.17.2",
