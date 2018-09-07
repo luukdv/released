@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "webpack --mode=production",
+    "serve": "netlify-lambda serve public",
     "start": "webpack-dev-server --mode=development"
   }
 }
