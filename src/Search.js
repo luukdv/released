@@ -1,7 +1,3 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Search extends Component {
-  render() {
-    return null;
-  }
-}
+export default React.memo(() => null)
