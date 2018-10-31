@@ -1,7 +1,7 @@
-const fs = require('fs');
-const merge = require('webpack-merge');
-const path = require('path');
-const Uglify = require('uglifyjs-webpack-plugin');
+const fs = require('fs')
+const merge = require('webpack-merge')
+const path = require('path')
+const Uglify = require('uglifyjs-webpack-plugin')
 
 const config = {
   output: {
@@ -17,7 +17,7 @@ const config = {
     ],
   },
 }
-const entries = {};
+const entries = {}
 const rule = {
   exclude: path.resolve(__dirname, 'src/functions'),
   include: path.resolve(__dirname, 'src'),
@@ -28,13 +28,13 @@ const rule = {
       presets: ['@babel/preset-env'],
     },
   },
-};
+}
 
 fs.readdirSync(path.resolve(__dirname, 'src/functions'))
   .filter(file => file.includes('.js'))
   .forEach(file => {
-    entries['../functions/' + file.replace('.js', '')] = './src/functions/' + file;
-  });
+    entries['../functions/' + file.replace('.js', '')] = './src/functions/' + file
+  })
 
 const configs = [
   merge.smart(config, {
@@ -57,7 +57,7 @@ const configs = [
     },
     output: { filename: 'bundle.js' },
   }),
-];
+]
 
 if (Object.keys(entries).length) {
   configs.push(merge.smart(config, {
@@ -69,7 +69,7 @@ if (Object.keys(entries).length) {
       filename: '[name].js',
       libraryTarget: 'commonjs',
     },
-  }));
+  }))
 }
 
 module.exports = configs
