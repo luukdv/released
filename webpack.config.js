@@ -41,7 +41,6 @@ const configs = [
     devServer: {
       compress: true,
       contentBase: path.resolve(__dirname, 'public'),
-      open: true,
     },
     entry: './src/index.js',
     module: {
