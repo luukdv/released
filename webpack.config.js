@@ -49,6 +49,7 @@ const configs = [
         merge.smart(rule, {
           use: {
             options: {
+              plugins: ['@babel/plugin-proposal-class-properties'],
               presets: ['@babel/preset-react'],
             },
           },
