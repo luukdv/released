@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Search from './Search'
 
-ReactDOM.render(
-  () => <Search />,
-  document.querySelector('.app')
-)
+const app = () => <Search />
+
+ReactDOM.render(app(), document.querySelector('.app'))
