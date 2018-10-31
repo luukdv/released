@@ -19,6 +19,7 @@ const config = {
 }
 const entries = {};
 const rule = {
+  exclude: path.resolve(__dirname, 'src/functions'),
   include: path.resolve(__dirname, 'src'),
   test: /\.js/,
   use: {
