@@ -35,7 +35,7 @@ fs.readdirSync(path.resolve(__dirname, 'src/functions'))
     entries['../functions/' + file.replace('.js', '')] = './src/functions/' + file;
   });
 
-module.exports = [
+const configs = [
   merge.smart(config, {
     devServer: {
       compress: true,
@@ -56,7 +56,10 @@ module.exports = [
     },
     output: { filename: 'bundle.js' },
   }),
-  merge.smart(config, {
+];
+
+if (Object.keys(entries).length) {
+  configs.push(merge.smart(config, {
     entry: entries,
     module: {
       rules: [rule],
@@ -65,5 +68,7 @@ module.exports = [
       filename: '[name].js',
       libraryTarget: 'commonjs',
     },
-  }),
-];
+  }));
+}
+
+module.exports = configs
