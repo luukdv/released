@@ -2,7 +2,7 @@ import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default () => (
+export default ({ children }) => (
   <div
     css={css`
       ${scale(3, 'margin-bottom')}
