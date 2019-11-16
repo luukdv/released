@@ -8,7 +8,7 @@ export default () => (
       html {
         -webkit-text-size-adjust: 100%;
         box-sizing: border-box;
-        line-height: 2;
+        line-height: 1.5;
       }
 
       * {
@@ -25,19 +25,11 @@ export default () => (
         margin-bottom: 0;
         margin-left: 0;
         margin-right: 0;
-        ${scale(3, 'margin-top', true)}
-      }
-
-      h1,
-      h2,
-      h3 {
-        line-height: 1.5;
-        margin-top: 0;
       }
 
       h2 {
-        font-weight: 400;
-        margin-bottom: 0.15em;
+        font-weight: 700;
+        margin: 0 0 0.5em;
         ${scale(2.5, 'font-size')}
       }
     `}
