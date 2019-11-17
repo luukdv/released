@@ -47,8 +47,8 @@ const Release = ({ artist, title, label }) => (
   >
     <div
       css={css`
-        padding-right: 1em;
-        width: 10%;
+        padding-right: 1.5em;
+        width: 11.25%;
       `}
     >
       <img
@@ -64,7 +64,7 @@ const Release = ({ artist, title, label }) => (
     <div
       css={css`
         font-weight: 700;
-        padding-right: 1em;
+        padding-right: 1.5em;
         width: 50%;
       `}
     >
@@ -72,8 +72,7 @@ const Release = ({ artist, title, label }) => (
     </div>
     <div
       css={css`
-        padding-right: 1em;
-        width: 40%;
+        width: 38.875%;
       `}
     >
       {artist}
