@@ -13,14 +13,14 @@ export default () => (
     <Wrap>
       <div
         css={css`
-          width: 50%;
+          width: 55%;
         `}
       >
         <New />
       </div>
       <div
         css={css`
-          width: 40%;
+          width: 37.5%;
         `}
       >
         <h2>Add new label</h2>
