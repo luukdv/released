@@ -24,7 +24,6 @@ export default ({ name }) => (
         border-radius: 9em;
         user-select: none;
         text-align: center;
-        line-height: 1.25;
         padding: 0.5em 1em;
       `}
     >
