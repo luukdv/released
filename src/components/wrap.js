@@ -7,7 +7,7 @@ export default ({ children }) => (
       display: flex;
       justify-content: space-between;
       margin: 0 auto;
-      max-width: 1200px;
+      max-width: 1600px;
       padding-left: 20px;
       padding-right: 20px;
 

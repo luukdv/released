@@ -3,7 +3,7 @@ export default (number, type, strong = false) => `
   number / (strong ? 1.5 * 1.5 : 1.5)
 ).toFixed(1)}em);
 
-  @media (min-width: 1201px) {
+  @media (min-width: 1601px) {
     ${type}: ${number}em;
   }
 `
