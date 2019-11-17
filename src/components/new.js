@@ -1,3 +1,4 @@
+import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
@@ -27,7 +28,55 @@ export default () => (
 )
 
 const Release = ({ artist, title, label }) => (
-  <div>
-    <strong>{title}</strong> by {artist}
+  <div
+    css={css`
+      align-items: center;
+      display: flex;
+      padding: 0.75em 0;
+      ${scale(1.25, 'font-size')}
+
+      &:not(:last-child) {
+        border-bottom: 2px solid rgb(220, 220, 220);
+      }
+
+      div {
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+    `}
+  >
+    <div
+      css={css`
+        padding-right: 1em;
+        width: 10%;
+      `}
+    >
+      <img
+        css={css`
+          border-radius: 0.25em;
+          width: 100%;
+          display: block;
+        `}
+        alt={title}
+        src="https://img.discogs.com/Esg0J3Z44KXXdIWR4kNx1yTWz9I=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-14376251-1573290978-3847.jpeg.jpg"
+      />
+    </div>
+    <div
+      css={css`
+        font-weight: 700;
+        padding-right: 1em;
+        width: 50%;
+      `}
+    >
+      {title}
+    </div>
+    <div
+      css={css`
+        padding-right: 1em;
+        width: 40%;
+      `}
+    >
+      {artist}
+    </div>
   </div>
 )
