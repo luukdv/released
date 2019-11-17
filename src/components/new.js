@@ -39,6 +39,10 @@ const Release = ({ artist, title, label }) => (
         border-bottom: 2px solid rgb(220, 220, 220);
       }
 
+      &:last-child {
+        padding-bottom: 0;
+      }
+
       div {
         flex-grow: 0;
         flex-shrink: 0;

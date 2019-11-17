@@ -22,9 +22,10 @@ export default () => (
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
           'Segoe UI Symbol';
-        margin-bottom: 0;
         margin-left: 0;
         margin-right: 0;
+        ${scale(10, 'margin-bottom')}
+        ${scale(20, 'margin-top')}
       }
 
       h2 {
