@@ -4,8 +4,6 @@ import { css } from '@emotion/core'
 export default ({ children }) => (
   <div
     css={css`
-      display: flex;
-      justify-content: space-between;
       margin: 0 auto;
       max-width: 1600px;
       padding-left: 20px;
@@ -14,6 +12,11 @@ export default ({ children }) => (
       @media (min-width: 641px) {
         padding-left: 40px;
         padding-right: 40px;
+      }
+
+      @media (min-width: 961px) {
+        display: flex;
+        justify-content: space-between;
       }
     `}
   >

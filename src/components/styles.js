@@ -8,6 +8,7 @@ export default () => (
       html {
         -webkit-text-size-adjust: 100%;
         box-sizing: border-box;
+        font-size: 18px;
         line-height: 1.25;
       }
 

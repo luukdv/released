@@ -33,6 +33,7 @@ const Release = ({ artist, title, label }) => (
       align-items: center;
       display: flex;
       padding: 0.75em 0;
+      position: relative;
       ${scale(1.25, 'font-size')}
 
       &:not(:last-child) {
@@ -51,8 +52,13 @@ const Release = ({ artist, title, label }) => (
   >
     <div
       css={css`
+        display: none;
         padding-right: 1.5em;
         width: 11.25%;
+
+        @media (min-width: 481px) {
+          display: block;
+        }
       `}
     >
       <img
@@ -69,14 +75,22 @@ const Release = ({ artist, title, label }) => (
       css={css`
         font-weight: 700;
         padding-right: 1.5em;
-        width: 50%;
+        width: 55%;
+
+        @media (min-width: 481px) {
+          width: 50%;
+        }
       `}
     >
       {title}
     </div>
     <div
       css={css`
-        width: 38.875%;
+        width: 45%;
+
+        @media (min-width: 481px) {
+          width: 38.875%;
+        }
       `}
     >
       {artist}

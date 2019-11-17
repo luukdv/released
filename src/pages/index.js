@@ -13,14 +13,18 @@ export default () => (
     <Wrap>
       <div
         css={css`
-          width: 55%;
+          @media (min-width: 961px) {
+            width: 55%;
+          }
         `}
       >
         <New />
       </div>
       <div
         css={css`
-          width: 37.5%;
+          @media (min-width: 961px) {
+            width: 37.5%;
+          }
         `}
       >
         <h2>Add new label</h2>
