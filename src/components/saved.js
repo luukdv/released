@@ -9,6 +9,7 @@ export default () => (
       css={css`
         display: flex;
         flex-wrap: wrap;
+        margin-bottom: -0.75em;
       `}
     >
       <Label name="Creme Organization" />

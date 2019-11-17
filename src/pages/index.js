@@ -11,7 +11,11 @@ export default () => (
     <Head />
     <Styles />
     <Wrap>
-      <div>
+      <div
+        css={css`
+          width: 50%;
+        `}
+      >
         <New />
       </div>
       <div
