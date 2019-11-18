@@ -1,6 +1,7 @@
 import Head from '../components/head'
 import Wrap from '../components/wrap'
 import Saved from '../components/saved'
+import Add from '../components/add'
 import New from '../components/new'
 import { css } from '@emotion/core'
 import React from 'react'
@@ -27,7 +28,7 @@ export default () => (
           }
         `}
       >
-        <h2>Add new label</h2>
+        <Add />
         <Saved />
       </div>
     </Wrap>
