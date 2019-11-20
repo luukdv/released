@@ -1,5 +1,6 @@
 import Head from '../components/head'
 import Wrap from '../components/wrap'
+import scale from '../../scale'
 import Saved from '../components/saved'
 import Add from '../components/add'
 import New from '../components/new'
@@ -14,7 +15,10 @@ export default () => (
     <Wrap>
       <div
         css={css`
+          ${scale(5, 'margin-bottom')}
+
           @media (min-width: 961px) {
+            margin-bottom: 0;
             width: 55%;
           }
         `}
