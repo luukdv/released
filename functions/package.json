@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start": "node -e \"require('.').searchLabels()\"",
+    "deploy": "gcloud functions deploy searchLabels --region=europe-west1 --runtime nodejs10 --trigger-http"
+  },
+  "dependencies": {}
+}
