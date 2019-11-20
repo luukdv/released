@@ -7,14 +7,23 @@ let delayed
 
 export default () => {
   const [results, setResults] = useState()
+  const [done, setDone] = useState()
 
   const onChange = () => {
+    setDone(false)
+
     if (delayed) {
       clearTimeout(delayed)
       delayed = null
     }
 
-    delayed = setTimeout(() => {}, 300)
+    if (!value) {
+      return
+    }
+
+    delayed = setTimeout(() => {
+      setDone(true)
+    }, 1250)
   }
 
   return (
@@ -44,13 +53,21 @@ export default () => {
             }
           `}
           type="text"
-          onChange={e => (value = e.target.value) && onChange()}
+          onChange={e => {
+            value = e.target.value
+            onChange()
+          }}
+          onBlur={() => setDone(false)}
+          onFocus={e => {
+            value = ''
+            e.target.value = ''
+          }}
         />
         <div
           css={css`
             background: white;
             left: 0;
-            display: none;
+            display: ${done ? 'block' : 'none'};
             top: 100%;
             border-radius: 0.25em;
             box-shadow: 0 0.1em 0.5em rgba(0, 0, 0, 0.25);
