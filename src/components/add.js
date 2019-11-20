@@ -23,7 +23,7 @@ export default () => {
 
     delayed = setTimeout(() => {
       setDone(true)
-    }, 1250)
+    }, 250)
   }
 
   return (
