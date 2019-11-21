@@ -1,11 +1,10 @@
 const got = require('got')
+const env = require('./env')
 
 exports.searchLabels = async (req, res) => {
   const api = 'https://api.discogs.com/database/search'
-  const token = ''
-  const query = process && process.argv ? process.argv[1] : ''
   const results = await got(
-    `${api}?token=${token}&per_page=10&type=label&q=${query}`,
+    `${api}?token=${env.token}&per_page=10&type=label&q=${req.query.search}`,
     { json: true }
   )
 
