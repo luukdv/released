@@ -1,13 +1,31 @@
 import React, { useState } from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
+import get from '../get'
+import env from '../../env'
 
 let value = ''
 let delayed
+let pending = []
 
 export default () => {
-  const [results, setResults] = useState()
+  const [results, setResults] = useState([])
   const [done, setDone] = useState()
+
+  const search = async () => {
+    pending.push(value)
+
+    const results = await get(
+      `${env.endpoint}?search=${value}${
+        process.env.NODE_ENV === 'development' ? '&dev=1' : ''
+      }`
+    )
+
+    if (value === pending[pending.length - 1]) {
+      setResults(results)
+      setDone(true)
+    }
+  }
 
   const onChange = () => {
     setDone(false)
@@ -21,9 +39,7 @@ export default () => {
       return
     }
 
-    delayed = setTimeout(() => {
-      setDone(true)
-    }, 250)
+    delayed = setTimeout(() => search(), 250)
   }
 
   return (
@@ -57,7 +73,6 @@ export default () => {
             value = e.target.value
             onChange()
           }}
-          onBlur={() => setDone(false)}
           onFocus={e => {
             value = ''
             e.target.value = ''
@@ -72,10 +87,12 @@ export default () => {
             border-radius: 0.25em;
             box-shadow: 0 0.1em 0.5em rgba(0, 0, 0, 0.25);
             position: absolute;
-            height: 10px;
             width: 100%;
           `}
-        ></div>
+        >
+          {!!results.length &&
+            results.map(result => <div key={result.id}>{result.title}</div>)}
+        </div>
       </div>
     </>
   )
