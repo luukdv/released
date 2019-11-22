@@ -8,5 +8,9 @@ exports.searchLabels = async (req, res) => {
     { json: true }
   )
 
+  res.set(
+    'Access-Control-Allow-Origin',
+    req.query.dev ? 'http://localhost:8000' : env.url
+  )
   res.status(200).send(results.body.results)
 }
