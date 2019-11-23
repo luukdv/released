@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
 import get from '../get'
@@ -11,6 +11,17 @@ export default () => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
   const [loading, setLoading] = useState()
+
+  useEffect(() => {
+    const listener = document.addEventListener('click', e => {
+      if (!document.getElementById('add').contains(e.target)) {
+        document.getElementById('search').value = ''
+        setDone(false)
+      }
+    })
+
+    return document.removeEventListener('click', listener)
+  }, [])
 
   const search = async () => {
     const results = await get(
@@ -49,6 +60,7 @@ export default () => {
     <>
       <h2>Add new label</h2>
       <div
+        id="add"
         css={css`
           ${scale(1.25, 'font-size')}
           margin-bottom: 3.5em;
@@ -56,6 +68,7 @@ export default () => {
         `}
       >
         <input
+          id="search"
           css={css`
             background: rgb(250, 250, 250);
             border: 2px solid rgb(220, 220, 220);
@@ -75,10 +88,6 @@ export default () => {
           onChange={e => {
             value = e.target.value
             onChange()
-          }}
-          onFocus={e => {
-            value = ''
-            e.target.value = ''
           }}
         />
         <div
@@ -121,6 +130,8 @@ export default () => {
             box-shadow: 0 0.1em 0.5em rgba(0, 0, 0, 0.25);
             position: absolute;
             width: 100%;
+            z-index: 1;
+            user-select: none;
           `}
         >
           {!!results.length &&
