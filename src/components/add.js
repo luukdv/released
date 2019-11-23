@@ -39,8 +39,11 @@ export default () => {
   }
 
   const onChange = () => {
-    setLoading(true)
     setDone(false)
+
+    if (value.length > 2) {
+      setLoading(true)
+    }
 
     if (delayed) {
       clearTimeout(delayed)
