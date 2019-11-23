@@ -1,4 +1,4 @@
-export default url => {
+export default (url, token) => {
   return new Promise((resolve, reject) => {
     const r = new XMLHttpRequest()
 
@@ -8,7 +8,7 @@ export default url => {
     r.onreadystatechange = () => {
       if (r.readyState === XMLHttpRequest.DONE) {
         if (r.status === 200) {
-          resolve(JSON.parse(r.response))
+          resolve({ response: JSON.parse(r.response), token })
         } else {
           reject()
         }

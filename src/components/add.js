@@ -6,28 +6,29 @@ import env from '../../env'
 
 let value = ''
 let delayed
-let pending = []
 
 export default () => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
+  const [loading, setLoading] = useState(true)
 
   const search = async () => {
-    pending.push(value)
-
     const results = await get(
       `${env.endpoint}?search=${value}${
         process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-      }`
+      }`,
+      value
     )
 
-    if (value === pending[pending.length - 1]) {
-      setResults(results)
+    if (results.token === value) {
+      setResults(results.response)
+      setLoading(false)
       setDone(true)
     }
   }
 
   const onChange = () => {
+    setLoading(true)
     setDone(false)
 
     if (delayed) {
