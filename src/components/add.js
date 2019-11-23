@@ -81,6 +81,37 @@ export default () => {
         />
         <div
           css={css`
+            right: 1em;
+            display: ${loading ? 'block' : 'none'};
+            top: 0;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            height: 100%;
+            position: absolute;
+          `}
+        >
+          <div
+            css={css`
+              @keyframes rotate {
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+
+              animation: rotate 1s ease-out infinite;
+              border-bottom: 0.25em solid transparent;
+              border-right: 0.25em solid rgb(140, 140, 140);
+              border-left: 0.25em solid rgb(140, 140, 140);
+              border-top: 0.25em solid transparent;
+              height: 1.75em;
+              border-radius: 50%;
+              width: 1.75em;
+            `}
+          ></div>
+        </div>
+        <div
+          css={css`
             background: white;
             left: 0;
             display: ${done ? 'block' : 'none'};
