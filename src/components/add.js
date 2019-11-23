@@ -10,7 +10,7 @@ let delayed
 export default () => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState()
 
   const search = async () => {
     const results = await get(
@@ -36,11 +36,13 @@ export default () => {
       delayed = null
     }
 
-    if (!value) {
-      return
-    }
-
-    delayed = setTimeout(() => search(), 250)
+    delayed = setTimeout(() => {
+      if (value.length > 2) {
+        search()
+      } else {
+        setLoading(false)
+      }
+    }, 250)
   }
 
   return (
@@ -61,7 +63,7 @@ export default () => {
             font-size: inherit;
             width: 100%;
             font-family: inherit;
-            padding: 1em;
+            padding: 1em 3.75em 1em 1em;
             -webkit-appearance: none;
 
             &:focus {
@@ -82,9 +84,8 @@ export default () => {
         <div
           css={css`
             right: 1em;
-            display: ${loading ? 'block' : 'none'};
+            display: ${loading ? 'flex' : 'none'};
             top: 0;
-            display: flex;
             align-items: center;
             pointer-events: none;
             height: 100%;
@@ -99,11 +100,11 @@ export default () => {
                 }
               }
 
-              animation: rotate 1s ease-out infinite;
-              border-bottom: 0.25em solid transparent;
-              border-right: 0.25em solid rgb(140, 140, 140);
-              border-left: 0.25em solid rgb(140, 140, 140);
-              border-top: 0.25em solid transparent;
+              animation: rotate 0.8s ease-out infinite;
+              border-bottom: 0.2em solid transparent;
+              border-right: 0.2em solid rgb(120, 120, 120);
+              border-left: 0.2em solid rgb(120, 120, 120);
+              border-top: 0.2em solid transparent;
               height: 1.75em;
               border-radius: 50%;
               width: 1.75em;
