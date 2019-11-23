@@ -68,6 +68,7 @@ export default () => {
         `}
       >
         <input
+          autoComplete="off"
           id="search"
           css={css`
             background: rgb(250, 250, 250);
