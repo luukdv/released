@@ -18,7 +18,9 @@ export default React.memo(() => {
         `}
       >
         {!!labels.length &&
-          labels.map(label => <Label name={label.name} key={label.id} />)}
+          labels.map(label => (
+            <Label name={label.name} key={label.id} id={label.id} />
+          ))}
       </div>
     </>
   )
