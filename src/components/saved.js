@@ -1,43 +1,24 @@
 import React from 'react'
 import { css } from '@emotion/core'
 import Label from './label'
+import { useContext } from 'react'
+import State from '../context/state'
 
-export default () => (
-  <>
-    <h2>Saved labels</h2>
-    <div
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: -0.75em;
-      `}
-    >
-      <Label name="Creme Organization" />
-      <Label name="!K7 Records" />
-      <Label name="Modern love" />
-      <Label name="Verve records" />
-      <Label name="Virgin records" />
-      <Label name="OM records" />
-      <Label name="Colemine" />
-      <Label name="Music From Memory" />
-      <Label name="Studio Barnhus" />
-      <Label name="Tan Cressida" />
-      <Label name="Dead Oceans" />
-      <Label name="Strange Life" />
-      <Label name="Kranky" />
-      <Label name="Mule Records" />
-      <Label name="Beggars Banquet" />
-      <Label name="Back to Mine" />
-      <Label name="Matador" />
-      <Label name="Captured Tracks" />
-      <Label name="Fabric" />
-      <Label name="Young God" />
-      <Label name="Endless Flight" />
-      <Label name="Top Dawg" />
-      <Label name="Warp Records" />
-      <Label name="PIAS" />
-      <Label name="Caldo Verde" />
-      <Label name="Cosmic Compositions" />
-    </div>
-  </>
-)
+export default () => {
+  const { labels } = useContext(State)
+  return (
+    <>
+      <h2>Saved labels</h2>
+      <div
+        css={css`
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: -0.75em;
+        `}
+      >
+        {!!labels.length &&
+          labels.map(label => <Label name={label.name} key={label.id} />)}
+      </div>
+    </>
+  )
+}

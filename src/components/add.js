@@ -17,13 +17,17 @@ export default () => {
   useEffect(() => {
     const listener = document.addEventListener('click', e => {
       if (!document.getElementById('add').contains(e.target)) {
-        document.getElementById('search').value = ''
-        setDone(false)
+        clear()
       }
     })
 
     return document.removeEventListener('click', listener)
   }, [])
+
+  const clear = () => {
+    document.getElementById('search').value = ''
+    setDone(false)
+  }
 
   const search = async () => {
     const results = await get(
@@ -102,7 +106,7 @@ export default () => {
           />
           <Loading show={loading} />
         </div>
-        <Results data={results} show={done} />
+        <Results data={results} show={done} clear={clear} />
       </div>
     </>
   )
