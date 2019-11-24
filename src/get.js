@@ -1,4 +1,4 @@
-export default (url, token) => {
+export default (url, token = null) => {
   return new Promise((resolve, reject) => {
     const r = new XMLHttpRequest()
 
