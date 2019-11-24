@@ -5,12 +5,24 @@ import Saved from '../components/saved'
 import Add from '../components/add'
 import New from '../components/new'
 import { css } from '@emotion/core'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
 import State from '../context/state'
 
 export default () => {
-  const [labels, setLabels] = useState([])
+  const [labels, setLabels] = useState(() => {
+    const savedLabels = window.localStorage.getItem('labels')
+
+    if (savedLabels) {
+      return JSON.parse(savedLabels)
+    }
+
+    return []
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem('labels', JSON.stringify(labels))
+  }, [labels])
 
   return (
     <State.Provider value={{ labels, setLabels }}>
