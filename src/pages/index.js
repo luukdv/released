@@ -3,7 +3,7 @@ import Wrap from '../components/wrap'
 import scale from '../../scale'
 import Saved from '../components/saved'
 import Add from '../components/add'
-import New from '../components/new'
+import Latest from '../components/latest'
 import { css } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
@@ -39,7 +39,7 @@ export default React.memo(() => {
             }
           `}
         >
-          <New />
+          <Latest />
         </div>
         <div
           css={css`

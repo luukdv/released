@@ -4,7 +4,7 @@ import { css } from '@emotion/core'
 
 export default React.memo(() => (
   <>
-    <h2>New releases</h2>
+    <h2>Latest releases</h2>
     <Release
       title="Dusk To Dawn Part I-III"
       artist="Mr. Tophat"
