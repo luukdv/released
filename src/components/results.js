@@ -24,7 +24,6 @@ export default ({ data, show }) => (
         <div
           css={css`
             padding: 0.75em 1.25em;
-            will-change: background-color;
             transition: background-color 0.2s ease-out;
 
             &:not(:last-child) {

@@ -22,7 +22,6 @@ export default ({ show }) => (
         }
 
         animation: rotate 0.8s ease-out infinite;
-        will-change: transform;
         border-bottom: 0.15em solid transparent;
         border-right: 0.15em solid rgb(120, 120, 120);
         border-left: 0.15em solid rgb(120, 120, 120);

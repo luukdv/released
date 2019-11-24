@@ -38,7 +38,6 @@ export default ({ name }) => (
         justify-content: center;
         transform: scale(0.5) translate(-1em, 1em);
         transition: transform 0.2s ease-out;
-        will-change: transform;
         width: 2em;
         height: 2em;
         pointer-events: none;
