@@ -4,7 +4,7 @@ import scale from '../../scale'
 import { useContext } from 'react'
 import State from '../context/state'
 
-export default React.memo(({ data, done, clear }) => {
+export default React.memo(({ data, done, clear, error }) => {
   const { labels, setLabels } = useContext(State)
 
   return (
@@ -24,14 +24,16 @@ export default React.memo(({ data, done, clear }) => {
         ${scale(1, 'font-size')}
       `}
     >
-      {!data.length && (
+      {(error || !data.length) && (
         <div
           css={css`
             padding: 2em 1.25em;
             text-align: center;
           `}
         >
-          No labels found that are not already added.
+          {error
+            ? 'Something went wrong 😔. You can try again later.'
+            : 'No labels found that are not already added.'}
         </div>
       )}
       {!!data.length &&
@@ -42,6 +44,7 @@ export default React.memo(({ data, done, clear }) => {
               align-items: center;
               padding: 1em 1.25em;
               transition: background-color 0.2s ease-out;
+              will-change: background-color;
 
               &:not(:last-child) {
                 border-bottom: 1px solid rgb(220, 220, 220);

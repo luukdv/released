@@ -26,6 +26,7 @@ export default React.memo(({ show }) => (
         border-bottom: 0.15em solid transparent;
         border-right: 0.15em solid rgb(120, 120, 120);
         border-left: 0.15em solid rgb(120, 120, 120);
+        will-change: transform;
         border-top: 0.15em solid transparent;
         height: 1.5em;
         border-radius: 50%;

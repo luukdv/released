@@ -14,6 +14,7 @@ let delayed
 export default React.memo(() => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
+  const [error, setError] = useState()
   const [loading, setLoading] = useState()
   const { labels } = useContext(State)
 
@@ -31,16 +32,25 @@ export default React.memo(() => {
   }
 
   const search = async () => {
-    const results = await get(
-      `${env.endpoint}?search=${value}${
-        process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-      }`,
-      value
-    )
+    let data
 
-    if (results.token === value) {
+    try {
+      data = await get(
+        `${env.endpoint}?search=${value}${
+          process.env.NODE_ENV === 'development' ? '&dev=1' : ''
+        }`,
+        value
+      )
+    } catch (e) {
+      setLoading(false)
+      setDone(true)
+      setError(true)
+      return
+    }
+
+    if (data.token === value) {
       setResults(
-        results.response.filter(result => {
+        data.response.filter(result => {
           return !labels.map(label => label.id).includes(result.id)
         })
       )
@@ -51,6 +61,7 @@ export default React.memo(() => {
 
   const onChange = () => {
     setDone(false)
+    setError(false)
 
     if (value.length > 2) {
       setLoading(true)
@@ -111,7 +122,7 @@ export default React.memo(() => {
           />
           <Loading show={loading} />
         </div>
-        <Results data={results} done={done} clear={clear} />
+        <Results data={results} done={done} clear={clear} error={error} />
       </div>
     </>
   )
