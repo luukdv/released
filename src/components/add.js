@@ -15,13 +15,11 @@ export default React.memo(() => {
   const [loading, setLoading] = useState()
 
   useEffect(() => {
-    const listener = document.addEventListener('click', e => {
+    document.addEventListener('click', e => {
       if (!document.getElementById('add').contains(e.target)) {
         clear()
       }
     })
-
-    return document.removeEventListener('click', listener)
   }, [])
 
   const clear = () => {
@@ -106,7 +104,7 @@ export default React.memo(() => {
           />
           <Loading show={loading} />
         </div>
-        <Results data={results} show={done} clear={clear} />
+        <Results data={results} done={done} clear={clear} />
       </div>
     </>
   )

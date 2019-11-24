@@ -4,7 +4,7 @@ import scale from '../../scale'
 import { useContext } from 'react'
 import State from '../context/state'
 
-export default React.memo(({ data, show, clear }) => {
+export default React.memo(({ data, done, clear }) => {
   const { labels, setLabels } = useContext(State)
 
   return (
@@ -12,7 +12,7 @@ export default React.memo(({ data, show, clear }) => {
       css={css`
         background: white;
         left: 0;
-        display: ${show ? 'block' : 'none'};
+        display: ${done ? 'block' : 'none'};
         top: 100%;
         border-radius: 0.25em;
         box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
@@ -24,6 +24,16 @@ export default React.memo(({ data, show, clear }) => {
         ${scale(1, 'font-size')}
       `}
     >
+      {!data.length && (
+        <div
+          css={css`
+            padding: 2em 0;
+            text-align: center;
+          `}
+        >
+          No labels found.
+        </div>
+      )}
       {!!data.length &&
         data.map(result => (
           <div

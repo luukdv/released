@@ -6,6 +6,7 @@ import State from '../context/state'
 
 export default React.memo(() => {
   const { labels } = useContext(State)
+
   return (
     <>
       <h2>Saved labels</h2>
