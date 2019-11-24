@@ -28,6 +28,8 @@ export default React.memo(({ data, show, clear }) => {
         data.map(result => (
           <div
             css={css`
+              display: flex;
+              align-items: center;
               padding: 1em 1.25em;
               transition: background-color 0.2s ease-out;
 
@@ -45,7 +47,20 @@ export default React.memo(({ data, show, clear }) => {
               clear()
             }}
           >
-            {result.title}
+            <div
+              css={css`
+              background: url('${result.thumb}') rgb(230, 230, 230);
+              border-radius: 0.25em;
+              background-size: cover;
+              background-position: 50%;
+              height: 1.5em;
+              flex-shrink: 0;
+              flex-grow: 0;
+              margin-right: 1em;
+              width: 4.5em;
+            `}
+            ></div>
+            <div>{result.title}</div>
           </div>
         ))}
     </div>
