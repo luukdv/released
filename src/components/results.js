@@ -23,7 +23,7 @@ export default ({ data, show }) => (
       data.map(result => (
         <div
           css={css`
-            padding: 0.75em 1.25em;
+            padding: 1em 1.25em;
             transition: background-color 0.2s ease-out;
 
             &:not(:last-child) {
