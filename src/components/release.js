@@ -2,7 +2,7 @@ import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default React.memo(({ artist, title, label, date }) => (
+export default React.memo(({ artist, title, label, image }) => (
   <div
     css={css`
       align-items: center;
@@ -36,14 +36,15 @@ export default React.memo(({ artist, title, label, date }) => (
         }
       `}
     >
-      <img
+      <div
         css={css`
           border-radius: 0.25em;
           width: 100%;
-          display: block;
+          padding-bottom: 100%;
+          background: url('${image}') rgb(230, 230, 230);
+          background-size: cover;
+          background-position: 50%;
         `}
-        alt={title}
-        src="https://img.discogs.com/Esg0J3Z44KXXdIWR4kNx1yTWz9I=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-14376251-1573290978-3847.jpeg.jpg"
       />
     </div>
     <div
