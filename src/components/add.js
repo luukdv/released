@@ -67,7 +67,7 @@ export default React.memo(() => {
 
   return (
     <>
-      <h2>Add new label</h2>
+      <h2>Add label</h2>
       <div
         id="add"
         css={css`
