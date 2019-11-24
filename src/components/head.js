@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-export default () => (
+export default React.memo(() => (
   <Helmet>
     <title>Released</title>
     {/*eslint-disable jsx-a11y/accessible-emoji*/}
@@ -26,4 +26,4 @@ export default () => (
       </script>
     )}
   </Helmet>
-)
+))

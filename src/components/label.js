@@ -2,7 +2,7 @@ import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default ({ name }) => (
+export default React.memo(({ name }) => (
   <div
     css={css`
       color: white;
@@ -53,4 +53,4 @@ export default ({ name }) => (
       ✕
     </div>
   </div>
-)
+))

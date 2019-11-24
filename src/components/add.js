@@ -9,7 +9,7 @@ import env from '../../env'
 let value = ''
 let delayed
 
-export default () => {
+export default React.memo(() => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
   const [loading, setLoading] = useState()
@@ -110,4 +110,4 @@ export default () => {
       </div>
     </>
   )
-}
+})

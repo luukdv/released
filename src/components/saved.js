@@ -4,7 +4,7 @@ import Label from './label'
 import { useContext } from 'react'
 import State from '../context/state'
 
-export default () => {
+export default React.memo(() => {
   const { labels } = useContext(State)
   return (
     <>
@@ -21,4 +21,4 @@ export default () => {
       </div>
     </>
   )
-}
+})

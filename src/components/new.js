@@ -2,7 +2,7 @@ import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default () => (
+export default React.memo(() => (
   <>
     <h2>New releases</h2>
     <Release
@@ -37,9 +37,9 @@ export default () => (
     <Release title="Family Vacation" artist="Axel Boman" label="" date="" />
     <Release title="Kuwa Huru" artist="Usio" label="" date="" />
   </>
-)
+))
 
-const Release = ({ artist, title, label, date }) => (
+const Release = React.memo(({ artist, title, label, date }) => (
   <div
     css={css`
       align-items: center;
@@ -108,4 +108,4 @@ const Release = ({ artist, title, label, date }) => (
       {artist}
     </div>
   </div>
-)
+))

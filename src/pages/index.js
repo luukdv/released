@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
 import State from '../context/state'
 
-export default () => {
+export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
     const savedLabels = window.localStorage.getItem('labels')
 
@@ -54,4 +54,4 @@ export default () => {
       </Wrap>
     </State.Provider>
   )
-}
+})

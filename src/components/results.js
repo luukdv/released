@@ -4,7 +4,7 @@ import scale from '../../scale'
 import { useContext } from 'react'
 import State from '../context/state'
 
-export default ({ data, show, clear }) => {
+export default React.memo(({ data, show, clear }) => {
   const { labels, setLabels } = useContext(State)
 
   return (
@@ -50,4 +50,4 @@ export default ({ data, show, clear }) => {
         ))}
     </div>
   )
-}
+})
