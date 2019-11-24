@@ -27,11 +27,11 @@ export default React.memo(({ data, done, clear }) => {
       {!data.length && (
         <div
           css={css`
-            padding: 2em 0;
+            padding: 2em 1.25em;
             text-align: center;
           `}
         >
-          No labels found.
+          No labels found that are not already added.
         </div>
       )}
       {!!data.length &&

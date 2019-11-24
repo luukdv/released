@@ -4,10 +4,11 @@ import { css } from '@emotion/core'
 export default React.memo(({ show }) => (
   <div
     css={css`
-      right: 1em;
+      right: 0;
       display: ${show ? 'flex' : 'none'};
       top: 0;
       align-items: center;
+      padding: 0 1em;
       pointer-events: none;
       height: 100%;
       position: absolute;

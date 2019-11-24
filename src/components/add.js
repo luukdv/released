@@ -5,6 +5,8 @@ import get from '../get'
 import Loading from './loading'
 import Results from './results'
 import env from '../../env'
+import { useContext } from 'react'
+import State from '../context/state'
 
 let value = ''
 let delayed
@@ -13,6 +15,7 @@ export default React.memo(() => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
   const [loading, setLoading] = useState()
+  const { labels } = useContext(State)
 
   useEffect(() => {
     document.addEventListener('click', e => {
@@ -36,7 +39,11 @@ export default React.memo(() => {
     )
 
     if (results.token === value) {
-      setResults(results.response)
+      setResults(
+        results.response.filter(result => {
+          return !labels.map(label => label.id).includes(result.id)
+        })
+      )
       setLoading(false)
       setDone(true)
     }
