@@ -35,7 +35,7 @@ export default React.memo(() => {
 
     try {
       data = await get(
-        /* eslint-disable-next-line no-undef */
+        // eslint-disable-next-line no-undef
         `${API_ENDPOINT}?search=${value}${
           process.env.NODE_ENV === 'development' ? '&dev=1' : ''
         }`,

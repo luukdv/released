@@ -22,7 +22,7 @@ export default React.memo(() => {
       try {
         for (const label of labels) {
           const newest = await get(
-            /* eslint-disable-next-line no-undef */
+            // eslint-disable-next-line no-undef
             `${API_ENDPOINT}?label=${label.name}&year=2019${
               process.env.NODE_ENV === 'development' ? '&dev=1' : ''
             }`
