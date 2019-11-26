@@ -9,7 +9,5 @@ if (process.env.NODE_ENV === 'development') {
 
 exports.onCreateWebpackConfig = c =>
   c.actions.setWebpackConfig({
-    plugins: [
-      c.plugins.define({ API_ENDPOINT: JSON.stringify(endpoint) }),
-    ],
+    plugins: [c.plugins.define({ API_ENDPOINT: JSON.stringify(endpoint) })],
   })
