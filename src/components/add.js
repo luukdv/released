@@ -4,7 +4,6 @@ import { css } from '@emotion/core'
 import get from '../get'
 import Loading from './loading'
 import Results from './results'
-import env from '../../env'
 import { useContext } from 'react'
 import State from '../context/state'
 
@@ -36,7 +35,8 @@ export default React.memo(() => {
 
     try {
       data = await get(
-        `${env.endpoint}?search=${value}${
+        /* eslint-disable-next-line no-undef */
+        `${API_ENDPOINT}?search=${value}${
           process.env.NODE_ENV === 'development' ? '&dev=1' : ''
         }`,
         value

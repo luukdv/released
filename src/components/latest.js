@@ -3,7 +3,6 @@ import Release from './release'
 import { useContext, useEffect, useState } from 'react'
 import State from '../context/state'
 import get from '../get'
-import env from '../../env'
 
 export default React.memo(() => {
   const [releases, setReleases] = useState([])
@@ -23,7 +22,8 @@ export default React.memo(() => {
       try {
         for (const label of labels) {
           const newest = await get(
-            `${env.endpoint}?label=${label.name}&year=2019${
+            /* eslint-disable-next-line no-undef */
+            `${API_ENDPOINT}?label=${label.name}&year=2019${
               process.env.NODE_ENV === 'development' ? '&dev=1' : ''
             }`
           )
