@@ -24,6 +24,8 @@ export default React.memo(() => {
             continue
           }
 
+          console.log('getting latest release from', label.name)
+
           let latest = await get(
             // eslint-disable-next-line no-undef
             `${API_ENDPOINT}?label=${label.name}&year=2019${
@@ -31,14 +33,15 @@ export default React.memo(() => {
             }`
           )
 
-          if (! latest.response.length) {
-            continue
-          }
-
           setLabels(
             labels.map(prevLabel => {
               if (prevLabel.id === label.id) {
                 prevLabel.checked = Date.now()
+
+                if (!latest.response.length) {
+                  return prevLabel
+                }
+
                 prevLabel.release = {
                   img: latest.response[0].thumb,
                   name: latest.response[0].title,
