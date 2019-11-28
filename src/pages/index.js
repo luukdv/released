@@ -61,13 +61,13 @@ export default React.memo(() => {
           name: latest.response[0].title,
         }
 
-        setReleases(
-          release
-            ? releases.map(r => {
+        setReleases(prevReleases => {
+          return release
+            ? prevReleases.map(r => {
                 return r.labelId === label.id ? newRelease : r
               })
-            : [...releases, newRelease]
-        )
+            : [...prevReleases, newRelease]
+        })
       } catch (e) {
         return
       }
