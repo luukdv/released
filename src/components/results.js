@@ -56,7 +56,13 @@ export default React.memo(({ data, done, clear, error }) => {
             `}
             key={result.id}
             onClick={() => {
-              setLabels([...labels, { id: result.id, name: result.title }])
+              setLabels([
+                ...labels,
+                {
+                  id: result.id,
+                  name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
+                },
+              ])
               clear()
             }}
           >
