@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import State from '../context/state'
 
 export default React.memo(({ name, id }) => {
-  const { labels, setLabels } = useContext(State)
+  const { setLabels, setReleases } = useContext(State)
 
   return (
     <div
@@ -35,7 +35,10 @@ export default React.memo(({ name, id }) => {
         {name}
       </div>
       <div
-        onClick={() => setLabels(labels.filter(label => label.id !== id))}
+        onClick={() => {
+          setLabels(prevLabels => prevLabels.filter(label => label.id !== id))
+          setReleases(prevReleases => prevReleases.filter(release => release.labelId !== id))
+        }}
         className="remove"
         css={css`
           background: rgb(255, 40, 80);
