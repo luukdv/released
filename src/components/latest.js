@@ -10,15 +10,17 @@ export default React.memo(() => {
     <>
       <h2>Latest releases</h2>
       {!!releases.length &&
-        releases.map(release => (
-          <Release
-            key={release.labelId}
-            title={release.name.split(' - ')[1]}
-            artist={release.name.split(' - ')[0].replace(/(.+)\*$/, '$1')}
-            label={release.labelName}
-            image={release.img}
-          />
-        ))}
+        releases.map(release =>
+          release.name ? (
+            <Release
+              key={release.labelId}
+              title={release.name.split(' - ')[1]}
+              artist={release.name.split(' - ')[0].replace(/(.+)\*$/, '$1')}
+              label={release.labelName}
+              image={release.img}
+            />
+          ) : null
+        )}
     </>
   )
 })

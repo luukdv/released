@@ -37,7 +37,9 @@ export default React.memo(({ name, id }) => {
       <div
         onClick={() => {
           setLabels(prevLabels => prevLabels.filter(label => label.id !== id))
-          setReleases(prevReleases => prevReleases.filter(release => release.labelId !== id))
+          setReleases(prevReleases =>
+            prevReleases.filter(release => release.labelId !== id)
+          )
         }}
         className="remove"
         css={css`

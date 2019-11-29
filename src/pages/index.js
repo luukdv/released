@@ -14,7 +14,10 @@ const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
-    const savedLabels = typeof window !== 'undefined' ? window.localStorage.getItem('labels') : null
+    const savedLabels =
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem('labels')
+        : null
 
     if (savedLabels) {
       return JSON.parse(savedLabels)
@@ -23,7 +26,10 @@ export default React.memo(() => {
     return []
   })
   const [releases, setReleases] = useState(() => {
-    const savedReleases = typeof window !== 'undefined' ? window.localStorage.getItem('releases') : null
+    const savedReleases =
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem('releases')
+        : null
 
     if (savedReleases) {
       return JSON.parse(savedReleases)
@@ -49,16 +55,12 @@ export default React.memo(() => {
           }`
         )
 
-        if (!latest.response.length) {
-          continue
-        }
-
         const newRelease = {
           checked: Date.now(),
           labelId: label.id,
-          img: latest.response[0].thumb,
+          img: latest.response.length ? latest.response[0].thumb : null,
           labelName: label.name,
-          name: latest.response[0].title,
+          name: latest.response.length ? latest.response[0].title : null,
         }
 
         setReleases(prevReleases => {
