@@ -14,6 +14,7 @@ export default React.memo(({ name, id }) => {
         font-weight: 700;
         margin: 0 0.75em 0.75em 0;
         position: relative;
+        user-select: none;
         ${scale(1, 'font-size')}
 
         &:hover .remove {
@@ -27,7 +28,6 @@ export default React.memo(({ name, id }) => {
         css={css`
           background: rgb(160, 160, 160);
           border-radius: 9em;
-          user-select: none;
           text-align: center;
           padding: 0.5em 1em;
         `}
