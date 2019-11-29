@@ -86,7 +86,7 @@ export default React.memo(() => {
   }, [releases])
 
   return (
-    <State.Provider value={{ labels, setLabels, releases }}>
+    <State.Provider value={{ labels, setLabels, releases, setReleases }}>
       <Head />
       <Styles />
       <Wrap>
