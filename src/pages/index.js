@@ -14,7 +14,7 @@ const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
-    const savedLabels = window.localStorage.getItem('labels')
+    const savedLabels = typeof window !== 'undefined' ? window.localStorage.getItem('labels') : null
 
     if (savedLabels) {
       return JSON.parse(savedLabels)
@@ -23,7 +23,7 @@ export default React.memo(() => {
     return []
   })
   const [releases, setReleases] = useState(() => {
-    const savedReleases = window.localStorage.getItem('releases')
+    const savedReleases = typeof window !== 'undefined' ? window.localStorage.getItem('releases') : null
 
     if (savedReleases) {
       return JSON.parse(savedReleases)
