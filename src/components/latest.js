@@ -8,13 +8,13 @@ export default React.memo(() => {
 
   return (
     <>
-      <h2>Latest albums</h2>
+      <h2>Latest releases</h2>
       {!!releases.length &&
         releases.map(release => (
           <Release
             key={release.labelId}
             title={release.name.split(' - ')[1]}
-            artist={release.name.split(' - ')[0]}
+            artist={release.name.split(' - ')[0].replace(/(.+)\*$/, '$1')}
             label={release.labelName}
             image={release.img}
           />
