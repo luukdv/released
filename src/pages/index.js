@@ -8,9 +8,6 @@ import { css } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
 import State from '../context/state'
-import get from '../get'
-
-const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
@@ -38,46 +35,7 @@ export default React.memo(() => {
     return []
   })
 
-  const checkReleases = async () => {
-    for (const label of labels) {
-      const existing = releases.filter(r => r.labelId === label.id)
-      const release = existing ? existing[0] : null
-
-      if (release && release.checked && Date.now() < release.checked + hour) {
-        continue
-      }
-
-      try {
-        const latest = await get(
-          // eslint-disable-next-line no-undef
-          `${API_ENDPOINT}?label=${label.name}&year=2019${
-            process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-          }`
-        )
-
-        const newRelease = {
-          checked: Date.now(),
-          labelId: label.id,
-          img: latest.response.length ? latest.response[0].thumb : null,
-          labelName: label.name,
-          name: latest.response.length ? latest.response[0].title : null,
-        }
-
-        setReleases(prevReleases => {
-          return release
-            ? prevReleases.map(r => {
-                return r.labelId === label.id ? newRelease : r
-              })
-            : [...prevReleases, newRelease]
-        })
-      } catch (e) {
-        return
-      }
-    }
-  }
-
   useEffect(() => {
-    checkReleases()
     window.localStorage.setItem('labels', JSON.stringify(labels))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labels])
