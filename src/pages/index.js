@@ -39,10 +39,14 @@ export default React.memo(() => {
     return []
   })
   const updateRelease = async label => {
+    console.log(label.name)
     setUpdating(true)
     const release = releases.filter(r => r.labelId === label.id)
 
+    console.log(release)
+
     if (release.checked && Date.now() < release.checked + hour) {
+      console.log('returning', Date.now() < release.checked + hour)
       return
     }
 
@@ -77,7 +81,6 @@ export default React.memo(() => {
           : release
       })
     )
-
     setUpdating(false)
   }
 
