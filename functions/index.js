@@ -9,13 +9,20 @@ exports.searchLabels = async (req, res) => {
         req.query.label
       }`
 
-  const results = await got(`${api}?token=${env.token}&${query}`, {
-    json: true,
-  })
-
   res.set(
     'Access-Control-Allow-Origin',
     req.query.dev ? 'http://localhost:8000' : env.url
   )
-  res.status(200).send(results.body.results)
+
+  try {
+    const results = await got(`${api}?token=${env.token}&${query}`, {
+      json: true,
+    })
+
+    res.status(200).send(results.body.results)
+  } catch (e) {
+    res
+      .status(e.statusCode ? e.statusCode : 400)
+      .send({ error: e.statusMessage ? e.statusMessage : e.code })
+  }
 }
