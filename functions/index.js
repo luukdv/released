@@ -26,6 +26,17 @@ exports.searchLabels = async (req, res) => {
       json: true,
     })
 
+    if (req.query.search) {
+      res.status(200).send(
+        results.body.results.map(result => ({
+          img: result.thumb,
+          title: result.title,
+          id: result.id,
+        }))
+      )
+      return
+    }
+
     if (!results.body.results.length || !isMainLabel()) {
       results = await got(`${api}?token=${env.token}&${getQuery('release')}`, {
         json: true,
@@ -35,7 +46,10 @@ exports.searchLabels = async (req, res) => {
     res.status(200).send({
       release:
         results.body.results.length && isMainLabel()
-          ? results.body.results[0]
+          ? {
+              img: results.body.results[0].thumb,
+              name: results.body.results[0].title,
+            }
           : null,
     })
   } catch (e) {
