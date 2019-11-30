@@ -1,4 +1,6 @@
 import React from 'react'
+import scale from '../../scale'
+import { css } from '@emotion/core'
 import Release from './release'
 import { useContext, useEffect } from 'react'
 import State from '../context/state'
@@ -68,6 +70,29 @@ export default React.memo(() => {
               image={release.img}
             />
           ))}
+      {!!releases.length && (
+        <p
+          css={css`
+            color: rgb(80, 80, 80);
+            font-style: italic;
+            margin-top: 1.5em;
+            ${scale(1.125, 'font-size')}
+          `}
+        >
+          Releases are updated every hour.
+        </p>
+      )}
+      {!releases.length && (
+        <p
+          css={css`
+            ${scale(1.25, 'font-size')}
+          `}
+        >
+          {
+            "Nothing to show yet 💁‍♂️. Add some labels and we'll check their latest release."
+          }
+        </p>
+      )}
     </>
   )
 })
