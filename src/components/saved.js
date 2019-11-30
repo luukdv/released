@@ -18,9 +18,11 @@ export default React.memo(() => {
             margin-bottom: -0.75em;
           `}
         >
-          {labels.map(label => (
-            <Label name={label.name} key={label.id} id={label.id} />
-          ))}
+          {labels
+            .sort((f, s) => (f.name > s.name ? 1 : -1))
+            .map(label => (
+              <Label name={label.name} key={label.id} id={label.id} />
+            ))}
         </div>
       </>
     )
