@@ -34,6 +34,11 @@ export default React.memo(() => (
         margin: 0 0 0.75em;
         ${scale(2.5, 'font-size')}
       }
+
+      p {
+        line-height: 1.75;
+        margin: 0;
+      }
     `}
   />
 ))
