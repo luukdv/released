@@ -47,8 +47,11 @@ exports.searchLabels = async (req, res) => {
       release:
         results.body.results.length && isMainLabel()
           ? {
+              artist: results.body.results[0].title
+                .split(' - ')[0]
+                .replace(/(.+)\*$/, '$1'),
               img: results.body.results[0].thumb,
-              name: results.body.results[0].title,
+              title: results.body.results[0].title.split(' - ')[1],
             }
           : null,
     })

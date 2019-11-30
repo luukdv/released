@@ -14,7 +14,7 @@ export default React.memo(() => {
   const checkReleases = async () => {
     for (const label of labels) {
       const existing = releases.filter(r => r.labelId === label.id)
-      const release = existing ? existing[0] : null
+      const release = existing.length ? existing[0] : null
 
       if (release && release.checked && Date.now() < release.checked + hour) {
         continue
@@ -29,11 +29,14 @@ export default React.memo(() => {
         )
 
         const newRelease = {
+          artist: latest.response.release
+            ? latest.response.release.artist
+            : null,
           checked: Date.now(),
           labelId: label.id,
           img: latest.response.release ? latest.response.release.img : null,
           labelName: label.name,
-          name: latest.response.release ? latest.response.release.name : null,
+          title: latest.response.release ? latest.response.release.title : null,
         }
 
         setReleases(prevReleases => {
@@ -44,6 +47,7 @@ export default React.memo(() => {
             : [...prevReleases, newRelease]
         })
       } catch (e) {
+        console.log(e)
         return
       }
     }
@@ -57,25 +61,28 @@ export default React.memo(() => {
   return (
     <>
       <h2>Latest from {new Date().getFullYear()}</h2>
-      {!!releases.length &&
-        releases
-          .filter(release => !!release.name)
-          .sort((f, s) => (f.checked > s.checked ? -1 : 1))
-          .map(release => (
-            <Release
-              key={release.labelId}
-              title={release.name.split(' - ')[1]}
-              artist={release.name.split(' - ')[0].replace(/(.+)\*$/, '$1')}
-              label={release.labelName}
-              image={release.img}
-            />
-          ))}
+      {!!releases.length && (
+        <div>
+          {releases
+            .filter(release => release.artist && release.title)
+            .sort((f, s) => (f.title > s.title ? -1 : 1))
+            .map(release => (
+              <Release
+                key={release.labelId}
+                title={release.title}
+                artist={release.artist}
+                label={release.labelName}
+                image={release.img}
+              />
+            ))}
+        </div>
+      )}
       {!!releases.length && (
         <p
           css={css`
             color: rgb(80, 80, 80);
             font-style: italic;
-            margin-top: 1.5em;
+            margin-top: 2em;
             ${scale(1.125, 'font-size')}
           `}
         >
