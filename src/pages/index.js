@@ -50,14 +50,15 @@ export default React.memo(() => {
       <Head />
       <Styles />
       <Wrap>
-      <div css={css`
-          background: rgb(235, 235, 235);
-          width: 100%;
-          ${scale(15, 'height')}
-          ${scale(4, 'margin-bottom')}
-        `}>
-        </div>
-        </Wrap>
+        <div
+          css={css`
+            background: rgb(235, 235, 235);
+            width: 100%;
+            ${scale(15, 'height')}
+            ${scale(4, 'margin-bottom')}
+          `}
+        ></div>
+      </Wrap>
       <Wrap>
         <div
           css={css`
