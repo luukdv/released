@@ -10,7 +10,7 @@ import Styles from '../components/styles'
 import State from '../context/state'
 import get from '../get'
 
-const hour = 1
+const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
