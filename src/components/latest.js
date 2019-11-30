@@ -29,9 +29,9 @@ export default React.memo(() => {
         const newRelease = {
           checked: Date.now(),
           labelId: label.id,
-          img: latest.response.release ? latest.response.release.thumb : null,
+          img: latest.response.release ? latest.response.release.img : null,
           labelName: label.name,
-          name: latest.response.release ? latest.response.release.title : null,
+          name: latest.response.release ? latest.response.release.name : null,
         }
 
         setReleases(prevReleases => {
@@ -56,8 +56,10 @@ export default React.memo(() => {
     <>
       <h2>Latest from {new Date().getFullYear()}</h2>
       {!!releases.length &&
-        releases.map(release =>
-          release.name ? (
+        releases
+          .filter(release => !!release.name)
+          .sort((f, s) => (f.checked > s.checked ? -1 : 1))
+          .map(release => (
             <Release
               key={release.labelId}
               title={release.name.split(' - ')[1]}
@@ -65,8 +67,7 @@ export default React.memo(() => {
               label={release.labelName}
               image={release.img}
             />
-          ) : null
-        )}
+          ))}
     </>
   )
 })

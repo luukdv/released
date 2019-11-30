@@ -68,7 +68,7 @@ export default React.memo(({ data, done, clear, error }) => {
           >
             <div
               css={css`
-              background: url('${result.thumb}') rgb(230, 230, 230);
+              background: url('${result.img}') rgb(230, 230, 230);
               border-radius: 0.25em;
               background-size: cover;
               background-position: 50%;
