@@ -21,7 +21,7 @@ export default React.memo(() => {
       try {
         const latest = await get(
           // eslint-disable-next-line no-undef
-          `${API_ENDPOINT}?label=${label.name}&year=2019${
+          `${API_ENDPOINT}?label=${label.name}${
             process.env.NODE_ENV === 'development' ? '&dev=1' : ''
           }`
         )
@@ -54,7 +54,7 @@ export default React.memo(() => {
 
   return (
     <>
-      <h2>Latest releases</h2>
+      <h2>Latest from {new Date().getFullYear()}</h2>
       {!!releases.length &&
         releases.map(release =>
           release.name ? (

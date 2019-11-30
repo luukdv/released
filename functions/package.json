@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test:search": "node -e \"require('.').searchLabels({ query: { search: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
-    "test:label": "node -e \"require('.').searchLabels({ query: { label: process.argv[1], year: process.argv[2] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
+    "test:label": "node -e \"require('.').searchLabels({ query: { label: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
     "deploy": "gcloud functions deploy searchLabels --region=europe-west1 --runtime nodejs10 --trigger-http"
   },
   "dependencies": {
