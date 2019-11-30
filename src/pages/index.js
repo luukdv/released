@@ -40,15 +40,16 @@ export default React.memo(() => {
   })
   const updateRelease = async label => {
     console.log(label.name)
-    setUpdating(true)
     const release = releases.filter(r => r.labelId === label.id)
-
-    console.log(release)
 
     if (release.checked && Date.now() < release.checked + hour) {
       console.log('returning', Date.now() < release.checked + hour)
       return
+    } else {
+      console.log(release.checked, Date.now() < release.checked + hour)
     }
+
+    setUpdating(true)
 
     let latest
 
