@@ -82,12 +82,15 @@ export default React.memo(() => {
   }
 
   return (
-    <>
+    <div
+      css={css`
+        margin-bottom: 3.5em;
+      `}
+    >
       <h2>Add label</h2>
       <div
         id="add"
         css={css`
-          margin-bottom: 3.5em;
           position: relative;
         `}
       >
@@ -124,6 +127,16 @@ export default React.memo(() => {
         </div>
         <Results data={results} done={done} clear={clear} error={error} />
       </div>
-    </>
+      {!labels.length && (
+        <p
+          css={css`
+            margin-top: 1.5em;
+            ${scale(1.25, 'font-size')}
+          `}
+        >
+          Once you've added some labels, we'll show them here.
+        </p>
+      )}
+    </div>
   )
 })
