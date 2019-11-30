@@ -10,7 +10,7 @@ export default React.memo(() => {
   return (
     !!labels.length && (
       <>
-        <h2>Saved labels</h2>
+        <h3>Saved labels</h3>
         <div
           css={css`
             display: flex;

@@ -35,6 +35,12 @@ export default React.memo(() => (
         ${scale(2.5, 'font-size')}
       }
 
+      h3 {
+        font-weight: 700;
+        margin: 0 0 0.75em;
+        ${scale(2, 'font-size')}
+      }
+
       p {
         line-height: 1.75;
         margin: 0;
