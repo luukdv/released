@@ -18,7 +18,10 @@
   "scripts": {
     "build": "gatsby build",
     "format": "prettier --write '**/*.{js,json}'",
-    "start": "gatsby develop"
+    "start": "gatsby develop",
+    "test:search": "cd functions && node -e \"require('.').searchLabels({ query: { search: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
+    "test:label": "cd functions && node -e \"require('.').searchLabels({ query: { label: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
+    "deploy:functions": "cd functions && gcloud functions deploy searchLabels --region=europe-west1 --runtime nodejs10 --trigger-http"
   },
   "license": "MIT",
   "repository": {
