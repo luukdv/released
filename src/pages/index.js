@@ -8,6 +8,9 @@ import { css } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
 import State from '../context/state'
+import get from '../get'
+
+const hour = 1
 
 export default React.memo(() => {
   const [labels, setLabels] = useState(() => {
@@ -34,6 +37,45 @@ export default React.memo(() => {
 
     return []
   })
+  const updateRelease = async label => {
+    const release = releases.filter(r => r.labelId === label.id)
+
+    if (release.checked && Date.now() < release.checked + hour) {
+      return
+    }
+
+    let latest
+
+    try {
+      latest = await get(
+        // eslint-disable-next-line no-undef
+        `${API_ENDPOINT}?label=${label.name}${
+          process.env.NODE_ENV === 'development' ? '&dev=1' : ''
+        }`
+      )
+    } catch (e) {
+      console.log(e)
+      return
+    }
+
+    setReleases(prevReleases =>
+      prevReleases.map(release => {
+        return release.labelId === label.id
+          ? {
+              ...release,
+              artist: latest.response.release
+                ? latest.response.release.artist
+                : null,
+              checked: Date.now(),
+              img: latest.response.release ? latest.response.release.img : null,
+              title: latest.response.release
+                ? latest.response.release.title
+                : null,
+            }
+          : release
+      })
+    )
+  }
 
   useEffect(() => {
     window.localStorage.setItem('labels', JSON.stringify(labels))
@@ -46,7 +88,9 @@ export default React.memo(() => {
   }, [releases])
 
   return (
-    <State.Provider value={{ labels, setLabels, releases, setReleases }}>
+    <State.Provider
+      value={{ labels, setLabels, releases, setReleases, updateRelease }}
+    >
       <Head />
       <Styles />
       <Wrap>

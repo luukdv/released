@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, error }) => {
-  const { setLabels } = useContext(State)
+  const { setLabels, setReleases, updateRelease } = useContext(State)
 
   return (
     <div
@@ -56,13 +56,17 @@ export default React.memo(({ data, done, clear, error }) => {
             `}
             key={result.id}
             onClick={() => {
-              setLabels(prevLabels => [
-                ...prevLabels,
-                {
-                  id: result.id,
-                  name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
-                },
+              const label = {
+                id: result.id,
+                name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
+              }
+
+              setLabels(prevLabels => [...prevLabels, label])
+              setReleases(prevReleases => [
+                ...prevReleases,
+                { labelId: result.id },
               ])
+              updateRelease(label)
               clear()
             }}
           >
