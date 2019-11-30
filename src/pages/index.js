@@ -13,6 +13,7 @@ import get from '../get'
 const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
+  const [updating, setUpdating] = useState(false)
   const [labels, setLabels] = useState(() => {
     const savedLabels =
       typeof window !== 'undefined'
@@ -38,6 +39,7 @@ export default React.memo(() => {
     return []
   })
   const updateRelease = async label => {
+    setUpdating(true)
     const release = releases.filter(r => r.labelId === label.id)
 
     if (release.checked && Date.now() < release.checked + hour) {
@@ -75,6 +77,8 @@ export default React.memo(() => {
           : release
       })
     )
+
+    setUpdating(false)
   }
 
   useEffect(() => {
@@ -89,7 +93,14 @@ export default React.memo(() => {
 
   return (
     <State.Provider
-      value={{ labels, setLabels, releases, setReleases, updateRelease }}
+      value={{
+        labels,
+        setLabels,
+        releases,
+        setReleases,
+        updateRelease,
+        updating,
+      }}
     >
       <Head />
       <Styles />
