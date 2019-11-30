@@ -24,9 +24,9 @@ export default React.memo(() => (
           Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
           'Segoe UI Symbol';
         margin-left: 0;
+        margin-top: 0;
         margin-right: 0;
         ${scale(10, 'margin-bottom')}
-        ${scale(20, 'margin-top')}
       }
 
       h2 {
