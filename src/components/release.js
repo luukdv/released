@@ -41,7 +41,7 @@ export default React.memo(({ artist, title, label, image }) => (
           border-radius: 0.25em;
           width: 100%;
           padding-bottom: 100%;
-          background: url('${image}') rgb(230, 230, 230);
+          background: ${image ? `url('${image}') rgb(230, 230, 230)` : 'rgb(230, 230, 230)'};
           background-size: cover;
           background-position: 50%;
         `}
