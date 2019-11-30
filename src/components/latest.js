@@ -29,9 +29,9 @@ export default React.memo(() => {
         const newRelease = {
           checked: Date.now(),
           labelId: label.id,
-          img: latest.response.length ? latest.response[0].thumb : null,
+          img: latest.response.release ? latest.response.release.thumb : null,
           labelName: label.name,
-          name: latest.response.length ? latest.response[0].title : null,
+          name: latest.response.release ? latest.response.release.title : null,
         }
 
         setReleases(prevReleases => {
