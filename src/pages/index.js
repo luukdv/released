@@ -116,7 +116,7 @@ export default React.memo(() => {
         <div
           css={css`
             flex-grow: 1;
-            ${scale(4, 'margin-bottom')}
+            ${scale(5, 'margin-bottom')}
 
             @media (max-width: 960px) {
               margin-bottom: 0;
