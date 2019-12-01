@@ -100,6 +100,7 @@ export default React.memo(() => {
           `}
         >
           <input
+            autoFocus
             autoComplete="off"
             id="search"
             css={css`
