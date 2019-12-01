@@ -29,7 +29,6 @@ export default React.memo(() => {
                   key={release.labelId}
                   title={release.title}
                   artist={release.artist}
-                  labelId={release.labelId}
                   image={release.img}
                 />
               ))}
