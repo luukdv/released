@@ -13,6 +13,7 @@ import get from '../get'
 const hour = 60 * 60 * 1000
 
 export default React.memo(() => {
+  const [error, setError] = useState(false)
   const [ready, setReady] = useState(false)
   const [updating, setUpdating] = useState(false)
   const [labels, setLabels] = useState([])
@@ -20,12 +21,10 @@ export default React.memo(() => {
 
   const updateRelease = async (label, release) => {
     if (release.checked && Date.now() < release.checked + hour) {
-      console.log('not updating', label.name)
       return
-    } else {
-      console.log('updating', label.name)
     }
 
+    setError(false)
     setUpdating(true)
 
     let latest
@@ -38,7 +37,9 @@ export default React.memo(() => {
         }`
       )
     } catch (e) {
-      console.log(e)
+      console.error(e)
+      setError(true)
+      setUpdating(false)
       return
     }
 
@@ -98,6 +99,7 @@ export default React.memo(() => {
         setReleases,
         updateRelease,
         updating,
+        error,
       }}
     >
       <Head />

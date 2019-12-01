@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import State from '../context/state'
 
 export default React.memo(() => {
-  const { releases, updating } = useContext(State)
+  const { releases, updating, error } = useContext(State)
 
   const none = !releases.length
   const nonEmpty = releases.filter(release => release.artist && release.title)
@@ -34,19 +34,17 @@ export default React.memo(() => {
                 />
               ))}
           </div>
-          <p
-            css={css`
-              color: rgb(80, 80, 80);
-              font-style: italic;
-              margin-top: 2em;
-              ${scale(1.125, 'font-size')}
-            `}
-          >
-            Releases are updated every hour.
-          </p>
+          {!error && <Notice>Releases are updated every hour.</Notice>}
         </>
       )}
-      {!updating && (none || onlyEmpty) && (
+      {error && (
+        <Notice>
+          {
+            "Something went wrong wile checking for a new release. We'll keep trying."
+          }
+        </Notice>
+      )}
+      {!error && !updating && (none || onlyEmpty) && (
         <p
           css={css`
             ${scale(1.25, 'font-size')}
@@ -60,3 +58,16 @@ export default React.memo(() => {
     </>
   )
 })
+
+const Notice = React.memo(({ children }) => (
+  <p
+    css={css`
+      color: rgb(80, 80, 80);
+      font-style: italic;
+      margin-top: 2em;
+      ${scale(1.125, 'font-size')}
+    `}
+  >
+    {children}
+  </p>
+))
