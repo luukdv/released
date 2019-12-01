@@ -7,6 +7,8 @@ import Latest from '../components/latest'
 import { css } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
 import Styles from '../components/styles'
+import Footer from '../components/footer'
+import NotReady from '../components/not-ready'
 import State from '../context/state'
 import get from '../get'
 
@@ -104,59 +106,68 @@ export default React.memo(() => {
     >
       <Head />
       <Styles />
-      <Wrap>
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        `}
+      >
         <div
           css={css`
-            background: rgb(235, 235, 235);
-            width: 100%;
-            ${scale(15, 'height')}
+            flex-grow: 1;
             ${scale(4, 'margin-bottom')}
-          `}
-        ></div>
-      </Wrap>
-      {!ready ? (
-        <Wrap>
-          <div
-            css={css`
-              text-align: center;
-              width: 100%;
-            `}
-          >
-            <h2
-              css={css`
-                margin: 0;
-              `}
-            >
-              Retrieving saved data…
-            </h2>
-          </div>
-        </Wrap>
-      ) : (
-        <Wrap>
-          <div
-            css={css`
-              ${scale(5, 'margin-bottom')}
 
-              @media (min-width: 961px) {
-                margin-bottom: 0;
-                width: 55%;
-              }
-            `}
-          >
-            <Latest />
-          </div>
-          <div
-            css={css`
-              @media (min-width: 961px) {
-                width: 37.5%;
-              }
-            `}
-          >
-            <Add />
-            <Saved />
-          </div>
+            @media (max-width: 960px) {
+              margin-bottom: 0;
+            }
+          `}
+        >
+          <Wrap>
+            <div
+              css={css`
+                background: rgb(235, 235, 235);
+                width: 100%;
+                ${scale(15, 'height')}
+                ${scale(4, 'margin-bottom')}
+              `}
+            ></div>
+          </Wrap>
+          {!ready ? (
+            <Wrap>
+              <NotReady />
+            </Wrap>
+          ) : (
+            <Wrap>
+              <div
+                css={css`
+                  ${scale(5, 'margin-bottom')}
+
+                  @media (min-width: 961px) {
+                    margin-bottom: 0;
+                    width: 55%;
+                  }
+                `}
+              >
+                <Latest />
+              </div>
+              <div
+                css={css`
+                  @media (min-width: 961px) {
+                    width: 37.5%;
+                  }
+                `}
+              >
+                <Add />
+                <Saved />
+              </div>
+            </Wrap>
+          )}
+        </div>
+        <Wrap>
+          <Footer />
         </Wrap>
-      )}
+      </div>
     </State.Provider>
   )
 })

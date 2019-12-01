@@ -23,10 +23,7 @@ export default React.memo(() => (
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
           'Segoe UI Symbol';
-        margin-left: 0;
-        margin-top: 0;
-        margin-right: 0;
-        ${scale(10, 'margin-bottom')}
+        margin: 0;
       }
 
       h2 {
@@ -44,6 +41,10 @@ export default React.memo(() => (
       p {
         line-height: 1.75;
         margin: 0;
+      }
+
+      a {
+        color: rgb(40, 40, 40);
       }
     `}
   />
