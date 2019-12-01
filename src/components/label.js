@@ -36,10 +36,20 @@ export default React.memo(({ name, id }) => {
       </div>
       <div
         onClick={() => {
-          setLabels(prevLabels => prevLabels.filter(label => label.id !== id))
-          setReleases(prevReleases =>
-            prevReleases.filter(release => release.labelId !== id)
-          )
+          setLabels(prevLabels => {
+            const newLabels = prevLabels.filter(label => label.id !== id)
+
+            window.localStorage.setItem('labels', JSON.stringify(newLabels))
+            return newLabels
+          })
+          setReleases(prevReleases => {
+            const newReleases = prevReleases.filter(
+              release => release.labelId !== id
+            )
+
+            window.localStorage.setItem('releases', JSON.stringify(newReleases))
+            return newReleases
+          })
         }}
         className="remove"
         css={css`

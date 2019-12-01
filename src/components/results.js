@@ -60,13 +60,24 @@ export default React.memo(({ data, done, clear, error }) => {
                 id: result.id,
                 name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
               }
+              const release = { labelId: result.id }
 
-              setLabels(prevLabels => [...prevLabels, label])
-              setReleases(prevReleases => [
-                ...prevReleases,
-                { labelId: result.id },
-              ])
-              updateRelease(label)
+              setLabels(prevLabels => {
+                const newLabels = [...prevLabels, label]
+
+                window.localStorage.setItem('labels', JSON.stringify(newLabels))
+                return newLabels
+              })
+              setReleases(prevReleases => {
+                const newReleases = [...prevReleases, release]
+
+                window.localStorage.setItem(
+                  'releases',
+                  JSON.stringify(newReleases)
+                )
+                return newReleases
+              })
+              updateRelease(label, release)
               clear()
             }}
           >

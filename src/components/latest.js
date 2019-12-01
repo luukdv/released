@@ -2,18 +2,11 @@ import React from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
 import Release from './release'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import State from '../context/state'
 
 export default React.memo(() => {
-  const { labels, releases, updateRelease, updating } = useContext(State)
-
-  useEffect(() => {
-    for (const label of labels) {
-      updateRelease(label)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { releases, updating } = useContext(State)
 
   const none = !releases.length
   const nonEmpty = releases.filter(release => release.artist && release.title)
