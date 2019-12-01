@@ -85,6 +85,10 @@ export default React.memo(() => {
     <div
       css={css`
         margin-bottom: 3.5em;
+
+        @media (min-width: 961px) {
+          margin-bottom: 0;
+        }
       `}
     >
       <h2>Add label</h2>
