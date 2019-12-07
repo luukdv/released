@@ -7,9 +7,9 @@ export default React.memo(({ artist, title, image }) => (
     css={css`
       align-items: center;
       display: flex;
-      padding: 0.75em 0;
+      padding: 0.67em 0;
       position: relative;
-      ${scale(1.25, 'font-size')}
+      ${scale(1.125, 'font-size')}
 
       &:not(:last-child) {
         border-bottom: 2px solid rgb(220, 220, 220);
@@ -19,17 +19,15 @@ export default React.memo(({ artist, title, image }) => (
         padding-bottom: 0;
       }
 
-      div {
-        flex-grow: 0;
-        flex-shrink: 0;
+      > div {
+        flex: none;
       }
     `}
   >
     <div
       css={css`
         display: none;
-        padding-right: 1.5em;
-        width: 11.25%;
+        width: 6%;
 
         @media (min-width: 481px) {
           display: block;
@@ -38,7 +36,7 @@ export default React.memo(({ artist, title, image }) => (
     >
       <div
         css={css`
-          border-radius: 0.25em;
+          border-radius: 3px;
           width: 100%;
           padding-bottom: 100%;
           background: ${image
@@ -52,11 +50,10 @@ export default React.memo(({ artist, title, image }) => (
     <div
       css={css`
         font-weight: 700;
-        padding-right: 1.5em;
-        width: 55%;
+        width: 50%;
 
         @media (min-width: 481px) {
-          width: 50%;
+          padding-left: 1.5em;
         }
       `}
     >
@@ -64,10 +61,11 @@ export default React.memo(({ artist, title, image }) => (
     </div>
     <div
       css={css`
-        width: 45%;
+        padding-left: 1.5em;
+        width: ${100 - 50}%;
 
         @media (min-width: 481px) {
-          width: 38.875%;
+          width: ${100 - 50 - 6}%;
         }
       `}
     >
