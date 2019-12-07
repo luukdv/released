@@ -7,6 +7,32 @@ import State from '../context/state'
 export default React.memo(({ data, done, clear, error }) => {
   const { setLabels, setReleases, updateRelease } = useContext(State)
 
+  const add = result => {
+    const label = {
+      id: result.id,
+      name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
+    }
+    const release = { labelId: result.id }
+
+    setLabels(prevLabels => {
+      const newLabels = [...prevLabels, label]
+
+      window.localStorage.setItem('labels', JSON.stringify(newLabels))
+      return newLabels
+    })
+    setReleases(prevReleases => {
+      const newReleases = [...prevReleases, release]
+
+      window.localStorage.setItem(
+        'releases',
+        JSON.stringify(newReleases)
+      )
+      return newReleases
+    })
+    updateRelease(label, release)
+    clear()
+  }
+
   return (
     <div
       css={css`
@@ -37,8 +63,10 @@ export default React.memo(({ data, done, clear, error }) => {
         </div>
       )}
       {!!data.length &&
-        data.map(result => (
+        data.map((result, i) => (
           <div
+            tabIndex={0}
+            role="button"
             css={css`
               display: flex;
               align-items: center;
@@ -55,31 +83,8 @@ export default React.memo(({ data, done, clear, error }) => {
               }
             `}
             key={result.id}
-            onClick={() => {
-              const label = {
-                id: result.id,
-                name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
-              }
-              const release = { labelId: result.id }
-
-              setLabels(prevLabels => {
-                const newLabels = [...prevLabels, label]
-
-                window.localStorage.setItem('labels', JSON.stringify(newLabels))
-                return newLabels
-              })
-              setReleases(prevReleases => {
-                const newReleases = [...prevReleases, release]
-
-                window.localStorage.setItem(
-                  'releases',
-                  JSON.stringify(newReleases)
-                )
-                return newReleases
-              })
-              updateRelease(label, release)
-              clear()
-            }}
+            onClick={() => add(result)}
+            onKeyUp={e => (e.key === 13 || e.keyCode === 13) && add(result)}
           >
             <div
               css={css`

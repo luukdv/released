@@ -7,6 +7,23 @@ import State from '../context/state'
 export default React.memo(({ name, id }) => {
   const { setLabels, setReleases } = useContext(State)
 
+  const remove = () => {
+    setLabels(prevLabels => {
+      const newLabels = prevLabels.filter(label => label.id !== id)
+
+      window.localStorage.setItem('labels', JSON.stringify(newLabels))
+      return newLabels
+    })
+    setReleases(prevReleases => {
+      const newReleases = prevReleases.filter(
+        release => release.labelId !== id
+      )
+
+      window.localStorage.setItem('releases', JSON.stringify(newReleases))
+      return newReleases
+    })
+  }
+
   return (
     <div
       css={css`
@@ -35,22 +52,10 @@ export default React.memo(({ name, id }) => {
         {name}
       </div>
       <div
-        onClick={() => {
-          setLabels(prevLabels => {
-            const newLabels = prevLabels.filter(label => label.id !== id)
-
-            window.localStorage.setItem('labels', JSON.stringify(newLabels))
-            return newLabels
-          })
-          setReleases(prevReleases => {
-            const newReleases = prevReleases.filter(
-              release => release.labelId !== id
-            )
-
-            window.localStorage.setItem('releases', JSON.stringify(newReleases))
-            return newReleases
-          })
-        }}
+        role="button"
+        tabIndex={0}
+        onKeyUp={e => (e.key === 13 || e.keyCode === 13) && remove()}
+        onClick={remove}
         className="remove"
         css={css`
           background: rgb(255, 40, 80);

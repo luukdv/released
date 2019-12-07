@@ -100,6 +100,7 @@ export default React.memo(() => {
           `}
         >
           <input
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             autoComplete="off"
             id="search"
