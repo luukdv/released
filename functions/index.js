@@ -51,6 +51,7 @@ exports.searchLabels = async (req, res) => {
                 .split(' - ')[0]
                 .replace(/(.+)\*$/, '$1'),
               img: results.body.results[0].thumb,
+              link: results.body.results[0].uri,
               title: results.body.results[0].title.split(' - ')[1],
             }
           : null,

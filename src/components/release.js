@@ -3,12 +3,14 @@ import React from 'react'
 import { css } from '@emotion/core'
 
 export default React.memo(({ artist, title, image }) => (
-  <div
+  <a
+    href=""
     css={css`
       align-items: center;
       display: flex;
       padding: 0.75em 0;
       position: relative;
+      text-decoration: none;
       ${scale(1.125, 'font-size')}
 
       @media (min-width: 481px) {
@@ -75,5 +77,5 @@ export default React.memo(({ artist, title, image }) => (
     >
       {decodeURIComponent(artist)}
     </div>
-  </div>
+  </a>
 ))
