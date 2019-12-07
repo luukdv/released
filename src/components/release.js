@@ -7,9 +7,13 @@ export default React.memo(({ artist, title, image }) => (
     css={css`
       align-items: center;
       display: flex;
-      padding: 0.67em 0;
+      padding: 0.75em 0;
       position: relative;
       ${scale(1.125, 'font-size')}
+
+      @media (min-width: 481px) {
+        padding: 0.67em 0;
+      }
 
       &:not(:last-child) {
         border-bottom: 2px solid rgb(220, 220, 220);
