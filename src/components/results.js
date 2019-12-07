@@ -89,7 +89,7 @@ export default React.memo(({ data, done, clear, error }) => {
             <div
               css={css`
               background: url('${result.img}') rgb(230, 230, 230);
-              border-radius: 0.25em;
+              border-radius: 3px;
               background-size: cover;
               background-position: 50%;
               height: 1.5em;
