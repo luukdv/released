@@ -1,6 +1,7 @@
 import Head from '../components/head'
 import Wrap from '../components/wrap'
 import scale from '../../scale'
+import strip from '../../strip'
 import Saved from '../components/saved'
 import Add from '../components/add'
 import Header from '../components/header'
@@ -52,7 +53,7 @@ export default React.memo(() => {
           ? {
               ...release,
               artist: latest.response.release
-                ? latest.response.release.artist
+                ? strip(latest.response.release.artist)
                 : null,
               checked: Date.now(),
               img: latest.response.release ? latest.response.release.img : null,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
+import strip from '../../strip'
 import { useContext } from 'react'
 import State from '../context/state'
 
@@ -8,10 +9,7 @@ export default React.memo(({ data, done, clear, error }) => {
   const { setLabels, setReleases, updateRelease } = useContext(State)
 
   const add = result => {
-    const label = {
-      id: result.id,
-      name: result.title.replace(/^(.+)\s\(\d+\)$/, '$1'),
-    }
+    const label = { id: result.id, name: strip(result.title) }
     const release = { labelId: result.id }
 
     setLabels(prevLabels => {
@@ -23,10 +21,7 @@ export default React.memo(({ data, done, clear, error }) => {
     setReleases(prevReleases => {
       const newReleases = [...prevReleases, release]
 
-      window.localStorage.setItem(
-        'releases',
-        JSON.stringify(newReleases)
-      )
+      window.localStorage.setItem('releases', JSON.stringify(newReleases))
       return newReleases
     })
     updateRelease(label, release)
