@@ -2,9 +2,11 @@ import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default React.memo(({ artist, title, image }) => (
+export default React.memo(({ data }) => (
   <a
-    href=""
+    href={`https://www.discogs.com${data.link}`}
+    target="_blank"
+    rel="noreferrer noopener nofollow"
     css={css`
       align-items: center;
       display: flex;
@@ -45,8 +47,8 @@ export default React.memo(({ artist, title, image }) => (
           border-radius: 3px;
           width: 100%;
           padding-bottom: 100%;
-          background: ${image
-            ? `url('${image}') rgb(230, 230, 230)`
+          background: ${data.img
+            ? `url('${data.img}') rgb(230, 230, 230)`
             : 'rgb(230, 230, 230)'};
           background-size: cover;
           background-position: 50%;
@@ -63,7 +65,7 @@ export default React.memo(({ artist, title, image }) => (
         }
       `}
     >
-      {decodeURIComponent(title)}
+      {decodeURIComponent(data.title)}
     </div>
     <div
       css={css`
@@ -75,7 +77,7 @@ export default React.memo(({ artist, title, image }) => (
         }
       `}
     >
-      {decodeURIComponent(artist)}
+      {decodeURIComponent(data.artist)}
     </div>
   </a>
 ))

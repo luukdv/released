@@ -57,6 +57,7 @@ export default React.memo(() => {
                 : null,
               checked: Date.now(),
               img: latest.response.release ? latest.response.release.img : null,
+              link: latest.response.release ? latest.response.release.link : null,
               title: latest.response.release
                 ? encodeURIComponent(latest.response.release.title)
                 : null,
