@@ -53,12 +53,12 @@ export default React.memo(() => {
           ? {
               ...release,
               artist: latest.response.release
-                ? strip(latest.response.release.artist)
+                ? encodeURIComponent(strip(latest.response.release.artist))
                 : null,
               checked: Date.now(),
               img: latest.response.release ? latest.response.release.img : null,
               title: latest.response.release
-                ? latest.response.release.title
+                ? encodeURIComponent(latest.response.release.title)
                 : null,
             }
           : release

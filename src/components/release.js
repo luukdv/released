@@ -61,7 +61,7 @@ export default React.memo(({ artist, title, image }) => (
         }
       `}
     >
-      {title}
+      {decodeURIComponent(title)}
     </div>
     <div
       css={css`
@@ -73,7 +73,7 @@ export default React.memo(({ artist, title, image }) => (
         }
       `}
     >
-      {artist}
+      {decodeURIComponent(artist)}
     </div>
   </div>
 ))

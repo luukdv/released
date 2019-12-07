@@ -9,7 +9,10 @@ export default React.memo(({ data, done, clear, error }) => {
   const { setLabels, setReleases, updateRelease } = useContext(State)
 
   const add = result => {
-    const label = { id: result.id, name: strip(result.title) }
+    const label = {
+      id: result.id,
+      name: encodeURIComponent(strip(result.title)),
+    }
     const release = { labelId: result.id }
 
     setLabels(prevLabels => {

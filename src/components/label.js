@@ -45,7 +45,7 @@ export default React.memo(({ name, id }) => {
           padding: 0.5em 1em;
         `}
       >
-        {name}
+        {decodeURIComponent(name)}
       </div>
       <div
         role="button"
