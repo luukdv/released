@@ -82,11 +82,7 @@ export default React.memo(() => {
   }
 
   return (
-    <div
-      css={css`
-        margin-bottom: 3.5em;
-      `}
-    >
+    <>
       <h2>Add label</h2>
       <div
         id="add"
@@ -139,6 +135,6 @@ export default React.memo(() => {
           Once you've added some labels, we'll show them here.
         </p>
       )}
-    </div>
+    </>
   )
 })

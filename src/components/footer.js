@@ -10,7 +10,7 @@ export default React.memo(() => (
       text-align: center;
       width: 100%;
       ${scale(1, 'font-size')}
-      ${scale(5, 'padding-bottom')}
+      ${scale(4, 'padding-bottom')}
 
       a {
         color: rgb(80, 80, 80);

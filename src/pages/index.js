@@ -3,6 +3,7 @@ import Wrap from '../components/wrap'
 import scale from '../../scale'
 import Saved from '../components/saved'
 import Add from '../components/add'
+import Header from '../components/header'
 import Latest from '../components/latest'
 import { css } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
@@ -116,23 +117,10 @@ export default React.memo(() => {
         <div
           css={css`
             flex-grow: 1;
-            ${scale(5, 'margin-bottom')}
-
-            @media (max-width: 960px) {
-              margin-bottom: 0;
-            }
+            ${scale(6, 'margin-bottom')}
           `}
         >
-          <Wrap>
-            <div
-              css={css`
-                background: rgb(235, 235, 235);
-                width: 100%;
-                ${scale(15, 'height')}
-                ${scale(4, 'margin-bottom')}
-              `}
-            ></div>
-          </Wrap>
+          <Header />
           {!ready ? (
             <Wrap>
               <NotReady />
@@ -141,7 +129,7 @@ export default React.memo(() => {
             <Wrap>
               <div
                 css={css`
-                  ${scale(5, 'margin-bottom')}
+                  ${scale(4, 'margin-bottom')}
 
                   @media (min-width: 961px) {
                     margin-bottom: 0;

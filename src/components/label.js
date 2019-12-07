@@ -1,4 +1,3 @@
-import scale from '../../scale'
 import React from 'react'
 import { css } from '@emotion/core'
 import { useContext } from 'react'
@@ -32,7 +31,6 @@ export default React.memo(({ name, id }) => {
         margin: 0 0.75em 0.75em 0;
         position: relative;
         user-select: none;
-        ${scale(1, 'font-size')}
 
         &:hover .remove {
           opacity: 1;
