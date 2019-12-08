@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
 import strip from '../../strip'
-import { useContext } from 'react'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, error }) => {

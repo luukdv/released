@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
 import get from '../get'
 import Loading from './loading'
 import Results from './results'
-import { useContext } from 'react'
 import State from '../context/state'
 
 let value = ''
