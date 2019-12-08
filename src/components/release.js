@@ -56,6 +56,8 @@ export default React.memo(({ data }) => {
           align-items: center;
           width: 100%;
           height: 100%;
+          transition: opacity 0.2s ease-out;
+          will-change: opacity;
           left: 0;
           position: absolute;
           top: 0;
