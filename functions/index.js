@@ -29,9 +29,10 @@ exports.searchLabels = async (req, res) => {
     if (req.query.search) {
       res.status(200).send(
         results.body.results.map(result => ({
-          img: result.thumb,
-          title: result.title,
           id: result.id,
+          img: result.thumb,
+          link: result.uri,
+          title: result.title,
         }))
       )
       return

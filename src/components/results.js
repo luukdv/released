@@ -10,6 +10,7 @@ export default React.memo(({ data, done, clear, error }) => {
   const add = result => {
     const label = {
       id: result.id,
+      link: result.link,
       name: encodeURIComponent(strip(result.title)),
     }
     const release = { labelId: result.id }
