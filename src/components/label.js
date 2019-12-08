@@ -13,7 +13,9 @@ export default React.memo(({ data }) => {
       return newLabels
     })
     setReleases(prevReleases => {
-      const newReleases = prevReleases.filter(release => release.labelId !== data.id)
+      const newReleases = prevReleases.filter(
+        release => release.labelId !== data.id
+      )
 
       window.localStorage.setItem('releases', JSON.stringify(newReleases))
       return newReleases
