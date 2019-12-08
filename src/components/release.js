@@ -1,8 +1,15 @@
 import scale from '../../scale'
-import React from 'react'
+import React, { useContext } from 'react'
 import { css } from '@emotion/core'
+import State from '../context/state'
 
 export default React.memo(({ data }) => {
+  const { labels } = useContext(State)
+  const labelName = labels.reduce(
+    (acc, curr) => (acc ? acc : curr.id === data.labelId ? curr.name : acc),
+    null
+  )
+
   return (
     <a
       href={`https://www.discogs.com${data.link}`}
@@ -42,7 +49,7 @@ export default React.memo(({ data }) => {
         className="release-label"
         css={css`
           background: rgb(235, 235, 235);
-          padding-left: 1.5em;
+          padding: 0 1.5em;
           display: flex;
           opacity: 0;
           pointer-events: none;
@@ -60,7 +67,9 @@ export default React.memo(({ data }) => {
             css={css`
               font-weight: 700;
             `}
-          ></span>
+          >
+            {decodeURIComponent(labelName)}
+          </span>
         </div>
       </div>
       <div
