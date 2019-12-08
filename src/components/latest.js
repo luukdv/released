@@ -27,7 +27,7 @@ export default React.memo(() => {
                 <Release key={release.labelId} data={release} />
               ))}
           </div>
-          {!error && <Notice>Releases are updated every hour.</Notice>}
+          {!error && <Notice>Releases are updated every three hours.</Notice>}
         </>
       )}
       {error && (

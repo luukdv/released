@@ -14,7 +14,7 @@ import NotReady from '../components/not-ready'
 import State from '../context/state'
 import get from '../get'
 
-const hour = 60 * 60 * 1000
+const threeHours = 3 * 60 * 60 * 1000
 
 export default React.memo(() => {
   const [error, setError] = useState(false)
@@ -24,7 +24,7 @@ export default React.memo(() => {
   const [releases, setReleases] = useState([])
 
   const updateRelease = async (label, release) => {
-    if (release.checked && Date.now() < release.checked + hour) {
+    if (release.checked && Date.now() < release.checked + threeHours) {
       return
     }
 
