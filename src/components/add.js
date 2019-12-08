@@ -98,7 +98,7 @@ export default React.memo(() => {
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             autoComplete="off"
-            spellcheck="false"
+            spellCheck="false"
             id="search"
             css={css`
               background: rgb(250, 250, 250);
