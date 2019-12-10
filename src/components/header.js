@@ -19,7 +19,7 @@ export default React.memo(() => (
         margin-left: -50%;
         width: 200%;
         ${scale(4, 'margin-bottom')}
-        ${scale(1, 'margin-top')}
+        ${scale(1.5, 'margin-top')}
 
         @media(min-width: 481px) {
           margin-left: -25%;
