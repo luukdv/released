@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
 import Release from './release'
+import Notice from './notice'
 import State from '../context/state'
 
 export default React.memo(() => {
@@ -51,16 +52,3 @@ export default React.memo(() => {
     </>
   )
 })
-
-const Notice = React.memo(({ children }) => (
-  <p
-    css={css`
-      color: rgb(80, 80, 80);
-      font-style: italic;
-      margin-top: 2em;
-      ${scale(1.125, 'font-size')}
-    `}
-  >
-    {children}
-  </p>
-))
