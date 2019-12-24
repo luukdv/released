@@ -2,12 +2,13 @@
   "name": "released",
   "description": "Keep up with new music from your favorite labels 📡",
   "dependencies": {
-    "@emotion/core": "^10.0.22",
-    "gatsby": "^2.18.11",
+    "@emotion/core": "^10.0.27",
+    "gatsby": "^2.18.17",
     "gatsby-plugin-emotion": "^4.1.18",
     "gatsby-plugin-netlify": "^2.1.30",
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-remove-trailing-slashes": "^2.1.17",
+    "netlify-cli": "^2.25.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1"
@@ -18,7 +19,8 @@
   "scripts": {
     "build": "gatsby build",
     "format": "prettier --write '**/*.{js,json}'",
-    "start": "gatsby develop",
+    "start": "netlify dev",
+    "dev": "gatsby develop",
     "test:labels": "cd functions && node -e \"require('.').searchLabels({ query: { search: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
     "test:latest": "cd functions && node -e \"require('.').searchLabels({ query: { label: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
     "deploy:functions": "cd functions && gcloud functions deploy searchLabels --region=europe-west1 --runtime nodejs10 --trigger-http"
