@@ -6,12 +6,10 @@ export default React.memo(({ children }) => (
     css={css`
       margin: 0 auto;
       max-width: 1600px;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding: 0 20px;
 
       @media (min-width: 641px) {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding: 0 40px;
       }
 
       @media (min-width: 961px) {
