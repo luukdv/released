@@ -3,7 +3,6 @@ import { css } from '@emotion/core'
 import scale from '../../scale'
 import Label from './label'
 import User from './user'
-import Notice from './notice'
 import State from '../context/state'
 
 export default React.memo(() => {
