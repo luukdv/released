@@ -1,67 +1,70 @@
-import env from '../../env'
-import gotrue from 'gotrue-js'
 import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/core'
 import Notice from './notice'
-
-const auth = new gotrue({ APIUrl: `${env.url}/.netlify/identity`, setCookie: true })
-const hash = document.location.hash
-const params = hash ? hash.slice(1).split('&').reduce((list, param) => {
-  const [key, val] = param.split('=')
-  list[key] = val
-
-  return list
-}, {}) : null
-
-if (params) {
-  auth.createUser(params)
-}
+import auth, { getParams } from '../../auth'
 
 export default React.memo(() => {
   const [user, setUser] = useState()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
+      const params = getParams()
+
+      if (params) {
+        await auth.createUser(params)
+      }
+
       const user = auth.currentUser()
-      const valid = user ? await user.jwt() : null
+      const token = user ? await user.jwt() : null
+      const valid = token && user.user_metadata
 
       setUser(valid ? user : false)
+
+      if (valid) {
+        user.update({ data: { set: true } })
+      }
     })()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (user === null) {
-    return (
-      <Notice>Checking login…</Notice>
-    )
+    return <Notice>Checking login…</Notice>
   }
 
   if (user === false) {
     return (
       <>
         <Notice>You can log in to save or restore your added labels.</Notice>
-        <Button>Log in with Google</Button>
+        <Button href={auth.loginExternalUrl('google')}>
+          Log in with Google
+        </Button>
       </>
     )
   }
 
   if (user) {
+    console.log(user)
     return (
       <>
-        <Notice>You are now logged in.</Notice>
-        <Button>Log out</Button>
+        <Notice>
+          You are now logged in as {user.user_metadata.full_name}.
+        </Notice>
+        <Button href="">Log me out</Button>
       </>
     )
   }
 })
 
-const Button = ({ children }) => (
-  <div
+const Button = ({ children, href }) => (
+  <a
+    href={href}
+    rel="nofollow"
     css={css`
       border-radius: 9em;
       box-shadow: 0 0.125em 0.5em rgba(0, 0, 0, 0.25);
       cursor: pointer;
       display: inline-flex;
       font-weight: 700;
+      text-decoration: none;
       margin-top: 1em;
       padding: 0.75em 1.25em;
       transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
@@ -73,5 +76,5 @@ const Button = ({ children }) => (
     `}
   >
     {children}
-  </div>
+  </a>
 )
