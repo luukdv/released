@@ -1,4 +1,5 @@
-env.js
 .cache
+.netlify
+env.js
 node_modules
 public
