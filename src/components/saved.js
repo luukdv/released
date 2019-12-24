@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
 import Label from './label'
+import User from './user'
 import Notice from './notice'
 import State from '../context/state'
 
@@ -30,7 +31,7 @@ export default React.memo(() => {
               <Label data={label} key={label.id} />
             ))}
         </div>
-        <Notice>Logged in as test user.</Notice>
+        <User />
       </div>
     )
   )
