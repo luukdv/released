@@ -8,6 +8,7 @@
     "gatsby-plugin-netlify": "^2.1.30",
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-remove-trailing-slashes": "^2.1.17",
+    "got": "^10.2.0",
     "gotrue-js": "^0.9.25",
     "netlify-cli": "^2.25.0",
     "react": "^16.11.0",
@@ -21,10 +22,7 @@
     "build": "gatsby build",
     "format": "prettier --write '**/*.{js,json}'",
     "start": "netlify dev",
-    "dev": "gatsby develop",
-    "test:labels": "cd functions && node -e \"require('.').searchLabels({ query: { search: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
-    "test:latest": "cd functions && node -e \"require('.').searchLabels({ query: { label: process.argv[1] } }, { set: () => {}, status: () => ({ send: r => console.log(r) }) })\"",
-    "deploy:functions": "cd functions && gcloud functions deploy searchLabels --region=europe-west1 --runtime nodejs10 --trigger-http"
+    "dev": "gatsby develop"
   },
   "license": "MIT",
   "repository": {

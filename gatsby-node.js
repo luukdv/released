@@ -1,13 +1,12 @@
 const isDev = process.env.NODE_ENV === 'development'
-let endpoint
+let token
 let url
 
 if (isDev) {
   const env = require('./env')
-  endpoint = env.endpoint
+  token = env.token
   url = env.url
 } else {
-  endpoint = process.env.API_ENDPOINT
   url = process.env.NETLIFY_URL
 }
 
@@ -16,7 +15,6 @@ exports.onCreateWebpackConfig = c =>
     plugins: [
       c.plugins.define({
         ANALYTICS_ID: isDev ? null : JSON.stringify(process.env.ANALYTICS_ID),
-        API_ENDPOINT: JSON.stringify(endpoint),
         NETLIFY_URL: JSON.stringify(url),
       }),
     ],
