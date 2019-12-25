@@ -7,7 +7,7 @@ if (isDev) {
   endpoint = env.endpoint
   url = env.url
 } else {
-  endpoint = process.env.GATSBY_API_ENDPOINT
+  endpoint = process.env.API_ENDPOINT
   url = process.env.NETLIFY_URL
 }
 
