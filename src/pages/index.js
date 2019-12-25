@@ -37,7 +37,7 @@ export default React.memo(() => {
     try {
       latest = await get(
         // eslint-disable-next-line no-undef
-        `${API_ENDPOINT}?label=${label.name}${
+        `.netlify/functions/searchLabels?label=${label.name}${
           process.env.NODE_ENV === 'development' ? '&dev=1' : ''
         }`
       )
