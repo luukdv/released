@@ -3,6 +3,7 @@ import Wrap from '../components/wrap'
 import scale from '../../scale'
 import strip from '../../strip'
 import Saved from '../components/saved'
+import User from '../components/user'
 import Add from '../components/add'
 import Header from '../components/header'
 import Latest from '../components/latest'
@@ -152,6 +153,7 @@ export default React.memo(() => {
               >
                 <Add />
                 <Saved />
+                <User />
               </div>
             </Wrap>
           )}
