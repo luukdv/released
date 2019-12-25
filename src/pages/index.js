@@ -95,8 +95,7 @@ export default React.memo(() => {
         updateRelease(label, release)
       }
     }, 250)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <State.Provider
