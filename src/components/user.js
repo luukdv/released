@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { css } from '@emotion/core'
 import Notice from './notice'
+import State from '../context/state'
 import auth, { getParams } from '../../auth'
 
 export default React.memo(() => {
   const [user, setUser] = useState()
+  const { labels, releases } = useContext(State)
 
   useEffect(() => {
     ;(async () => {
@@ -19,8 +21,14 @@ export default React.memo(() => {
 
       setUser(token ? user : false)
 
-      if (token) {
-        user.update({ data: { set: true } })
+      if (token && !user.user_metadata.set) {
+        user.update({
+          data: {
+            set: true,
+            labels,
+            releases,
+          },
+        })
       }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -43,9 +51,7 @@ export default React.memo(() => {
   if (user) {
     return (
       <>
-        <Notice>
-          You are logged in as {user.user_metadata.full_name}.
-        </Notice>
+        <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
         <Button href="">Log me out</Button>
       </>
     )
