@@ -22,7 +22,7 @@
     "build": "gatsby build",
     "format": "prettier --write '**/*.{js,json}'",
     "start": "netlify dev",
-    "dev": "gatsby develop"
+    "dev": "gatsby develop -p 8888"
   },
   "license": "MIT",
   "repository": {

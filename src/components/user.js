@@ -44,7 +44,7 @@ export default React.memo(() => {
     return (
       <>
         <Notice>
-          You are now logged in as {user.user_metadata.full_name}.
+          You are logged in as {user.user_metadata.full_name}.
         </Notice>
         <Button href="">Log me out</Button>
       </>
