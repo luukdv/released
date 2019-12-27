@@ -16,11 +16,10 @@ export default React.memo(() => {
 
       const user = auth.currentUser()
       const token = user ? await user.jwt() : null
-      const valid = token && user.user_metadata
 
-      setUser(valid ? user : false)
+      setUser(token ? user : false)
 
-      if (valid) {
+      if (token) {
         user.update({ data: { set: true } })
       }
     })()
@@ -42,7 +41,6 @@ export default React.memo(() => {
   }
 
   if (user) {
-    console.log(user)
     return (
       <>
         <Notice>
