@@ -33,13 +33,7 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(
-        // eslint-disable-next-line no-undef
-        `.netlify/functions/searchLabels?search=${value}${
-          process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-        }`,
-        value
-      )
+      data = await get(`.netlify/functions/searchLabels?search=${value}`, value)
     } catch (e) {
       setLoading(false)
       setDone(true)
