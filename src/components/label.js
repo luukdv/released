@@ -6,20 +6,8 @@ export default React.memo(({ data }) => {
   const { setLabels, setReleases } = useContext(State)
 
   const remove = () => {
-    setLabels(prevLabels => {
-      const newLabels = prevLabels.filter(label => label.id !== data.id)
-
-      window.localStorage.setItem('labels', JSON.stringify(newLabels))
-      return newLabels
-    })
-    setReleases(prevReleases => {
-      const newReleases = prevReleases.filter(
-        release => release.labelId !== data.id
-      )
-
-      window.localStorage.setItem('releases', JSON.stringify(newReleases))
-      return newReleases
-    })
+    setLabels(prev => prev.filter(label => label.id !== data.id))
+    setReleases(prev => prev.filter(release => release.labelId !== data.id))
   }
 
   return (

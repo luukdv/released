@@ -15,18 +15,8 @@ export default React.memo(({ data, done, clear, error }) => {
     }
     const release = { labelId: result.id }
 
-    setLabels(prevLabels => {
-      const newLabels = [...prevLabels, label]
-
-      window.localStorage.setItem('labels', JSON.stringify(newLabels))
-      return newLabels
-    })
-    setReleases(prevReleases => {
-      const newReleases = [...prevReleases, release]
-
-      window.localStorage.setItem('releases', JSON.stringify(newReleases))
-      return newReleases
-    })
+    setLabels(prev => [...prev, label])
+    setReleases(prev => [...prev, release])
     updateRelease(label, release)
     clear()
   }
