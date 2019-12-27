@@ -1,7 +1,7 @@
-const got = require('got')
+const axios = require('axios')
 
 exports.handler = async (e, ctx, cb) => {
-  let results
+  let response
   const api = 'https://api.discogs.com/database/search'
   const getQuery = type => {
     return e.queryStringParameters.search
@@ -11,20 +11,20 @@ exports.handler = async (e, ctx, cb) => {
         }`
   }
   const isMainLabel = () =>
-    results.results[0].label.length &&
-    results.results[0].label[0].toLowerCase() ===
+    results.data.results[0].label.length &&
+    results.data.results[0].label[0].toLowerCase() ===
       e.queryStringParameters.label.toLowerCase()
 
   try {
-    results = await got(
+    results = await axios.get(
       `${api}?token=${process.env.API_TOKEN}&${getQuery('master')}`
-    ).json()
+    )
 
     if (e.queryStringParameters.search) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          results: results.results.map(result => ({
+          results: results.data.results.map(result => ({
             id: result.id,
             img: result.thumb,
             link: result.uri,
@@ -34,34 +34,34 @@ exports.handler = async (e, ctx, cb) => {
       }
     }
 
-    if (!results.results.length || !isMainLabel()) {
-      results = await got(
+    if (!results.data.results.length || !isMainLabel()) {
+      results = await axios.get(
         `${api}?token=${process.env.API_TOKEN}&${getQuery('release')}`
-      ).json()
+      )
     }
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         release:
-          results.results.length && isMainLabel()
+          results.data.results.length && isMainLabel()
             ? {
-                artist: results.results[0].title
+                artist: results.data.results[0].title
                   .split(' - ')[0]
                   .replace(/(.+)\*$/, '$1'),
-                img: results.results[0].thumb,
-                link: results.results[0].uri,
-                title: results.results[0].title.split(' - ')[1],
+                img: results.data.results[0].thumb,
+                link: results.data.results[0].uri,
+                title: results.data.results[0].title.split(' - ')[1],
               }
             : null,
       }),
     }
   } catch (e) {
     return {
-      statusCode: e.statusCode ? e.statusCode : 400,
       body: JSON.stringify({
-        error: e.statusMessage ? e.statusMessage : e.code,
+        error: e.response ? e.response.statusText : e.code,
       }),
+      statusCode: e.response ? e.response.status : 400,
     }
   }
 }
