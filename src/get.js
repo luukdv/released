@@ -8,9 +8,15 @@ export default (url, token = null) => {
     r.onreadystatechange = () => {
       if (r.readyState === XMLHttpRequest.DONE) {
         if (r.status === 200) {
-          resolve({ response: JSON.parse(r.response), token })
+          try {
+            const parsed = JSON.parse(r.response)
+
+            resolve({ response: parsed, token })
+          } catch (e) {
+            reject(e)
+          }
         } else {
-          reject()
+          reject(`${r.status} (${r.statusText})`)
         }
       }
     }
