@@ -36,7 +36,7 @@ export default React.memo(() => {
     let latest
 
     try {
-      latest = await get(`/.netlify/functions/searchLabels?label=${label.name}`)
+      latest = await get(`.netlify/functions/searchLabels?label=${label.name}`)
     } catch (e) {
       setError(true)
       setUpdating(false)
