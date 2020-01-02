@@ -23,7 +23,6 @@
     "start": "netlify dev -p 8888",
     "dev": "gatsby develop"
   },
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/luukdv/released.git"
