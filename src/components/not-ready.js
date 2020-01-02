@@ -13,7 +13,7 @@ export default React.memo(() => (
         margin: 0;
       `}
     >
-      Retrieving saved data…
+      Checking login…
     </h2>
   </div>
 ))

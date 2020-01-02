@@ -1,14 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { css } from '@emotion/core'
 import Notice from './notice'
 import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const { user } = useContext(State)
+  const { user, labels, releases } = useContext(State)
+
+  useEffect(() => {
+    if (!user) {
+      return
+    }
+
+    user.update({
+      data: { labels, releases }
+    })
+  }, [labels, releases]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (user === null) {
-    return null
+    return
   }
 
   return user ? (

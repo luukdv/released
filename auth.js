@@ -17,7 +17,6 @@ export const getParams = () => {
 }
 
 export default new gotrue({
-  // eslint-disable-next-line no-undef
-  APIUrl: `${NETLIFY_URL}/.netlify/identity`,
+  APIUrl: `${NETLIFY_URL}/.netlify/identity`, // eslint-disable-line no-undef
   setCookie: true,
 })
