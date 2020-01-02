@@ -4,12 +4,10 @@ import { Helmet } from 'react-helmet'
 export default React.memo(() => (
   <Helmet>
     <title>Released</title>
-    {/* eslint-disable jsx-a11y/accessible-emoji */}
     <meta
       name="description"
       content="Keep up with new music from your favorite labels 📡"
     />
-    {/* eslint-enable jsx-a11y/accessible-emoji */}
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     {/* eslint-disable no-undef */}
