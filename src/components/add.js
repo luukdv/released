@@ -33,13 +33,7 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(
-        // eslint-disable-next-line no-undef
-        `${API_ENDPOINT}?search=${value}${
-          process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-        }`,
-        value
-      )
+      data = await get(`.netlify/functions/searchLabels?search=${value}`, value)
     } catch (e) {
       setLoading(false)
       setDone(true)
@@ -49,7 +43,7 @@ export default React.memo(() => {
 
     if (data.token === value) {
       setResults(
-        data.response.filter(result => {
+        data.response.results.filter(result => {
           return !labels.map(label => label.id).includes(result.id)
         })
       )
@@ -95,8 +89,6 @@ export default React.memo(() => {
           `}
         >
           <input
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
             autoComplete="off"
             spellCheck="false"
             id="search"

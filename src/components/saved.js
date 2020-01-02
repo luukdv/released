@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
 import Label from './label'
-import User from './user'
 import State from '../context/state'
 
 export default React.memo(() => {
@@ -30,7 +29,6 @@ export default React.memo(() => {
               <Label data={label} key={label.id} />
             ))}
         </div>
-        <User />
       </div>
     )
   )

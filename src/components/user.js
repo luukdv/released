@@ -1,74 +1,87 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { css } from '@emotion/core'
 import Notice from './notice'
-import auth, { getParams } from '../../auth'
+import State from '../context/state'
+import auth from '../../auth'
 
 export default React.memo(() => {
-  const [user, setUser] = useState()
+  const {
+    labels,
+    releases,
+    setLabels,
+    setReleases,
+    setUser,
+    user,
+  } = useContext(State)
+  const [label, setLabel] = useState('Log in with Google')
+  const [notice, setNotice] = useState(
+    'You can log in to save or restore your added labels.'
+  )
 
   useEffect(() => {
-    ;(async () => {
-      const params = getParams()
+    if (!user) {
+      return
+    }
 
-      if (params) {
-        await auth.createUser(params)
-      }
-
-      const user = auth.currentUser()
-      const token = user ? await user.jwt() : null
-      const valid = token && user.user_metadata
-
-      setUser(valid ? user : false)
-
-      if (valid) {
-        user.update({ data: { set: true } })
-      }
-    })()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    user.update({
+      data: { labels, releases },
+    })
+  }, [labels, releases]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (user === null) {
-    return <Notice>Checking login…</Notice>
+    return
   }
 
-  if (user === false) {
-    return (
-      <>
-        <Notice>You can log in to save or restore your added labels.</Notice>
-        <Button href={auth.loginExternalUrl('google')}>
-          Log in with Google
-        </Button>
-      </>
-    )
-  }
-
-  if (user) {
-    console.log(user)
-    return (
-      <>
-        <Notice>
-          You are now logged in as {user.user_metadata.full_name}.
-        </Notice>
-        <Button href="">Log me out</Button>
-      </>
-    )
-  }
+  return user ? (
+    <>
+      <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
+      <Button
+        onClick={() => {
+          setUser(false)
+          setNotice('You are successfully logged out.')
+          setLabels([])
+          setReleases([])
+          user.logout()
+        }}
+      >
+        Log me out
+      </Button>
+    </>
+  ) : (
+    <>
+      <Notice>{notice}</Notice>
+      <Button
+        onClick={() => {
+          setLabel('One moment…')
+          window.location.href = auth.loginExternalUrl('google')
+        }}
+      >
+        {label}
+      </Button>
+    </>
+  )
 })
 
-const Button = ({ children, href }) => (
-  <a
-    href={href}
+const Button = ({ children, href, onClick }) => (
+  <div
+    role="button"
+    onClick={onClick}
     rel="nofollow"
+    tabIndex={0}
+    onKeyUp={e => (e.key === 13 || e.keyCode === 13) && onClick()}
     css={css`
+      user-select: none;
       border-radius: 9em;
       box-shadow: 0 0.125em 0.5em rgba(0, 0, 0, 0.25);
       cursor: pointer;
       display: inline-flex;
       font-weight: 700;
-      text-decoration: none;
       margin-top: 1em;
+      outline: none;
       padding: 0.75em 1.25em;
       transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
 
+      &:focus,
       &:hover {
         box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.25);
         transform: translateY(-0.125em);
@@ -76,5 +89,5 @@ const Button = ({ children, href }) => (
     `}
   >
     {children}
-  </a>
+  </div>
 )

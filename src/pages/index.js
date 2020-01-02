@@ -3,6 +3,7 @@ import Wrap from '../components/wrap'
 import scale from '../../scale'
 import strip from '../../strip'
 import Saved from '../components/saved'
+import User from '../components/user'
 import Add from '../components/add'
 import Header from '../components/header'
 import Latest from '../components/latest'
@@ -13,13 +14,14 @@ import Footer from '../components/footer'
 import NotReady from '../components/not-ready'
 import State from '../context/state'
 import get from '../get'
+import auth, { getParams } from '../../auth'
 
 const threeHours = 3 * 60 * 60 * 1000
 
 export default React.memo(() => {
-  const [error, setError] = useState(false)
-  const [ready, setReady] = useState(false)
-  const [updating, setUpdating] = useState(false)
+  const [error, setError] = useState()
+  const [user, setUser] = useState(null)
+  const [updating, setUpdating] = useState()
   const [labels, setLabels] = useState([])
   const [releases, setReleases] = useState([])
 
@@ -34,22 +36,16 @@ export default React.memo(() => {
     let latest
 
     try {
-      latest = await get(
-        // eslint-disable-next-line no-undef
-        `${API_ENDPOINT}?label=${label.name}${
-          process.env.NODE_ENV === 'development' ? '&dev=1' : ''
-        }`
-      )
+      latest = await get(`.netlify/functions/searchLabels?label=${label.name}`)
     } catch (e) {
-      console.error(e)
       setError(true)
       setUpdating(false)
       return
     }
 
-    setReleases(prevReleases => {
-      const newReleases = prevReleases.map(release => {
-        return release.labelId === label.id
+    setReleases(prev =>
+      prev.map(release =>
+        release.labelId === label.id
           ? {
               ...release,
               artist: latest.response.release
@@ -65,48 +61,61 @@ export default React.memo(() => {
                 : null,
             }
           : release
-      })
-
-      window.localStorage.setItem('releases', JSON.stringify(newReleases))
-      return newReleases
-    })
+      )
+    )
     setUpdating(false)
   }
 
   useEffect(() => {
-    const labelsData = window.localStorage.getItem('labels')
-    const savedLabels = labelsData ? JSON.parse(labelsData) : null
-    const releasesData = window.localStorage.getItem('releases')
-    const savedReleases = releasesData ? JSON.parse(releasesData) : null
+    ;(async () => {
+      const params = getParams()
 
-    if (!(savedLabels && savedReleases)) {
-      setReady(true)
-      return
-    }
+      if (params) {
+        await auth.createUser(params)
+      }
 
-    setTimeout(() => {
+      const user = auth.currentUser()
+      const token = user ? await user.jwt() : null
+      const userData = token ? user : false
+      setUser(userData)
+
+      if (userData && !user.user_metadata.set) {
+        user.update({
+          data: {
+            set: true,
+            labels,
+            releases,
+          },
+        })
+      }
+
+      const savedLabels =
+        userData && user.user_metadata.labels ? user.user_metadata.labels : []
+      const savedReleases =
+        userData && user.user_metadata.labels ? user.user_metadata.releases : []
+
       setLabels(savedLabels)
       setReleases(savedReleases)
-      setReady(true)
 
-      for (const label of savedLabels) {
-        const release = savedReleases.filter(r => r.labelId === label.id)[0]
-        updateRelease(label, release)
-      }
-    }, 250)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      // for (const label of savedLabels) {
+      //   const release = savedReleases.filter(r => r.labelId === label.id)[0]
+      //   updateRelease(label, release)
+      // }
+    })()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <State.Provider
       value={{
+        error,
         labels,
-        setLabels,
         releases,
+        setLabels,
         setReleases,
+        setUser,
         updateRelease,
         updating,
-        error,
+        user,
       }}
     >
       <Head />
@@ -125,7 +134,7 @@ export default React.memo(() => {
           `}
         >
           <Header />
-          {!ready ? (
+          {user === null ? (
             <Wrap>
               <NotReady />
             </Wrap>
@@ -152,6 +161,7 @@ export default React.memo(() => {
               >
                 <Add />
                 <Saved />
+                <User />
               </div>
             </Wrap>
           )}
