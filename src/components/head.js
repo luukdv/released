@@ -18,7 +18,7 @@ export default React.memo(() => (
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '${process.env.ANALYTICS_ID}', 'auto');
+        ga('create', '${process.env.GATSBY_ANALYTICS_ID}', 'auto');
         ga('send', 'pageview');
       `}
       </script>

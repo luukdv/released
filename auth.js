@@ -3,7 +3,7 @@ import gotrue from 'gotrue-js'
 const url =
   process.env.NODE_ENV === 'development'
     ? JSON.stringify(require('./env').url)
-    : process.env.URL
+    : process.env.GATSBY_URL
 
 export const getParams = () => {
   const hash = document.location.hash
