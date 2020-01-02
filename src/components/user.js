@@ -13,7 +13,7 @@ export default React.memo(() => {
     }
 
     user.update({
-      data: { labels, releases }
+      data: { labels, releases },
     })
   }, [labels, releases]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -24,27 +24,33 @@ export default React.memo(() => {
   return user ? (
     <>
       <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
-      <Button href="">Log me out</Button>
+      <Button onClick={() => user.logout()}>Log me out</Button>
     </>
   ) : (
     <>
       <Notice>You can log in to save or restore your added labels.</Notice>
-      <Button href={auth.loginExternalUrl('google')}>Log in with Google</Button>
+      <Button
+        onClick={() => (window.location.href = auth.loginExternalUrl('google'))}
+      >
+        Log in with Google
+      </Button>
     </>
   )
 })
 
-const Button = ({ children, href }) => (
-  <a
-    href={href}
+const Button = ({ children, href, onClick }) => (
+  <div
+    role="button"
+    onClick={onClick}
     rel="nofollow"
+    tabIndex={0}
+    onKeyUp={e => (e.key === 13 || e.keyCode === 13) && onClick()}
     css={css`
       border-radius: 9em;
       box-shadow: 0 0.125em 0.5em rgba(0, 0, 0, 0.25);
       cursor: pointer;
       display: inline-flex;
       font-weight: 700;
-      text-decoration: none;
       margin-top: 1em;
       padding: 0.75em 1.25em;
       transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
@@ -56,5 +62,5 @@ const Button = ({ children, href }) => (
     `}
   >
     {children}
-  </a>
+  </div>
 )
