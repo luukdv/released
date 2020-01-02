@@ -5,7 +5,7 @@ exports.onCreateWebpackConfig = c =>
         NETLIFY_URL:
           process.env.NODE_ENV === 'development'
             ? JSON.stringify(require('./env').url)
-            : process.env.URL,
+            : process.env.NETLIFY_URL,
       }),
     ],
   })
