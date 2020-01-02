@@ -79,16 +79,6 @@ export default React.memo(() => {
       const userData = token ? user : false
       setUser(userData)
 
-      if (userData && !user.user_metadata.set) {
-        user.update({
-          data: {
-            set: true,
-            labels,
-            releases,
-          },
-        })
-      }
-
       const savedLabels =
         userData && user.user_metadata.labels ? user.user_metadata.labels : []
       const savedReleases =
