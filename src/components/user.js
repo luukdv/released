@@ -11,7 +11,7 @@ export default React.memo(() => {
     return null
   }
 
-  return user !== false ? (
+  return user ? (
     <>
       <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
       <Button href="">Log me out</Button>
