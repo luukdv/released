@@ -1,5 +1,10 @@
 import gotrue from 'gotrue-js'
 
+const url =
+  process.env.NODE_ENV === 'development'
+    ? JSON.stringify(require('./env').url)
+    : process.env.URL
+
 export const getParams = () => {
   const hash = document.location.hash
 
@@ -17,6 +22,6 @@ export const getParams = () => {
 }
 
 export default new gotrue({
-  APIUrl: `${NETLIFY_URL}/.netlify/identity`, // eslint-disable-line no-undef
+  APIUrl: `${url}/.netlify/identity`,
   setCookie: true,
 })
