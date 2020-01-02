@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-exports.handler = async (e, ctx, cb) => {
+exports.handler = async e => {
   let response
   const api = 'https://api.discogs.com/database/search'
   const getQuery = type => {
