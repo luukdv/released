@@ -6,18 +6,20 @@ export default (url, token = null) => {
     r.send()
 
     r.onreadystatechange = () => {
-      if (r.readyState === XMLHttpRequest.DONE) {
-        if (r.status === 200) {
-          try {
-            const parsed = JSON.parse(r.response)
+      if (r.readyState !== XMLHttpRequest.DONE) {
+        return
+      }
 
-            resolve({ response: parsed, token })
-          } catch (e) {
-            reject(e)
-          }
-        } else {
-          reject(`${r.status} (${r.statusText})`)
+      if (r.status === 200) {
+        try {
+          const parsed = JSON.parse(r.response)
+
+          resolve({ response: parsed, token })
+        } catch (e) {
+          reject(e)
         }
+      } else {
+        reject(`${r.status} (${r.statusText})`)
       }
     }
   })
