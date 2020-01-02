@@ -11,7 +11,7 @@ export default React.memo(() => (
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     {/* eslint-disable no-undef */}
-    {ANALYTICS_ID && (
+    {process.env.NODE_ENV !== 'development' && (
       <script>
         {`
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
