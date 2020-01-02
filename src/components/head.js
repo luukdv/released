@@ -10,7 +10,6 @@ export default React.memo(() => (
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    {/* eslint-disable no-undef */}
     {process.env.NODE_ENV !== 'development' && (
       <script>
         {`
@@ -19,11 +18,10 @@ export default React.memo(() => (
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '${ANALYTICS_ID}', 'auto');
+        ga('create', '${process.env.ANALYTICS_ID}', 'auto');
         ga('send', 'pageview');
       `}
       </script>
     )}
-    {/* eslint-enable no-undef */}
   </Helmet>
 ))
