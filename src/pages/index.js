@@ -1,20 +1,21 @@
-import Head from '../components/head'
-import Wrap from '../components/wrap'
-import scale from '../../scale'
-import strip from '../../strip'
-import Saved from '../components/saved'
-import User from '../components/user'
 import Add from '../components/add'
+import auth, { getParams } from '../../auth'
+import Footer from '../components/footer'
+import get from '../get'
+import Head from '../components/head'
 import Header from '../components/header'
 import Latest from '../components/latest'
-import { css } from '@emotion/core'
-import React, { useState, useEffect } from 'react'
-import Styles from '../components/styles'
-import Footer from '../components/footer'
 import NotReady from '../components/not-ready'
+import React, { useState, useEffect } from 'react'
+import Saved from '../components/saved'
+import scale from '../../scale'
 import State from '../context/state'
-import get from '../get'
-import auth, { getParams } from '../../auth'
+import strip from '../../strip'
+import Styles from '../components/styles'
+import User from '../components/user'
+import Wrap from '../components/wrap'
+import { css } from '@emotion/core'
+import { navigate } from '@reach/router'
 
 const threeHours = 3 * 60 * 60 * 1000
 
@@ -71,7 +72,8 @@ export default React.memo(() => {
       const params = getParams()
 
       if (params) {
-        await auth.createUser(params)
+        await auth.createUser(params, true)
+        navigate('/', { replace: true })
       }
 
       const user = auth.currentUser()
