@@ -10,16 +10,17 @@ export default (url, token = null) => {
         return
       }
 
-      if (r.status === 200) {
-        try {
-          const parsed = JSON.parse(r.response)
-
-          resolve({ response: parsed, token })
-        } catch (e) {
-          reject(e)
-        }
-      } else {
+      if (r.status !== 200) {
         reject(`${r.status} (${r.statusText})`)
+        return
+      }
+
+      try {
+        const parsed = JSON.parse(r.response)
+
+        resolve({ response: parsed, token })
+      } catch (e) {
+        reject(e)
       }
     }
   })
