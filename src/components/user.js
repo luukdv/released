@@ -23,9 +23,13 @@ export default React.memo(() => {
       return
     }
 
-    user.update({
-      data: { labels, releases },
-    })
+    if (labels.length) {
+      user.update({ data: { labels } })
+    }
+
+    if (releases.length) {
+      user.update({ data: { releases } })
+    }
   }, [labels, releases]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (user === null) {
