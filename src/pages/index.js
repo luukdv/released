@@ -26,6 +26,30 @@ export default React.memo(() => {
   const [labels, setLabels] = useState([])
   const [releases, setReleases] = useState([])
 
+  const persistLabels = newLabels => {
+    if (!user) {
+      return
+    }
+
+    user.update({
+      data: {
+        labels: newLabels,
+      },
+    })
+  }
+
+  const persistReleases = newReleases => {
+    if (!user) {
+      return
+    }
+
+    user.update({
+      data: {
+        releases: newReleases,
+      },
+    })
+  }
+
   const updateRelease = async (label, release) => {
     if (release.checked && Date.now() < release.checked + threeHours) {
       return
@@ -44,8 +68,8 @@ export default React.memo(() => {
       return
     }
 
-    setReleases(prev =>
-      prev.map(release =>
+    setReleases(prev => {
+      const next = prev.map(release =>
         release.labelId === label.id
           ? {
               ...release,
@@ -63,7 +87,11 @@ export default React.memo(() => {
             }
           : release
       )
-    )
+
+      persistReleases(next)
+
+      return next
+    })
     setUpdating(false)
   }
 
@@ -89,10 +117,10 @@ export default React.memo(() => {
       setLabels(savedLabels)
       setReleases(savedReleases)
 
-      // for (const label of savedLabels) {
-      //   const release = savedReleases.filter(r => r.labelId === label.id)[0]
-      //   updateRelease(label, release)
-      // }
+      for (const label of savedLabels) {
+        const release = savedReleases.filter(r => r.labelId === label.id)[0]
+        updateRelease(label, release)
+      }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -101,6 +129,8 @@ export default React.memo(() => {
       value={{
         error,
         labels,
+        persistLabels,
+        persistReleases,
         releases,
         setLabels,
         setReleases,

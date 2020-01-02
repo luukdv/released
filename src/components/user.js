@@ -1,36 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { css } from '@emotion/core'
 import Notice from './notice'
 import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const {
-    labels,
-    releases,
-    setLabels,
-    setReleases,
-    setUser,
-    user,
-  } = useContext(State)
-  const [label, setLabel] = useState('Log in with Google')
+  const { setLabels, setReleases, setUser, user } = useContext(State)
+  const [text, setText] = useState('Log in with Google')
   const [notice, setNotice] = useState(
     'You can log in to save or restore your added labels.'
   )
-
-  useEffect(() => {
-    if (!user) {
-      return
-    }
-
-    if (labels.length) {
-      user.update({ data: { labels } })
-    }
-
-    if (releases.length) {
-      user.update({ data: { releases } })
-    }
-  }, [labels, releases]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (user === null) {
     return
@@ -56,11 +35,11 @@ export default React.memo(() => {
       <Notice>{notice}</Notice>
       <Button
         onClick={() => {
-          setLabel('One moment…')
+          setText('One moment…')
           window.location.href = auth.loginExternalUrl('google')
         }}
       >
-        {label}
+        {text}
       </Button>
     </>
   )

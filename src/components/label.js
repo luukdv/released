@@ -3,11 +3,25 @@ import { css } from '@emotion/core'
 import State from '../context/state'
 
 export default React.memo(({ data }) => {
-  const { setLabels, setReleases } = useContext(State)
+  const { setLabels, persistLabels, persistReleases, setReleases } = useContext(
+    State
+  )
 
   const remove = () => {
-    setLabels(prev => prev.filter(label => label.id !== data.id))
-    setReleases(prev => prev.filter(release => release.labelId !== data.id))
+    setLabels(prev => {
+      const next = prev.filter(label => label.id !== data.id)
+
+      persistLabels(next)
+
+      return next
+    })
+    setReleases(prev => {
+      const next = prev.filter(release => release.labelId !== data.id)
+
+      persistReleases(next)
+
+      return next
+    })
   }
 
   return (

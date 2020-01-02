@@ -5,7 +5,13 @@ import strip from '../../strip'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, error }) => {
-  const { setLabels, setReleases, updateRelease } = useContext(State)
+  const {
+    setLabels,
+    setReleases,
+    persistLabels,
+    persistReleases,
+    updateRelease,
+  } = useContext(State)
 
   const add = result => {
     const label = {
@@ -15,8 +21,20 @@ export default React.memo(({ data, done, clear, error }) => {
     }
     const release = { labelId: result.id }
 
-    setLabels(prev => [...prev, label])
-    setReleases(prev => [...prev, release])
+    setLabels(prev => {
+      const next = [...prev, label]
+
+      persistLabels(next)
+
+      return next
+    })
+    setReleases(prev => {
+      const next = [...prev, release]
+
+      persistReleases(next)
+
+      return next
+    })
     updateRelease(label, release)
     clear()
   }
