@@ -107,13 +107,14 @@ export default React.memo(() => {
   return (
     <State.Provider
       value={{
+        error,
         labels,
-        setLabels,
         releases,
+        setLabels,
         setReleases,
+        setUser,
         updateRelease,
         updating,
-        error,
         user,
       }}
     >

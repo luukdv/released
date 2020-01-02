@@ -5,8 +5,18 @@ import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const { user, labels, releases } = useContext(State)
+  const {
+    labels,
+    releases,
+    setLabels,
+    setReleases,
+    setUser,
+    user,
+  } = useContext(State)
   const [label, setLabel] = useState('Log in with Google')
+  const [notice, setNotice] = useState(
+    'You can log in to save or restore your added labels.'
+  )
 
   useEffect(() => {
     if (!user) {
@@ -25,11 +35,21 @@ export default React.memo(() => {
   return user ? (
     <>
       <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
-      <Button onClick={() => user.logout()}>Log me out</Button>
+      <Button
+        onClick={() => {
+          setUser(false)
+          setNotice('You are successfully logged out.')
+          setLabels([])
+          setReleases([])
+          user.logout()
+        }}
+      >
+        Log me out
+      </Button>
     </>
   ) : (
     <>
-      <Notice>You can log in to save or restore your added labels.</Notice>
+      <Notice>{notice}</Notice>
       <Button
         onClick={() => {
           setLabel('One moment…')
