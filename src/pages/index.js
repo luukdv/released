@@ -6,7 +6,7 @@ import State from '../context/state'
 import strip from '../../strip'
 import { navigate } from '@reach/router'
 
-const updateInterval = 5000
+const updateInterval = 3000
 
 export default React.memo(() => {
   const [error, setError] = useState()
@@ -55,7 +55,7 @@ export default React.memo(() => {
 
   const update = async label => {
     setError(false)
-    setUpdating(label.name)
+    setUpdating(decodeURIComponent(label.name))
 
     let latest
 

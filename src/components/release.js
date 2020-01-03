@@ -5,14 +5,10 @@ import State from '../context/state'
 
 export default React.memo(({ data }) => {
   const { labels } = useContext(State)
-  const labelName = labels.reduce(
-    (acc, curr) => (acc ? acc : curr.id === data.labelId ? curr.name : acc),
-    null
-  )
 
   return (
     <a
-      href={`https://www.discogs.com${data.link}`}
+      href={`https://www.discogs.com${data.release.link}`}
       target="_blank"
       rel="noreferrer noopener nofollow"
       css={css`
@@ -70,7 +66,7 @@ export default React.memo(({ data }) => {
               font-weight: 700;
             `}
           >
-            {decodeURIComponent(labelName)}
+            {decodeURIComponent(data.name)}
           </span>
         </div>
       </div>
@@ -89,8 +85,8 @@ export default React.memo(({ data }) => {
             border-radius: 3px;
             width: 100%;
             padding-bottom: 100%;
-            background: ${data.img
-              ? `url('${data.img}') rgb(230, 230, 230)`
+            background: ${data.release.img
+              ? `url('${data.release.img}') rgb(230, 230, 230)`
               : 'rgb(230, 230, 230)'};
             background-size: cover;
             background-position: 50%;
@@ -107,7 +103,7 @@ export default React.memo(({ data }) => {
           }
         `}
       >
-        {decodeURIComponent(data.title)}
+        {decodeURIComponent(data.release.title)}
       </div>
       <div
         css={css`
@@ -119,7 +115,7 @@ export default React.memo(({ data }) => {
           }
         `}
       >
-        {decodeURIComponent(data.artist)}
+        {decodeURIComponent(data.release.artist)}
       </div>
     </a>
   )
