@@ -36,13 +36,15 @@ export default React.memo(() => {
 
   useEffect(() => {
     if (! user) {
+      setLabels([])
+
       return
     }
 
     setLabels(user.user_metadata.labels ? user.user_metadata.labels : [])
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const persistLabels = newLabels => {
+  const persist = newLabels => {
     if (! user) {
       return
     }
@@ -54,11 +56,7 @@ export default React.memo(() => {
     })
   }
 
-  const updateRelease = async label => {
-    if (label.checked && Date.now() < label.checked + threeHours) {
-      return
-    }
-
+  const update = async label => {
     setError(false)
     setUpdating(true)
 
@@ -72,30 +70,26 @@ export default React.memo(() => {
       return
     }
 
+    const data = latest.response.release
+
     setLabels(prevLabels => {
       const next = prevLabels.map(prevLabel => {
-        if (prevLabel.id === label.id) {
-          const release = {
-            artist: latest.response.release
-              ? encodeURIComponent(strip(latest.response.release.artist))
-              : null,
-            img: latest.response.release ? latest.response.release.img : null,
-            link: latest.response.release
-              ? latest.response.release.link
-              : null,
-            title: latest.response.release
-              ? encodeURIComponent(latest.response.release.title)
-              : null,
-          }
-
-          return {
-            ...prevLabel,
-            checked: Date.now(),
-            release,
-          }
+        if (prevLabel.id !== label.id) {
+          return prevLabel
         }
 
-        return label
+        const release = {
+          artist: data ? encodeURIComponent(strip(data.artist)) : null,
+          img: data ? data.img : null,
+          link: data ? data.link : null,
+          title: data ? encodeURIComponent(data.title) : null,
+        }
+
+        return {
+          ...prevLabel,
+          checked: Date.now(),
+          release,
+        }
       })
 
       return next
@@ -105,7 +99,7 @@ export default React.memo(() => {
 
   return (
     <State.Provider
-      value={{ error, labels, persistLabels, setLabels, setUser, updating, user }}
+      value={{ error, labels, persist, setLabels, setUser, update, updating, user }}
     >
       <App />
     </State.Provider>

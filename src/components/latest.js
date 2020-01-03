@@ -24,8 +24,8 @@ export default React.memo(() => {
           <div>
             {nonEmpty
               .sort((f, s) => (f.title > s.title ? 1 : -1))
-              .map(release => (
-                <Release key={release.labelId} data={release} />
+              .map(label => (
+                <Release key={label.id} data={label.release} />
               ))}
           </div>
           {!error && <Notice>Releases are updated every three hours.</Notice>}
