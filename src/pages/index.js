@@ -35,14 +35,18 @@ export default React.memo(() => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (! user) {
+    if (!user) {
       setLabels([])
 
       return
     }
 
-    const savedLabels = user.user_metadata.labels ? user.user_metadata.labels : []
-    const orderedLabels = savedLabels.sort((f, s) => f.checked > s.checked ? 1 : -1)
+    const savedLabels = user.user_metadata.labels
+      ? user.user_metadata.labels
+      : []
+    const orderedLabels = savedLabels.sort((f, s) =>
+      f.checked > s.checked ? 1 : -1
+    )
 
     setLabels(savedLabels)
 
@@ -75,12 +79,14 @@ export default React.memo(() => {
           return prevLabel
         }
 
-        const release = data ? {
-          artist: encodeURIComponent(strip(data.artist)),
-          img: data.img,
-          link: data.link,
-          title: encodeURIComponent(data.title),
-        } : prevLabel.release
+        const release = data
+          ? {
+              artist: encodeURIComponent(strip(data.artist)),
+              img: data.img,
+              link: data.link,
+              title: encodeURIComponent(data.title),
+            }
+          : prevLabel.release
 
         return { ...prevLabel, checked: Date.now(), release }
       })
@@ -93,7 +99,7 @@ export default React.memo(() => {
   }
 
   const persist = newLabels => {
-    if (! user) {
+    if (!user) {
       return
     }
 
@@ -106,7 +112,16 @@ export default React.memo(() => {
 
   return (
     <State.Provider
-      value={{ error, labels, persist, setLabels, setUser, update, updating, user }}
+      value={{
+        error,
+        labels,
+        persist,
+        setLabels,
+        setUser,
+        update,
+        updating,
+        user,
+      }}
     >
       <App />
     </State.Provider>
