@@ -20,7 +20,10 @@ export default React.memo(() => {
       const params = getParams()
 
       if (params) {
-        await auth.createUser(params, true)
+        try {
+          const test = await auth.createUser(params, true)
+        } catch (e) {}
+
         navigate('/', { replace: true })
       }
 
