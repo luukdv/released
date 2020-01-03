@@ -28,7 +28,6 @@ export default React.memo(() => {
                 <Release key={label.id} data={label.release} />
               ))}
           </div>
-          {!error && <Notice>Releases are updated every three hours.</Notice>}
         </>
       )}
       {error && (
@@ -46,7 +45,7 @@ export default React.memo(() => {
         >
           {none
             ? "Nothing to show yet 💁‍♂️. Add some labels and we'll check their latest release."
-            : "Nothing to show from this year so far 🤔. We'll keep checking for new releases (every three hours)."}
+            : "Nothing to show from this year so far 🤔. We'll keep checking for new releases."}
         </p>
       )}
     </>
