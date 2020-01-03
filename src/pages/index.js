@@ -52,7 +52,7 @@ export default React.memo(() => {
 
   const update = async label => {
     setError(false)
-    setUpdating(true)
+    setUpdating(label.name)
 
     let latest
 
@@ -66,25 +66,20 @@ export default React.memo(() => {
 
     const data = latest.response.release
 
-    if (! data) {
-      setUpdating(false)
-      return
-    }
-
     setLabels(prevLabels => {
       const next = prevLabels.map(prevLabel => {
         if (prevLabel.id !== label.id) {
           return prevLabel
         }
 
-        const release = {
-          artist: data ? encodeURIComponent(strip(data.artist)) : null,
-          img: data ? data.img : null,
-          link: data ? data.link : null,
-          title: data ? encodeURIComponent(data.title) : null,
-        }
+        const release = data ? {
+          artist: encodeURIComponent(strip(data.artist)),
+          img: data.img,
+          link: data.link,
+          title: encodeURIComponent(data.title),
+        } : prevLabel.release
 
-        return { ...prevLabel, release }
+        return { ...prevLabel, checked: Date.now(), release }
       })
 
       return next
