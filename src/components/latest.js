@@ -16,7 +16,7 @@ export default React.memo(() => {
     <>
       <h2>
         {updating
-          ? `Checking now: ${updating}…`
+          ? `Checking ${updating}…`
           : `Latest from ${new Date().getFullYear()}`}
       </h2>
       {!onlyEmpty && (
