@@ -6,10 +6,10 @@ import Notice from './notice'
 import State from '../context/state'
 
 export default React.memo(() => {
-  const { releases, updating, error } = useContext(State)
+  const { labels, updating, error } = useContext(State)
 
-  const none = !releases.length
-  const nonEmpty = releases.filter(release => release.artist && release.title)
+  const none = !labels.length
+  const nonEmpty = labels.filter(label => !!label.release)
   const onlyEmpty = !nonEmpty.length
 
   return (

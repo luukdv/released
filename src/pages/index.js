@@ -11,7 +11,6 @@ const threeHours = 3 * 60 * 60 * 1000
 export default React.memo(() => {
   const [error, setError] = useState()
   const [labels, setLabels] = useState([])
-  const [releases, setReleases] = useState([])
   const [updating, setUpdating] = useState()
   const [user, setUser] = useState(null)
 
@@ -31,24 +30,19 @@ export default React.memo(() => {
       const token = user ? await user.jwt() : null
       const userData = token ? user : false
       setUser(userData)
-
-      const savedLabels =
-        userData && user.user_metadata.labels ? user.user_metadata.labels : []
-      const savedReleases =
-        userData && user.user_metadata.labels ? user.user_metadata.releases : []
-
-      setLabels(savedLabels)
-      setReleases(savedReleases)
-
-      for (const label of savedLabels) {
-        const release = savedReleases.filter(r => r.labelId === label.id)[0]
-        updateRelease(label, release)
-      }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (! user) {
+      return
+    }
+
+    setLabels(user.user_metadata.labels ? user.user_metadata.labels : [])
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const persistLabels = newLabels => {
-    if (!user) {
+    if (! user) {
       return
     }
 
@@ -59,20 +53,8 @@ export default React.memo(() => {
     })
   }
 
-  const persistReleases = newReleases => {
-    if (!user) {
-      return
-    }
-
-    user.update({
-      data: {
-        releases: newReleases,
-      },
-    })
-  }
-
-  const updateRelease = async (label, release) => {
-    if (release.checked && Date.now() < release.checked + threeHours) {
+  const updateRelease = async label => {
+    if (label.checked && Date.now() < label.checked + threeHours) {
       return
     }
 
@@ -89,27 +71,31 @@ export default React.memo(() => {
       return
     }
 
-    setReleases(prev => {
-      const next = prev.map(release =>
-        release.labelId === label.id
-          ? {
-              ...release,
-              artist: latest.response.release
-                ? encodeURIComponent(strip(latest.response.release.artist))
-                : null,
-              checked: Date.now(),
-              img: latest.response.release ? latest.response.release.img : null,
-              link: latest.response.release
-                ? latest.response.release.link
-                : null,
-              title: latest.response.release
-                ? encodeURIComponent(latest.response.release.title)
-                : null,
-            }
-          : release
-      )
+    setLabels(prevLabels => {
+      const next = prevLabels.map(prevLabel => {
+        if (prevLabel.id === label.id) {
+          const release = {
+            artist: latest.response.release
+              ? encodeURIComponent(strip(latest.response.release.artist))
+              : null,
+            img: latest.response.release ? latest.response.release.img : null,
+            link: latest.response.release
+              ? latest.response.release.link
+              : null,
+            title: latest.response.release
+              ? encodeURIComponent(latest.response.release.title)
+              : null,
+          }
 
-      persistReleases(next)
+          return {
+            ...prevLabel,
+            checked: Date.now(),
+            release,
+          }
+        }
+
+        return label
+      })
 
       return next
     })
@@ -118,19 +104,7 @@ export default React.memo(() => {
 
   return (
     <State.Provider
-      value={{
-        error,
-        labels,
-        persistLabels,
-        persistReleases,
-        releases,
-        setLabels,
-        setReleases,
-        setUser,
-        updateRelease,
-        updating,
-        user,
-      }}
+      value={{ error, labels, persistLabels, setLabels, setUser, updating, user }}
     >
       <App />
     </State.Provider>
