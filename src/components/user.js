@@ -5,7 +5,7 @@ import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const { setLabels, setReleases, setUser, user } = useContext(State)
+  const { setUser, user } = useContext(State)
   const [text, setText] = useState('Log in with Google')
   const [notice, setNotice] = useState(
     'You can log in to save or restore your added labels.'
@@ -22,8 +22,6 @@ export default React.memo(() => {
         onClick={() => {
           setUser(false)
           setNotice('You are successfully logged out.')
-          setLabels([])
-          setReleases([])
           user.logout()
         }}
       >

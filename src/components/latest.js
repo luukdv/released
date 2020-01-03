@@ -6,17 +6,17 @@ import Notice from './notice'
 import State from '../context/state'
 
 export default React.memo(() => {
-  const { releases, updating, error } = useContext(State)
+  const { labels, updating, error } = useContext(State)
 
-  const none = !releases.length
-  const nonEmpty = releases.filter(release => release.artist && release.title)
+  const none = !labels.length
+  const nonEmpty = labels.filter(label => !!label.release)
   const onlyEmpty = !nonEmpty.length
 
   return (
     <>
       <h2>
         {updating
-          ? 'Updating releases…'
+          ? `Checking now: ${updating}…`
           : `Latest from ${new Date().getFullYear()}`}
       </h2>
       {!onlyEmpty && (
@@ -24,11 +24,10 @@ export default React.memo(() => {
           <div>
             {nonEmpty
               .sort((f, s) => (f.title > s.title ? 1 : -1))
-              .map(release => (
-                <Release key={release.labelId} data={release} />
+              .map(label => (
+                <Release key={label.id} data={label} />
               ))}
           </div>
-          {!error && <Notice>Releases are updated every three hours.</Notice>}
         </>
       )}
       {error && (
@@ -46,7 +45,7 @@ export default React.memo(() => {
         >
           {none
             ? "Nothing to show yet 💁‍♂️. Add some labels and we'll check their latest release."
-            : "Nothing to show from this year so far 🤔. We'll keep checking for new releases (every three hours)."}
+            : "Nothing to show from this year so far 🤔. We'll keep checking for new releases."}
         </p>
       )}
     </>

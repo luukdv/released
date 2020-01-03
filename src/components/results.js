@@ -5,37 +5,24 @@ import strip from '../../strip'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, error }) => {
-  const {
-    setLabels,
-    setReleases,
-    persistLabels,
-    persistReleases,
-    updateRelease,
-  } = useContext(State)
+  const { setLabels, persist, update } = useContext(State)
 
   const add = result => {
     const label = {
       id: result.id,
       link: result.link,
       name: encodeURIComponent(strip(result.title)),
+      release: null,
     }
-    const release = { labelId: result.id }
 
     setLabels(prev => {
       const next = [...prev, label]
 
-      persistLabels(next)
+      persist(next)
 
       return next
     })
-    setReleases(prev => {
-      const next = [...prev, release]
-
-      persistReleases(next)
-
-      return next
-    })
-    updateRelease(label, release)
+    update(label)
     clear()
   }
 

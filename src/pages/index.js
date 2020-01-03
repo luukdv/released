@@ -6,12 +6,11 @@ import State from '../context/state'
 import strip from '../../strip'
 import { navigate } from '@reach/router'
 
-const threeHours = 3 * 60 * 60 * 1000
+const updateInterval = 3000
 
 export default React.memo(() => {
   const [error, setError] = useState()
   const [labels, setLabels] = useState([])
-  const [releases, setReleases] = useState([])
   const [updating, setUpdating] = useState()
   const [user, setUser] = useState(null)
 
@@ -27,57 +26,40 @@ export default React.memo(() => {
         navigate('/', { replace: true })
       }
 
-      const user = auth.currentUser()
-      const token = user ? await user.jwt() : null
-      const userData = token ? user : false
+      const current = auth.currentUser()
+      const token = current ? await current.jwt() : null
+      const userData = token ? current : false
+
       setUser(userData)
-
-      const savedLabels =
-        userData && user.user_metadata.labels ? user.user_metadata.labels : []
-      const savedReleases =
-        userData && user.user_metadata.labels ? user.user_metadata.releases : []
-
-      setLabels(savedLabels)
-      setReleases(savedReleases)
-
-      for (const label of savedLabels) {
-        const release = savedReleases.filter(r => r.labelId === label.id)[0]
-        updateRelease(label, release)
-      }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const persistLabels = newLabels => {
+  useEffect(() => {
     if (!user) {
+      setLabels([])
+
       return
     }
 
-    user.update({
-      data: {
-        labels: newLabels,
-      },
-    })
-  }
+    const savedLabels = user.user_metadata.labels
+      ? user.user_metadata.labels
+      : []
+    const orderedLabels = savedLabels.sort((f, s) =>
+      f.checked > s.checked ? 1 : -1
+    )
 
-  const persistReleases = newReleases => {
-    if (!user) {
-      return
+    setLabels(savedLabels)
+
+    for (let i = 0; i < orderedLabels.length; i++) {
+      let label = orderedLabels[i]
+
+      setTimeout(() => update(label), i * updateInterval)
     }
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    user.update({
-      data: {
-        releases: newReleases,
-      },
-    })
-  }
-
-  const updateRelease = async (label, release) => {
-    if (release.checked && Date.now() < release.checked + threeHours) {
-      return
-    }
-
+  const update = async label => {
     setError(false)
-    setUpdating(true)
+    setUpdating(decodeURIComponent(label.name))
 
     let latest
 
@@ -89,31 +71,43 @@ export default React.memo(() => {
       return
     }
 
-    setReleases(prev => {
-      const next = prev.map(release =>
-        release.labelId === label.id
-          ? {
-              ...release,
-              artist: latest.response.release
-                ? encodeURIComponent(strip(latest.response.release.artist))
-                : null,
-              checked: Date.now(),
-              img: latest.response.release ? latest.response.release.img : null,
-              link: latest.response.release
-                ? latest.response.release.link
-                : null,
-              title: latest.response.release
-                ? encodeURIComponent(latest.response.release.title)
-                : null,
-            }
-          : release
-      )
+    const data = latest.response.release
 
-      persistReleases(next)
+    setLabels(prevLabels => {
+      const next = prevLabels.map(prevLabel => {
+        if (prevLabel.id !== label.id) {
+          return prevLabel
+        }
+
+        const release = data
+          ? {
+              artist: encodeURIComponent(strip(data.artist)),
+              img: data.img,
+              link: data.link,
+              title: encodeURIComponent(data.title),
+            }
+          : prevLabel.release
+
+        return { ...prevLabel, checked: Date.now(), release }
+      })
+
+      persist(next)
 
       return next
     })
     setUpdating(false)
+  }
+
+  const persist = newLabels => {
+    if (!user) {
+      return
+    }
+
+    user.update({
+      data: {
+        labels: newLabels,
+      },
+    })
   }
 
   return (
@@ -121,13 +115,10 @@ export default React.memo(() => {
       value={{
         error,
         labels,
-        persistLabels,
-        persistReleases,
-        releases,
+        persist,
         setLabels,
-        setReleases,
         setUser,
-        updateRelease,
+        update,
         updating,
         user,
       }}
