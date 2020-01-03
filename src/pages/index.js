@@ -82,6 +82,8 @@ export default React.memo(() => {
         return { ...prevLabel, checked: Date.now(), release }
       })
 
+      persist(next)
+
       return next
     })
     setUpdating(false)
