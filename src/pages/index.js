@@ -41,12 +41,13 @@ export default React.memo(() => {
       return
     }
 
-    const newLabels = user.user_metadata.labels ? user.user_metadata.labels : []
+    const savedLabels = user.user_metadata.labels ? user.user_metadata.labels : []
+    const orderedLabels = savedLabels.sort((f, s) => (f.checked > s.checked ? 1 : -1))
 
-    setLabels(newLabels)
+    setLabels(savedLabels)
 
-    for (let i = 0; i < newLabels.length; i++) {
-      setTimeout(() => update(newLabels[i]), i * updateInterval)
+    for (let i = 0; i < orderedLabels.length; i++) {
+      setTimeout(() => update(orderedLabels[i]), i * updateInterval)
     }
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
