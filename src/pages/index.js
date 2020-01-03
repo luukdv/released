@@ -6,7 +6,7 @@ import State from '../context/state'
 import strip from '../../strip'
 import { navigate } from '@reach/router'
 
-const threeHours = 3 * 60 * 60 * 1000
+const updateInterval = 5000
 
 export default React.memo(() => {
   const [error, setError] = useState()
@@ -41,20 +41,14 @@ export default React.memo(() => {
       return
     }
 
-    setLabels(user.user_metadata.labels ? user.user_metadata.labels : [])
-  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+    const newLabels = user.user_metadata.labels ? user.user_metadata.labels : []
 
-  const persist = newLabels => {
-    if (! user) {
-      return
+    setLabels(newLabels)
+
+    for (let i = 0; i < newLabels.length; i++) {
+      setTimeout(() => update(newLabels[i]), i * updateInterval)
     }
-
-    user.update({
-      data: {
-        labels: newLabels,
-      },
-    })
-  }
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = async label => {
     setError(false)
@@ -90,16 +84,24 @@ export default React.memo(() => {
           title: data ? encodeURIComponent(data.title) : null,
         }
 
-        return {
-          ...prevLabel,
-          checked: Date.now(),
-          release,
-        }
+        return { ...prevLabel, release }
       })
 
       return next
     })
     setUpdating(false)
+  }
+
+  const persist = newLabels => {
+    if (! user) {
+      return
+    }
+
+    user.update({
+      data: {
+        labels: newLabels,
+      },
+    })
   }
 
   return (
