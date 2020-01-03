@@ -26,9 +26,10 @@ export default React.memo(() => {
         navigate('/', { replace: true })
       }
 
-      const user = auth.currentUser()
-      const token = user ? await user.jwt() : null
-      const userData = token ? user : false
+      const current = auth.currentUser()
+      const token = current ? await current.jwt() : null
+      const userData = token ? current : false
+
       setUser(userData)
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
