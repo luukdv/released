@@ -72,6 +72,11 @@ export default React.memo(() => {
 
     const data = latest.response.release
 
+    if (! data) {
+      setUpdating(false)
+      return
+    }
+
     setLabels(prevLabels => {
       const next = prevLabels.map(prevLabel => {
         if (prevLabel.id !== label.id) {
