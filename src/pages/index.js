@@ -7,7 +7,8 @@ import strip from '../../strip'
 import { navigate } from '@reach/router'
 
 const updateInterval = 3000
-const updates = []
+let lastUpdated = 0
+let updater
 
 export default React.memo(() => {
   const [done, setDone] = useState()
@@ -23,9 +24,7 @@ export default React.memo(() => {
       if (params) {
         try {
           await auth.createUser(params, true)
-        } catch (e) {
-          console.log('Failed to create user', e)
-        }
+        } catch (e) {}
 
         navigate('/', { replace: true })
       }
@@ -44,7 +43,6 @@ export default React.memo(() => {
       try {
         data = await currentUser.getUserData()
       } catch (e) {
-        console.log('Failed to retrieve data', e)
         setDone(true)
         return
       }
@@ -53,28 +51,21 @@ export default React.memo(() => {
         ? data.user_metadata.labels
         : []
 
+      setDone(true)
+
       if (!savedLabels.length) {
-        setDone(true)
         return
       }
 
-      const orderedLabels = savedLabels.sort((f, s) =>
-        f.checked > s.checked ? 1 : -1
-      )
-
       setLabels(savedLabels)
-      setDone(true)
-
-      for (let i = 0; i < orderedLabels.length; i++) {
-        let label = orderedLabels[i]
-        const timeout = setTimeout(() => update(label), i * updateInterval)
-
-        updates.push(timeout)
-      }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (labels.length) {
+      runUpdater()
+    }
+
     if (!user) {
       return
     }
@@ -87,13 +78,42 @@ export default React.memo(() => {
   const logout = () => {
     setLabels([])
     setUpdating(false)
-    updates.forEach(u => clearTimeout(u))
-
+    clearTimeout(updater)
     setUser(false)
     user.logout()
   }
 
+  const runUpdater = () => {
+    const label = labels.reduce((acc, curr) => {
+      if (!acc.checked) {
+        return acc
+      }
+
+      if (!curr.checked) {
+        return curr
+      }
+
+      return acc.checked > curr.checked ? curr : acc
+    })
+    const hour = 60 * 60 * 1000
+    const stale = label.checked + hour < Date.now()
+
+    clearTimeout(updater)
+
+    if (!label.checked || stale) {
+      const delay = lastUpdated + updateInterval > Date.now()
+
+      if (delay) {
+        updater = setTimeout(() => update(label), updateInterval)
+      } else {
+        update(label)
+      }
+    }
+  }
+
   const update = async label => {
+    lastUpdated = Date.now()
+
     setError(false)
     setUpdating(decodeURIComponent(label.name))
 
@@ -138,7 +158,6 @@ export default React.memo(() => {
         labels,
         logout,
         setLabels,
-        update,
         updating,
         user,
       }}
