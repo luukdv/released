@@ -14,7 +14,7 @@ import Wrap from './wrap'
 import { css } from '@emotion/core'
 
 export default React.memo(() => {
-  const { user } = useContext(State)
+  const { done } = useContext(State)
 
   return (
     <>
@@ -34,7 +34,7 @@ export default React.memo(() => {
           `}
         >
           <Header />
-          {user === null ? (
+          {!done ? (
             <Wrap>
               <NotReady />
             </Wrap>

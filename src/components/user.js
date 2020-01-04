@@ -5,13 +5,13 @@ import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const { user, logout } = useContext(State)
+  const { user, done, logout } = useContext(State)
   const [text, setText] = useState('Log in with Google')
   const [notice, setNotice] = useState(
     'You can log in to save or restore your added labels.'
   )
 
-  if (user === null) {
+  if (!done) {
     return
   }
 

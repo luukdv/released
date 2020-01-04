@@ -10,10 +10,11 @@ const updateInterval = 3000
 const updates = []
 
 export default React.memo(() => {
+  const [done, setDone] = useState()
   const [error, setError] = useState()
   const [labels, setLabels] = useState([])
   const [updating, setUpdating] = useState()
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState()
 
   useEffect(() => {
     const params = getParams()
@@ -35,17 +36,20 @@ export default React.memo(() => {
 
   useEffect(() => {
     if (!user) {
-      setLabels([])
+      if (done) {
+        setLabels([])
+      }
 
       return
     }
 
-    ;(async () => {
-      let data
+    let data
 
+    ;(async () => {
       try {
         data = await user.getUserData()
       } catch(e) {
+        setDone(true)
         return
       }
 
@@ -54,6 +58,7 @@ export default React.memo(() => {
         : []
 
       if (!savedLabels.length) {
+        setDone(true)
         return
       }
 
@@ -62,6 +67,7 @@ export default React.memo(() => {
       )
 
       setLabels(savedLabels)
+      setDone(true)
 
       for (let i = 0; i < orderedLabels.length; i++) {
         let label = orderedLabels[i]
@@ -128,6 +134,7 @@ export default React.memo(() => {
   return (
     <State.Provider
       value={{
+        done,
         error,
         labels,
         logout,
