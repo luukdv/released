@@ -23,38 +23,34 @@ export default React.memo(() => {
       if (params) {
         try {
           await auth.createUser(params, true)
-        } catch (e) {}
+        } catch (e) {
+          console.log('Failed to create user', e)
+        }
 
         navigate('/', { replace: true })
       }
 
-      const current = auth.currentUser()
+      const currentUser = auth.currentUser()
 
-      setUser(current ? current : false)
-    })()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+      setUser(currentUser ? currentUser : false)
 
-  useEffect(() => {
-    if (!user) {
-      if (done) {
-        setLabels([])
+      if (!currentUser) {
+        setDone(true)
+        return
       }
 
-      return
-    }
+      let data
 
-    let data
-
-    ;(async () => {
       try {
-        data = await user.getUserData()
-      } catch(e) {
+        data = await currentUser.getUserData()
+      } catch (e) {
+        console.log('Failed to retrieve data', e)
         setDone(true)
         return
       }
 
       const savedLabels = data.user_metadata.labels
-        ? user.user_metadata.labels
+        ? data.user_metadata.labels
         : []
 
       if (!savedLabels.length) {
@@ -76,7 +72,7 @@ export default React.memo(() => {
         updates.push(timeout)
       }
     })()
-  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!user) {
@@ -89,6 +85,7 @@ export default React.memo(() => {
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
+    setLabels([])
     setUpdating(false)
     updates.forEach(u => clearTimeout(u))
 
@@ -112,22 +109,24 @@ export default React.memo(() => {
 
     const data = latest.response.release
 
-    setLabels(prevLabels => prevLabels.map(prevLabel => {
-      if (prevLabel.id !== label.id) {
-        return prevLabel
-      }
+    setLabels(prevLabels =>
+      prevLabels.map(prevLabel => {
+        if (prevLabel.id !== label.id) {
+          return prevLabel
+        }
 
-      const release = data
-        ? {
-            artist: encodeURIComponent(strip(data.artist)),
-            img: data.img,
-            link: data.link,
-            title: encodeURIComponent(data.title),
-          }
-        : prevLabel.release
+        const release = data
+          ? {
+              artist: encodeURIComponent(strip(data.artist)),
+              img: data.img,
+              link: data.link,
+              title: encodeURIComponent(data.title),
+            }
+          : prevLabel.release
 
-      return { ...prevLabel, checked: Date.now(), release }
-    }))
+        return { ...prevLabel, checked: Date.now(), release }
+      })
+    )
     setUpdating(false)
   }
 
