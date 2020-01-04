@@ -7,6 +7,7 @@ import strip from '../../strip'
 import { navigate } from '@reach/router'
 
 const updateInterval = 3000
+const updates = []
 
 export default React.memo(() => {
   const [error, setError] = useState()
@@ -27,23 +28,24 @@ export default React.memo(() => {
       }
 
       const current = auth.currentUser()
-      const token = current ? await current.jwt() : null
-      const userData = token ? current : false
 
-      setUser(userData)
+      setUser(current ? current : false)
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!user) {
-      setLabels([])
-
       return
     }
 
     const savedLabels = user.user_metadata.labels
       ? user.user_metadata.labels
       : []
+
+    if (!savedLabels.length) {
+      return
+    }
+
     const orderedLabels = savedLabels.sort((f, s) =>
       f.checked > s.checked ? 1 : -1
     )
@@ -52,10 +54,29 @@ export default React.memo(() => {
 
     for (let i = 0; i < orderedLabels.length; i++) {
       let label = orderedLabels[i]
+      const timeout = setTimeout(() => update(label), i * updateInterval)
 
-      setTimeout(() => update(label), i * updateInterval)
+      updates.push(timeout)
     }
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!user) {
+      return
+    }
+
+    user.update({
+      data: { labels },
+    })
+  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const logout = () => {
+    setUpdating(false)
+    updates.forEach(u => clearTimeout(u))
+
+    setUser(false)
+    user.logout()
+  }
 
   const update = async label => {
     setError(false)
@@ -73,41 +94,23 @@ export default React.memo(() => {
 
     const data = latest.response.release
 
-    setLabels(prevLabels => {
-      const next = prevLabels.map(prevLabel => {
-        if (prevLabel.id !== label.id) {
-          return prevLabel
-        }
+    setLabels(prevLabels => prevLabels.map(prevLabel => {
+      if (prevLabel.id !== label.id) {
+        return prevLabel
+      }
 
-        const release = data
-          ? {
-              artist: encodeURIComponent(strip(data.artist)),
-              img: data.img,
-              link: data.link,
-              title: encodeURIComponent(data.title),
-            }
-          : prevLabel.release
+      const release = data
+        ? {
+            artist: encodeURIComponent(strip(data.artist)),
+            img: data.img,
+            link: data.link,
+            title: encodeURIComponent(data.title),
+          }
+        : prevLabel.release
 
-        return { ...prevLabel, checked: Date.now(), release }
-      })
-
-      persist(next)
-
-      return next
-    })
+      return { ...prevLabel, checked: Date.now(), release }
+    }))
     setUpdating(false)
-  }
-
-  const persist = newLabels => {
-    if (!user) {
-      return
-    }
-
-    user.update({
-      data: {
-        labels: newLabels,
-      },
-    })
   }
 
   return (
@@ -115,9 +118,8 @@ export default React.memo(() => {
       value={{
         error,
         labels,
-        persist,
+        logout,
         setLabels,
-        setUser,
         update,
         updating,
         user,

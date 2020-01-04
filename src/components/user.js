@@ -5,7 +5,7 @@ import State from '../context/state'
 import auth from '../../auth'
 
 export default React.memo(() => {
-  const { setUser, user } = useContext(State)
+  const { user, logout } = useContext(State)
   const [text, setText] = useState('Log in with Google')
   const [notice, setNotice] = useState(
     'You can log in to save or restore your added labels.'
@@ -20,9 +20,8 @@ export default React.memo(() => {
       <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
       <Button
         onClick={() => {
-          setUser(false)
           setNotice('You are successfully logged out.')
-          user.logout()
+          logout()
         }}
       >
         Log me out
