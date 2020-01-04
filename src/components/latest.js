@@ -14,7 +14,15 @@ export default React.memo(() => {
 
   return (
     <>
-      <h2>{updating ? `Checking ${updating}…` : 'Latest releases'}</h2>
+      <h2
+        css={css`
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        `}
+      >
+        {updating ? `Checking ${updating}…` : 'Latest releases'}
+      </h2>
       {!onlyEmpty && (
         <>
           <div>
