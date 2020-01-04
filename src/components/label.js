@@ -4,7 +4,8 @@ import State from '../context/state'
 
 export default React.memo(({ data }) => {
   const { setLabels } = useContext(State)
-  const remove = () => setLabels(prev => prev.filter(label => label.id !== data.id))
+  const remove = () =>
+    setLabels(prev => prev.filter(label => label.id !== data.id))
 
   return (
     <div

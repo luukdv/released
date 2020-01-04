@@ -14,11 +14,7 @@ export default React.memo(() => {
 
   return (
     <>
-      <h2>
-        {updating
-          ? `Checking ${updating}…`
-          : 'Latest releases'}
-      </h2>
+      <h2>{updating ? `Checking ${updating}…` : 'Latest releases'}</h2>
       {!onlyEmpty && (
         <>
           <div>
