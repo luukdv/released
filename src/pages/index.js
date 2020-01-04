@@ -16,9 +16,9 @@ export default React.memo(() => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    ;(async () => {
-      const params = getParams()
+    const params = getParams()
 
+    ;(async () => {
       if (params) {
         try {
           await auth.createUser(params, true)
@@ -35,29 +35,41 @@ export default React.memo(() => {
 
   useEffect(() => {
     if (!user) {
+      setLabels([])
+
       return
     }
 
-    const savedLabels = user.user_metadata.labels
-      ? user.user_metadata.labels
-      : []
+    ;(async () => {
+      let data
 
-    if (!savedLabels.length) {
-      return
-    }
+      try {
+        data = await user.getUserData()
+      } catch(e) {
+        return
+      }
 
-    const orderedLabels = savedLabels.sort((f, s) =>
-      f.checked > s.checked ? 1 : -1
-    )
+      const savedLabels = data.user_metadata.labels
+        ? user.user_metadata.labels
+        : []
 
-    setLabels(savedLabels)
+      if (!savedLabels.length) {
+        return
+      }
 
-    for (let i = 0; i < orderedLabels.length; i++) {
-      let label = orderedLabels[i]
-      const timeout = setTimeout(() => update(label), i * updateInterval)
+      const orderedLabels = savedLabels.sort((f, s) =>
+        f.checked > s.checked ? 1 : -1
+      )
 
-      updates.push(timeout)
-    }
+      setLabels(savedLabels)
+
+      for (let i = 0; i < orderedLabels.length; i++) {
+        let label = orderedLabels[i]
+        const timeout = setTimeout(() => update(label), i * updateInterval)
+
+        updates.push(timeout)
+      }
+    })()
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
