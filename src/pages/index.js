@@ -95,8 +95,8 @@ export default React.memo(() => {
 
       return acc.checked > curr.checked ? curr : acc
     })
-    const hour = 60 * 60 * 1000
-    const stale = label.checked + hour < Date.now()
+    const threeHours = 3 * 60 * 60 * 1000
+    const stale = label.checked + threeHours < Date.now()
 
     clearTimeout(updater)
 

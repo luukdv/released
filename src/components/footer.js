@@ -6,33 +6,31 @@ export default React.memo(() => (
   <div
     css={css`
       color: rgb(80, 80, 80);
-      display: flex;
       text-align: center;
       width: 100%;
       ${scale(1, 'font-size')}
       ${scale(4, 'padding-bottom')}
 
+      @media (min-width: 561px) {
+        display: flex;
+      }
+
       a {
         color: rgb(80, 80, 80);
       }
+
+      > *:not(:last-child) {
+        margin-bottom: 2em;
+
+        @media (min-width: 561px) {
+          margin-bottom: 0;
+        }
+      }
     `}
   >
-    <a
-      css={css`
-        margin-right: 1em;
-      `}
-      target="_blank"
-      href="https://www.luuk.site"
-      rel="noopener noreferrer"
-    >
-      Contact
-    </a>
-    •
-    <div
-      css={css`
-        margin-left: 1em;
-      `}
-    >
+    <div>Releases are updated every 3 hours</div>
+    <Dot />
+    <div>
       Header illustration by{' '}
       <a
         target="_blank"
@@ -42,5 +40,31 @@ export default React.memo(() => (
         Stutpak
       </a>
     </div>
+    <Dot />
+    <a
+      css={css`
+        display: block;
+      `}
+      target="_blank"
+      href="https://www.luuk.site"
+      rel="noopener noreferrer"
+    >
+      Contact
+    </a>
   </div>
 ))
+
+const Dot = () => (
+  <div
+    css={css`
+      display: none;
+      margin: 0 1em;
+
+      @media (min-width: 561px) {
+        display: block;
+      }
+    `}
+  >
+    •
+  </div>
+)
