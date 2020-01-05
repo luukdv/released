@@ -24,15 +24,15 @@ export default React.memo(({ data }) => (
         pointer-events: auto;
       }
 
-      &:not(:last-child) {
+      &:not(:last-of-type) {
         border-bottom: 2px solid rgb(220, 220, 220);
       }
 
-      &:first-child {
+      &:first-of-type {
         padding-top: 0;
       }
 
-      &:last-child {
+      &:last-of-type {
         padding-bottom: 0;
       }
 
