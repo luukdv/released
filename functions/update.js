@@ -7,13 +7,13 @@ exports.handler = async e => {
     return e.queryStringParameters.search
       ? `per_page=10&type=label&q=${e.queryStringParameters.search}`
       : `per_page=1&type=${type}&year=${new Date().getFullYear()}&label=${
-          e.queryStringParameters.label
+          e.queryStringParameters.name
         }`
   }
   const isMainLabel = () =>
     results.data.results[0].label.length &&
     results.data.results[0].label[0].toLowerCase() ===
-      e.queryStringParameters.label.toLowerCase()
+      e.queryStringParameters.name.toLowerCase()
 
   try {
     results = await axios.get(
