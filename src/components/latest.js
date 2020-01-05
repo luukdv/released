@@ -27,7 +27,7 @@ export default React.memo(() => {
         <>
           <div>
             {nonEmpty
-              .sort((f, s) => (f.title > s.title ? 1 : -1))
+              .sort((f, s) => (f.release.title > s.release.title ? 1 : -1))
               .map(label => (
                 <Release key={label.id} data={label} />
               ))}
