@@ -37,7 +37,7 @@ export default React.memo(() => {
       {error && (
         <Notice>
           {
-            "Something went wrong wile checking for a new release. We'll keep trying."
+            "Something went wrong wile checking for new releases. We'll keep trying."
           }
         </Notice>
       )}
