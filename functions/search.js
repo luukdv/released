@@ -7,7 +7,9 @@ exports.handler = async e => {
     q: e.queryStringParameters.query,
     token: process.env.API_TOKEN,
     type: 'label',
-  }).map(p => p.join('=')).join('&')
+  })
+    .map(p => p.join('='))
+    .join('&')
 
   try {
     const response = await axios.get(`${api}?${params}`)

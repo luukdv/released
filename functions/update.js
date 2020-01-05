@@ -3,13 +3,16 @@ const api = 'https://api.discogs.com/database/search'
 const currentYear = new Date().getFullYear()
 
 exports.handler = async e => {
-  const getParams = (type, year) => Object.entries({
-    label: e.queryStringParameters.name,
-    per_page: 1,
-    token: process.env.API_TOKEN,
-    type,
-    year,
-  }).map(p => p.join('=')).join('&')
+  const getParams = (type, year) =>
+    Object.entries({
+      label: e.queryStringParameters.name,
+      per_page: 1,
+      token: process.env.API_TOKEN,
+      type,
+      year,
+    })
+      .map(p => p.join('='))
+      .join('&')
 
   const isMainLabel = res =>
     res.data.results[0].label.length &&
@@ -35,7 +38,7 @@ exports.handler = async e => {
 
     response = await getLatestByYear(currentYear)
 
-    if (! response) {
+    if (!response) {
       response = await getLatestByYear(currentYear - 1)
     }
 
