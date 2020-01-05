@@ -28,6 +28,10 @@ export default React.memo(({ data }) => (
         border-bottom: 2px solid rgb(220, 220, 220);
       }
 
+      &:first-child {
+        padding-top: 0;
+      }
+
       &:last-child {
         padding-bottom: 0;
       }
