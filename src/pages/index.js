@@ -34,10 +34,11 @@ export default React.memo(() => {
       }
 
       const currentUser = auth.currentUser()
+      const userObject = currentUser && currentUser.user_metadata ? currentUser : false
 
-      setUser(currentUser && currentUser.user_metadata ? currentUser : false)
+      setUser(userObject)
 
-      if (!currentUser) {
+      if (!userObject) {
         setDone(true)
         return
       }
@@ -45,7 +46,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await currentUser.getUserData()
+        data = await userObject.getUserData()
       } catch (e) {
         setError(
           'Something went wrong while retrieving your user data. You can try again later.'
