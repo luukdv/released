@@ -33,7 +33,7 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(`.netlify/functions/searchLabels?search=${value}`, value)
+      data = await get(`.netlify/functions/search?query=${value}`, value)
     } catch (e) {
       setLoading(false)
       setDone(true)

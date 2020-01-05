@@ -120,7 +120,7 @@ export default React.memo(() => {
     let latest
 
     try {
-      latest = await get(`.netlify/functions/searchLabels?label=${label.name}`)
+      latest = await get(`.netlify/functions/update?name=${label.name}`)
     } catch (e) {
       setError(true)
       setUpdating(false)
