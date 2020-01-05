@@ -34,13 +34,7 @@ export default React.memo(() => {
           </div>
         </>
       )}
-      {error && (
-        <Notice>
-          {
-            "Something went wrong wile checking for new releases. We'll keep trying."
-          }
-        </Notice>
-      )}
+      {error && <Notice>{error}</Notice>}
       {!error && !updating && (none || onlyEmpty) && (
         <p
           css={css`

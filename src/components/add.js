@@ -12,7 +12,7 @@ let delayed
 export default React.memo(() => {
   const [results, setResults] = useState([])
   const [done, setDone] = useState()
-  const [error, setError] = useState()
+  const [searchError, setSearchError] = useState()
   const [loading, setLoading] = useState()
   const { labels } = useContext(State)
 
@@ -37,7 +37,7 @@ export default React.memo(() => {
     } catch (e) {
       setLoading(false)
       setDone(true)
-      setError(true)
+      setSearchError('Something went wrong. You can try again later.')
       return
     }
 
@@ -54,7 +54,7 @@ export default React.memo(() => {
 
   const onChange = () => {
     setDone(false)
-    setError(false)
+    setSearchError(false)
 
     if (value.length > 2) {
       setLoading(true)
@@ -115,7 +115,12 @@ export default React.memo(() => {
           />
           <Loading show={loading} />
         </div>
-        <Results data={results} done={done} clear={clear} error={error} />
+        <Results
+          data={results}
+          done={done}
+          clear={clear}
+          searchError={searchError}
+        />
       </div>
       {!labels.length && (
         <p

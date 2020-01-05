@@ -24,14 +24,18 @@ export default React.memo(() => {
       if (params) {
         try {
           await auth.createUser(params, true)
-        } catch (e) {}
+        } catch (e) {
+          setError(
+            'Something went wrong while logging in. You can try again later.'
+          )
+        }
 
         navigate('/', { replace: true })
       }
 
       const currentUser = auth.currentUser()
 
-      setUser(currentUser ? currentUser : false)
+      setUser(currentUser && currentUser.user_metadata ? currentUser : false)
 
       if (!currentUser) {
         setDone(true)
@@ -43,6 +47,9 @@ export default React.memo(() => {
       try {
         data = await currentUser.getUserData()
       } catch (e) {
+        setError(
+          'Something went wrong while retrieving your user data. You can try again later.'
+        )
         setDone(true)
         return
       }
@@ -122,7 +129,9 @@ export default React.memo(() => {
     try {
       latest = await get(`.netlify/functions/update?name=${label.name}`)
     } catch (e) {
-      setError(true)
+      setError(
+        "Something went wrong wile checking for new releases. We'll keep trying."
+      )
       setUpdating(false)
       return
     }

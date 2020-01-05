@@ -4,7 +4,7 @@ import scale from '../../scale'
 import strip from '../../strip'
 import State from '../context/state'
 
-export default React.memo(({ data, done, clear, error }) => {
+export default React.memo(({ data, done, clear, searchError }) => {
   const { setLabels } = useContext(State)
 
   const add = result => {
@@ -36,15 +36,15 @@ export default React.memo(({ data, done, clear, error }) => {
         ${scale(1, 'font-size')}
       `}
     >
-      {(error || !data.length) && (
+      {(searchError || !data.length) && (
         <div
           css={css`
             padding: 2em 1.25em;
             text-align: center;
           `}
         >
-          {error
-            ? 'Something went wrong 😔. You can try again later.'
+          {searchError
+            ? searchError
             : 'No labels found that are not already added.'}
         </div>
       )}
