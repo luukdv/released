@@ -2,10 +2,10 @@ const axios = require('axios')
 const api = 'https://api.discogs.com/database/search'
 const currentYear = new Date().getFullYear()
 
-exports.handler = async e => {
+exports.handler = async event => {
   const getParams = (type, year) =>
     Object.entries({
-      label: e.queryStringParameters.name,
+      label: event.queryStringParameters.name,
       per_page: 1,
       token: process.env.API_TOKEN,
       type,
@@ -17,7 +17,7 @@ exports.handler = async e => {
   const isMainLabel = res =>
     res.data.results[0].label.length &&
     res.data.results[0].label[0].toLowerCase() ===
-      e.queryStringParameters.name.toLowerCase()
+      event.queryStringParameters.name.toLowerCase()
 
   const getLatestByYear = async year => {
     const master = await axios.get(`${api}?${getParams('master', year)}`)
