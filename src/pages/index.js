@@ -37,35 +37,25 @@ export default React.memo(() => {
       const userObject = currentUser && currentUser.user_metadata ? currentUser : false
 
       setUser(userObject)
-
-      if (!userObject) {
-        setDone(true)
-        return
-      }
-
-      let data
-
-      try {
-        data = await userObject.getUserData()
-      } catch (e) {
-        setError(
-          'Something went wrong while retrieving your user data. You can try again later.'
-        )
-        setDone(true)
-        return
-      }
-
-      const savedLabels = data.user_metadata.labels
-        ? data.user_metadata.labels
-        : []
-
       setDone(true)
 
-      if (!savedLabels.length) {
+      if (!userObject) {
         return
       }
 
-      setLabels(savedLabels)
+      try {
+        const { response: { data: { labels } } } = await get(`.netlify/functions/user?id=${userObject.id}`)
+
+        if (!labels.length) {
+          return
+        }
+
+        setLabels(labels)
+      } catch (e) {
+        setError(
+          'Something went wrong while saving your data. You can try again later.'
+        )
+      }
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -78,9 +68,9 @@ export default React.memo(() => {
       return
     }
 
-    user.update({
-      data: { labels },
-    })
+    // user.update({
+    //   data: { labels },
+    // })
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
