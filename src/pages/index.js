@@ -58,7 +58,10 @@ export default React.memo(() => {
         response: { labels: savedLabels, ref },
       } = data
 
-      setUser(prevUser => ({ ...prevUser, ref }))
+      setUser(prevUser => {
+        prevUser.ref = ref
+        return prevUser
+      })
 
       if (savedLabels.length) {
         setLabels(savedLabels)
