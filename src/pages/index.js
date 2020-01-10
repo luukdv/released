@@ -43,19 +43,21 @@ export default React.memo(() => {
         return
       }
 
+      let data
+
       try {
-        const { response: { data: { labels } } } = await get(`.netlify/functions/user?id=${userObject.id}`)
-
-        if (!labels.length) {
-          return
-        }
-
-        setLabels(labels)
+        data = await get(`.netlify/functions/user?id=${userObject.id}`)
       } catch (e) {
         setError(
           'Something went wrong while saving your data. You can try again later.'
         )
       }
+
+      if (!data.response.labels.length) {
+        return
+      }
+
+      setLabels(data.response.labels)
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
