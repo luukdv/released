@@ -46,7 +46,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await get(`.netlify/functions/user?id=${userObject.id}`)
+        data = await get(`.netlify/functions/getUser?id=${userObject.id}`)
       } catch (e) {
         setError(
           'Something went wrong while saving your data. You can try again later.'
@@ -120,7 +120,7 @@ export default React.memo(() => {
     let latest
 
     try {
-      latest = await get(`.netlify/functions/update?name=${label.name}`)
+      latest = await get(`.netlify/functions/updateLabel?name=${label.name}`)
     } catch (e) {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
