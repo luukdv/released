@@ -73,7 +73,7 @@ export default React.memo(() => {
       runUpdater()
     }
 
-    if (!user) {
+    if (!user || !done) {
       return
     }
 
