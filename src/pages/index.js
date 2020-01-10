@@ -96,10 +96,10 @@ export default React.memo(() => {
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
-    setLabels([])
     setUpdating(false)
     clearTimeout(updater)
     setUser(false)
+    setLabels([])
     user.logout()
   }
 
