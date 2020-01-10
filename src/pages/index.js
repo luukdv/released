@@ -34,12 +34,13 @@ export default React.memo(() => {
       }
 
       const currentUser = auth.currentUser()
-      const userObject = currentUser && currentUser.user_metadata ? currentUser : false
+      const userObject =
+        currentUser && currentUser.user_metadata ? currentUser : false
 
       setUser(userObject)
-      setDone(true)
 
       if (!userObject) {
+        setDone(true)
         return
       }
 
@@ -53,11 +54,17 @@ export default React.memo(() => {
         )
       }
 
-      if (!data.response.labels.length) {
-        return
+      const {
+        response: { labels: savedLabels, ref },
+      } = data
+
+      setUser(prevUser => ({ ...prevUser, ref }))
+
+      if (savedLabels.length) {
+        setLabels(savedLabels)
       }
 
-      setLabels(data.response.labels)
+      setDone(true)
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -72,13 +79,17 @@ export default React.memo(() => {
 
     ;(async () => {
       try {
-        await get(`.netlify/functions/updateUser?id=${user.id}&labels=${JSON.stringify(labels)}`)
+        await get(
+          `.netlify/functions/updateUser?ref=${
+            user.ref
+          }&labels=${JSON.stringify(labels)}`
+        )
       } catch (e) {
         setError(
           'Something went wrong while saving labels to your account. You can try again later.'
         )
       }
-    })();
+    })()
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
@@ -135,7 +146,9 @@ export default React.memo(() => {
       return
     }
 
-    const data = latest.response.release
+    const {
+      response: { release: data },
+    } = latest
 
     setLabels(prevLabels =>
       prevLabels.map(prevLabel => {
