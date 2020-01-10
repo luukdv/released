@@ -49,7 +49,7 @@ export default React.memo(() => {
         data = await get(`.netlify/functions/getUser?id=${userObject.id}`)
       } catch (e) {
         setError(
-          'Something went wrong while saving your data. You can try again later.'
+          'Something went wrong while saving data to your account. You can try again later.'
         )
       }
 

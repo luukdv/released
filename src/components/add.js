@@ -37,7 +37,7 @@ export default React.memo(() => {
     } catch (e) {
       setLoading(false)
       setDone(true)
-      setSearchError('Something went wrong. You can try again later.')
+      setSearchError('Something went wrong while searching for labels. You can try again later.')
       return
     }
 
