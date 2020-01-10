@@ -34,7 +34,8 @@ export default React.memo(() => {
       }
 
       const currentUser = auth.currentUser()
-      const userObject = currentUser && currentUser.user_metadata ? currentUser : false
+      const userObject =
+        currentUser && currentUser.user_metadata ? currentUser : false
 
       setUser(userObject)
 
@@ -46,26 +47,24 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await userObject.getUserData()
+        data = await get(`.netlify/functions/getUser?id=${userObject.id}`)
       } catch (e) {
         setError(
-          'Something went wrong while retrieving your user data. You can try again later.'
+          'Something went wrong while saving data to your account. You can try again later.'
         )
-        setDone(true)
-        return
       }
 
-      const savedLabels = data.user_metadata.labels
-        ? data.user_metadata.labels
-        : []
+      const {
+        response: { labels: savedLabels, ref },
+      } = data
+
+      setUser(prevUser => ({ ...prevUser, ref }))
+
+      if (savedLabels.length) {
+        setLabels(savedLabels)
+      }
 
       setDone(true)
-
-      if (!savedLabels.length) {
-        return
-      }
-
-      setLabels(savedLabels)
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -78,9 +77,19 @@ export default React.memo(() => {
       return
     }
 
-    user.update({
-      data: { labels },
-    })
+    ;(async () => {
+      try {
+        await get(
+          `.netlify/functions/updateUser?ref=${
+            user.ref
+          }&labels=${JSON.stringify(labels)}`
+        )
+      } catch (e) {
+        setError(
+          'Something went wrong while saving labels to your account. You can try again later.'
+        )
+      }
+    })()
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
@@ -128,7 +137,7 @@ export default React.memo(() => {
     let latest
 
     try {
-      latest = await get(`.netlify/functions/update?name=${label.name}`)
+      latest = await get(`.netlify/functions/updateLabel?name=${label.name}`)
     } catch (e) {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
@@ -137,7 +146,9 @@ export default React.memo(() => {
       return
     }
 
-    const data = latest.response.release
+    const {
+      response: { release: data },
+    } = latest
 
     setLabels(prevLabels =>
       prevLabels.map(prevLabel => {

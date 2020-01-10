@@ -1,10 +1,10 @@
 const axios = require('axios')
 const api = 'https://api.discogs.com/database/search'
 
-exports.handler = async e => {
+exports.handler = async event => {
   const params = Object.entries({
     per_page: 10,
-    q: e.queryStringParameters.query,
+    q: event.queryStringParameters.query,
     token: process.env.API_TOKEN,
     type: 'label',
   })
