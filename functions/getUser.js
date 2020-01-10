@@ -7,7 +7,7 @@ exports.handler = async event => {
   let response
 
   try {
-    response = await client.query(q.Get(q.Match(q.Index('by_id'), id)))
+    response = await client.query(q.Get(q.Match(q.Index('user_by_id'), id)))
   } catch (e) {
     try {
       response = await client.query(
