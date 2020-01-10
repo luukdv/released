@@ -70,9 +70,15 @@ export default React.memo(() => {
       return
     }
 
-    // user.update({
-    //   data: { labels },
-    // })
+    ;(async () => {
+      try {
+        await get(`.netlify/functions/updateUser?id=${user.id}&labels=${JSON.stringify(labels)}`)
+      } catch (e) {
+        setError(
+          'Something went wrong while saving labels to your account. You can try again later.'
+        )
+      }
+    })();
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
