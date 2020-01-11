@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import scale from '../../scale'
 import { css } from '@emotion/core'
-import get from '../get'
+import { get } from '../http'
 import Loading from './loading'
 import Results from './results'
 import State from '../context/state'
@@ -33,7 +33,7 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(`.netlify/functions/searchLabel?query=${value}`, value)
+      data = await get(`.netlify/functions/searchLabel?query=${value}`, { token: value })
     } catch (e) {
       setLoading(false)
       setDone(true)

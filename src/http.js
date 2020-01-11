@@ -1,9 +1,10 @@
-export default (url, token = null) => {
+const request = (type, url, options) => {
   return new Promise((resolve, reject) => {
     const r = new XMLHttpRequest()
+    const token = options.token ? options.token : null
 
-    r.open('GET', url)
-    r.send()
+    r.open(type, url)
+    r.send(options.data ? options.data : null)
 
     r.onreadystatechange = () => {
       if (r.readyState !== XMLHttpRequest.DONE) {
@@ -25,3 +26,5 @@ export default (url, token = null) => {
     }
   })
 }
+
+export const get = (url, options = {}) => request('GET', url, options)

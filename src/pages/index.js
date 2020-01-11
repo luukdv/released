@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import get from '../get'
+import { get } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import strip from '../../strip'
