@@ -3,8 +3,16 @@ const q = fauna.query
 const client = new fauna.Client({ secret: process.env.FAUNADB })
 
 exports.handler = async event => {
-  const ref = event.queryStringParameters.ref
-  const labels = JSON.parse(event.queryStringParameters.labels)
+  if (event.httpMethod !== 'POST') {
+    return {
+      body: JSON.stringify({ error: 'Not allowed' }),
+      statusCode: 405,
+    }
+  }
+
+  const data = JSON.parse(event.body)
+  const ref = data.ref
+  const labels = data.labels
 
   try {
     await client.query(
