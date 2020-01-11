@@ -4,7 +4,7 @@ const request = (type, url, options) => {
     const token = options.token ? options.token : null
 
     r.open(type, url)
-    r.send(options.data ? options.data : null)
+    r.send(options.data ? JSON.stringify(options.data) : null)
 
     r.onreadystatechange = () => {
       if (r.readyState !== XMLHttpRequest.DONE) {

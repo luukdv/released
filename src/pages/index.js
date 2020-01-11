@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get } from '../http'
+import { get, post } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import strip from '../../strip'
@@ -84,11 +84,9 @@ export default React.memo(() => {
 
     ;(async () => {
       try {
-        await get(
-          `.netlify/functions/updateUser?ref=${
-            user.ref
-          }&labels=${JSON.stringify(labels)}`
-        )
+        await post('.netlify/functions/updateUser', {
+          data: { ref: user.ref, labels },
+        })
       } catch (e) {
         setError(
           'Something went wrong while saving labels to your account. You can try again later.'
