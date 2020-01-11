@@ -28,3 +28,4 @@ const request = (type, url, options) => {
 }
 
 export const get = (url, options = {}) => request('GET', url, options)
+export const post = (url, options = {}) => request('POST', url, options)
