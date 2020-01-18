@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get, post } from '../http'
+import { get } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import strip from '../../strip'
@@ -44,10 +44,12 @@ export default React.memo(() => {
         return
       }
 
-      let data
+      let savedLabels
 
       try {
-        data = await get(`.netlify/functions/getUser?id=${userObject.id}`)
+        savedLabels = await get(
+          `.netlify/functions/getLabels?user=${userObject.id}`
+        )
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'
@@ -55,15 +57,6 @@ export default React.memo(() => {
         setDone(true)
         return
       }
-
-      const {
-        response: { labels: savedLabels, ref },
-      } = data
-
-      setUser(prevUser => {
-        prevUser.ref = ref
-        return prevUser
-      })
 
       if (savedLabels.length) {
         setLabels(savedLabels)
@@ -73,28 +66,6 @@ export default React.memo(() => {
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (labels.length) {
-      runUpdater()
-    }
-
-    if (!user || !done) {
-      return
-    }
-
-    ;(async () => {
-      try {
-        await post('.netlify/functions/updateUser', {
-          data: { ref: user.ref, labels },
-        })
-      } catch (e) {
-        setError(
-          'Something went wrong while saving labels to your account. You can try again later.'
-        )
-      }
-    })()
-  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
-
   const logout = () => {
     setUpdating(false)
     clearTimeout(updater)
@@ -103,7 +74,11 @@ export default React.memo(() => {
     user.logout()
   }
 
-  const runUpdater = () => {
+  useEffect(() => {
+    if (!labels.length) {
+      return
+    }
+
     const label = labels.reduce((acc, curr) => {
       if (!acc.checked) {
         return acc
@@ -129,7 +104,7 @@ export default React.memo(() => {
         update(label)
       }
     }
-  }
+  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = async label => {
     lastUpdated = Date.now()
