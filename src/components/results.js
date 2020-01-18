@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
+import { post } from '../http'
 import strip from '../../strip'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, searchError }) => {
-  const { setLabels } = useContext(State)
+  const { setLabels, user, setError } = useContext(State)
 
-  const add = result => {
+  const add = async result => {
     const label = {
       id: result.id,
       link: result.link,
@@ -16,6 +17,18 @@ export default React.memo(({ data, done, clear, searchError }) => {
 
     setLabels(prev => [...prev, label])
     clear()
+
+    if (!user) {
+      return
+    }
+
+    try {
+      await post('.netlify/functions/addUserToLabel', { data: { label, user: user.id } })
+    } catch (e) {
+      setError(
+        'Something went wrong while saving labels to your account. You can try again later.'
+      )
+    }
   }
 
   return (
