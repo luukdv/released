@@ -11,7 +11,6 @@ exports.handler = async event => {
   }
 
   const data = JSON.parse(event.body)
-  const ref = data.ref
   const labels = data.labels
 
   try {
