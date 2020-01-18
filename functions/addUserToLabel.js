@@ -11,7 +11,8 @@ exports.handler = async event => {
   }
 
   const input = JSON.parse(event.body)
-  const labelId = parseInt(input.label.id)
+  const label = input.label
+  const labelId = parseInt(label.id)
   const userId = input.user
 
   try {
@@ -29,7 +30,7 @@ exports.handler = async event => {
             },
           }),
           q.Create(q.Collection('labels'), {
-            data: { id: labelId, users: [userId] },
+            data: { ...label, users: [userId] },
           })
         )
       )

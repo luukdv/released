@@ -44,12 +44,10 @@ export default React.memo(() => {
         return
       }
 
-      let savedLabels
+      let data
 
       try {
-        savedLabels = await get(
-          `.netlify/functions/getLabels?user=${userObject.id}`
-        )
+        data = await get(`.netlify/functions/getLabels?user=${userObject.id}`)
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'
@@ -57,6 +55,8 @@ export default React.memo(() => {
         setDone(true)
         return
       }
+
+      const { response: savedLabels } = data
 
       if (savedLabels.length) {
         setLabels(savedLabels)
