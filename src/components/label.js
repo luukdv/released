@@ -1,11 +1,28 @@
 import React, { useContext } from 'react'
+import { post } from '../http'
 import { css } from '@emotion/core'
 import State from '../context/state'
 
 export default React.memo(({ data }) => {
-  const { setLabels } = useContext(State)
-  const remove = () =>
+  const { setLabels, user, setError } = useContext(State)
+
+  const remove = async () => {
     setLabels(prev => prev.filter(label => label.id !== data.id))
+
+    if (!user) {
+      return
+    }
+
+    try {
+      await post('.netlify/functions/removeUserFromLabel', {
+        data: { label: data.id, user: user.id },
+      })
+    } catch (e) {
+      setError(
+        'Something went wrong while saving data to your account. You can try again later.'
+      )
+    }
+  }
 
   return (
     <div
