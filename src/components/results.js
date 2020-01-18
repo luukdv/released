@@ -13,6 +13,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
       id: result.id,
       link: result.link,
       name: encodeURIComponent(strip(result.title)),
+      release: {},
     }
 
     setLabels(prev => [...prev, label])

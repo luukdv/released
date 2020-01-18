@@ -42,20 +42,26 @@ exports.handler = async event => {
       response = await getLatestByYear(currentYear - 1)
     }
 
+    const release = response
+      ? {
+          artist: encodeURIComponent(
+            response.data.results[0].title
+              .split(' - ')[0]
+              .replace(/(.+)\*$/, '$1')
+              .replace(/\s\(\d+\)/, '')
+          ),
+          checked: Date.now(),
+          img: response.data.results[0].thumb,
+          link: response.data.results[0].uri,
+          title: encodeURIComponent(
+            response.data.results[0].title.split(' - ')[1]
+          ),
+        }
+      : null
+
     return {
+      body: JSON.stringify(release),
       statusCode: 200,
-      body: JSON.stringify({
-        release: response
-          ? {
-              artist: response.data.results[0].title
-                .split(' - ')[0]
-                .replace(/(.+)\*$/, '$1'),
-              img: response.data.results[0].thumb,
-              link: response.data.results[0].uri,
-              title: response.data.results[0].title.split(' - ')[1],
-            }
-          : null,
-      }),
     }
   } catch (e) {
     return {

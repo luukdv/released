@@ -3,7 +3,6 @@ import auth, { getParams } from '../../auth'
 import { get } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
-import strip from '../../strip'
 import { navigate } from '@reach/router'
 
 const updateInterval = 3000
@@ -80,22 +79,22 @@ export default React.memo(() => {
     }
 
     const label = labels.reduce((acc, curr) => {
-      if (!acc.checked) {
+      if (!acc.release.checked) {
         return acc
       }
 
-      if (!curr.checked) {
+      if (!curr.release.checked) {
         return curr
       }
 
-      return acc.checked > curr.checked ? curr : acc
+      return acc.release.checked > curr.release.checked ? curr : acc
     })
     const threeHours = 3 * 60 * 60 * 1000
-    const stale = label.checked + threeHours < Date.now()
+    const stale = label.release.checked + threeHours < Date.now()
 
     clearTimeout(updater)
 
-    if (!label.checked || stale) {
+    if (!label.release.checked || stale) {
       const delay = lastUpdated + updateInterval > Date.now()
 
       if (delay) {
@@ -112,10 +111,12 @@ export default React.memo(() => {
     setError(false)
     setUpdating(decodeURIComponent(label.name))
 
-    let latest
+    let data
 
     try {
-      latest = await get(`.netlify/functions/updateLabel?name=${label.name}`)
+      data = await get(
+        `.netlify/functions/updateLabel?id=${label.id}&name=${label.name}`
+      )
     } catch (e) {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
@@ -124,27 +125,12 @@ export default React.memo(() => {
       return
     }
 
-    const {
-      response: { release: data },
-    } = latest
+    const { response: release } = data
 
     setLabels(prevLabels =>
-      prevLabels.map(prevLabel => {
-        if (prevLabel.id !== label.id) {
-          return prevLabel
-        }
-
-        const release = data
-          ? {
-              artist: encodeURIComponent(strip(data.artist)),
-              img: data.img,
-              link: data.link,
-              title: encodeURIComponent(data.title),
-            }
-          : prevLabel.release
-
-        return { ...prevLabel, checked: Date.now(), release }
-      })
+      prevLabels.map(prevLabel =>
+        prevLabel.id === label.id ? { ...prevLabel, release } : prevLabel
+      )
     )
     setUpdating(false)
   }

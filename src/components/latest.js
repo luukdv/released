@@ -9,7 +9,9 @@ export default React.memo(() => {
   const { labels, updating, error } = useContext(State)
 
   const none = !labels.length
-  const nonEmpty = labels.filter(label => !!label.release)
+  const nonEmpty = labels.filter(
+    label => label.release.artist && label.release.title
+  )
   const onlyEmpty = !nonEmpty.length
 
   return (
