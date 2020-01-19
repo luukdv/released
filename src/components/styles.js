@@ -46,6 +46,10 @@ export default React.memo(() => (
       a {
         color: rgb(40, 40, 40);
       }
+
+      #gatsby-announcer {
+        display: none;
+      }
     `}
   />
 ))
