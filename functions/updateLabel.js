@@ -47,22 +47,21 @@ exports.handler = async event => {
       response = await getLatestByYear(currentYear - 1)
     }
 
-    const release = response
-      ? {
-          artist: encodeURIComponent(
-            response.data.results[0].title
-              .split(' - ')[0]
-              .replace(/(.+)\*$/, '$1')
-              .replace(/\s\(\d+\)/, '')
-          ),
-          checked: Date.now(),
-          img: response.data.results[0].thumb,
-          link: response.data.results[0].uri,
-          title: encodeURIComponent(
-            response.data.results[0].title.split(' - ')[1]
-          ),
-        }
-      : null
+    const release = { checked: Date.now() }
+
+    if (response) {
+      release.artist = encodeURIComponent(
+        response.data.results[0].title
+          .split(' - ')[0]
+          .replace(/(.+)\*$/, '$1')
+          .replace(/\s\(\d+\)/, '')
+      )
+      release.img = response.data.results[0].thumb
+      release.link = response.data.results[0].uri
+      release.title = encodeURIComponent(
+        response.data.results[0].title.split(' - ')[1]
+      )
+    }
 
     if (release) {
       client.query(
