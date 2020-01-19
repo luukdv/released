@@ -19,13 +19,6 @@ exports.handler = async event => {
       statusCode: 200,
     }
   } catch (e) {
-    return {
-      body: JSON.stringify({
-        error: e.requestResult
-          ? e.requestResult.responseContent.errors[0].description
-          : e.message,
-      }),
-      statusCode: e.requestResult.statusCode ? e.requestResult.statusCode : 400,
-    }
+    return db.error(e)
   }
 }

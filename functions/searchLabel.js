@@ -1,18 +1,18 @@
+const api = require('./utils/api')
 const axios = require('axios')
-const api = 'https://api.discogs.com/database/search'
 
 exports.handler = async event => {
   const params = Object.entries({
     per_page: 10,
     q: event.queryStringParameters.query,
-    token: process.env.API_TOKEN,
+    token: api.token,
     type: 'label',
   })
     .map(p => p.join('='))
     .join('&')
 
   try {
-    const response = await axios.get(`${api}?${params}`)
+    const response = await axios.get(`${api.base}?${params}`)
 
     return {
       statusCode: 200,
@@ -26,11 +26,6 @@ exports.handler = async event => {
       }),
     }
   } catch (e) {
-    return {
-      body: JSON.stringify({
-        error: e.response ? e.response.statusText : e.code,
-      }),
-      statusCode: e.response ? e.response.status : 400,
-    }
+    return api.error(e)
   }
 }

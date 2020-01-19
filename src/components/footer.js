@@ -28,7 +28,7 @@ export default React.memo(() => (
       }
     `}
   >
-    <div>Releases are updated every 3 hours</div>
+    <div>Releases are updated every 6 hours</div>
     <Dot />
     <div>
       Header illustration by{' '}

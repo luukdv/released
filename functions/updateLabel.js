@@ -1,4 +1,4 @@
-const api = 'https://api.discogs.com/database/search'
+const api = require('./utils/api')
 const axios = require('axios')
 const currentYear = new Date().getFullYear()
 const db = require('./utils/db')
@@ -11,7 +11,7 @@ exports.handler = async event => {
     Object.entries({
       label: event.queryStringParameters.name,
       per_page: 1,
-      token: process.env.API_TOKEN,
+      token: api.token,
       type,
       year,
     })
@@ -24,13 +24,13 @@ exports.handler = async event => {
       event.queryStringParameters.name.toLowerCase()
 
   const getLatestByYear = async year => {
-    const master = await axios.get(`${api}?${getParams('master', year)}`)
+    const master = await axios.get(`${api.base}?${getParams('master', year)}`)
 
     if (master.data.results.length && isMainLabel(master)) {
       return master
     }
 
-    const release = await axios.get(`${api}?${getParams('release', year)}`)
+    const release = await axios.get(`${api.base}?${getParams('release', year)}`)
 
     if (release.data.results.length && isMainLabel(release)) {
       return release
@@ -76,11 +76,6 @@ exports.handler = async event => {
       statusCode: 200,
     }
   } catch (e) {
-    return {
-      body: JSON.stringify({
-        error: e.response ? e.response.statusText : e.code,
-      }),
-      statusCode: e.response ? e.response.status : 400,
-    }
+    return api.error(e)
   }
 }
