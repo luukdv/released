@@ -1,12 +1,11 @@
-const fauna = require('faunadb')
-const q = fauna.query
-const client = new fauna.Client({ secret: process.env.FAUNADB })
+const db = require('./utils/db')
+const q = db.query
 
 exports.handler = async event => {
   const userId = event.queryStringParameters.user
 
   try {
-    const response = await client.query(
+    const response = await db.client.query(
       q.Map(
         q.Paginate(q.Match(q.Index('labels_by_user_id'), userId), {
           size: 99999,

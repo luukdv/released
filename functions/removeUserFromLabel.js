@@ -1,6 +1,5 @@
-const fauna = require('faunadb')
-const q = fauna.query
-const client = new fauna.Client({ secret: process.env.FAUNADB })
+const db = require('./utils/db')
+const q = db.query
 
 exports.handler = async event => {
   if (event.httpMethod !== 'POST') {
@@ -15,7 +14,7 @@ exports.handler = async event => {
   const userId = input.user
 
   try {
-    await client.query(
+    await db.client.query(
       q.Let(
         { doc: q.Get(q.Match(q.Index('label_by_id'), labelId)) },
         q.Update(q.Select('ref', q.Var('doc')), {

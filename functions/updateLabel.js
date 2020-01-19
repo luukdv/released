@@ -1,9 +1,8 @@
 const api = 'https://api.discogs.com/database/search'
 const axios = require('axios')
 const currentYear = new Date().getFullYear()
-const fauna = require('faunadb')
-const q = fauna.query
-const client = new fauna.Client({ secret: process.env.FAUNADB })
+const db = require('./utils/db')
+const q = db.query
 
 exports.handler = async event => {
   const labelId = parseInt(event.queryStringParameters.id)
@@ -64,7 +63,7 @@ exports.handler = async event => {
     }
 
     if (release) {
-      client.query(
+      db.client.query(
         q.Update(
           q.Select('ref', q.Get(q.Match(q.Index('label_by_id'), labelId))),
           { data: { release } }
