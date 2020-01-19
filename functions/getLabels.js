@@ -3,21 +3,22 @@ const q = fauna.query
 const client = new fauna.Client({ secret: process.env.FAUNADB })
 
 exports.handler = async event => {
-  if (event.httpMethod !== 'POST') {
-    return {
-      body: JSON.stringify({ error: 'Not allowed' }),
-      statusCode: 405,
-    }
-  }
-
-  const data = JSON.parse(event.body)
-  const ref = data.ref
-  const labels = data.labels
+  const userId = event.queryStringParameters.user
 
   try {
-    await client.query(
-      q.Update(q.Ref(q.Collection('users'), ref), { data: { labels } })
+    const response = await client.query(
+      q.Map(
+        q.Paginate(q.Match(q.Index('labels_by_user_id'), userId), {
+          size: 99999,
+        }),
+        q.Lambda('label', q.Select('data', q.Get(q.Var('label'))))
+      )
     )
+
+    return {
+      body: JSON.stringify(response.data.map(({ users, ...rest }) => rest)),
+      statusCode: 200,
+    }
   } catch (e) {
     return {
       body: JSON.stringify({
@@ -27,10 +28,5 @@ exports.handler = async event => {
       }),
       statusCode: e.requestResult.statusCode ? e.requestResult.statusCode : 400,
     }
-  }
-
-  return {
-    body: JSON.stringify({ success: true }),
-    statusCode: 200,
   }
 }

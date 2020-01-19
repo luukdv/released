@@ -1,8 +1,13 @@
-const axios = require('axios')
 const api = 'https://api.discogs.com/database/search'
+const axios = require('axios')
 const currentYear = new Date().getFullYear()
+const fauna = require('faunadb')
+const q = fauna.query
+const client = new fauna.Client({ secret: process.env.FAUNADB })
 
 exports.handler = async event => {
+  const labelId = parseInt(event.queryStringParameters.id)
+
   const getParams = (type, year) =>
     Object.entries({
       label: event.queryStringParameters.name,
@@ -42,20 +47,35 @@ exports.handler = async event => {
       response = await getLatestByYear(currentYear - 1)
     }
 
+    const release = response
+      ? {
+          artist: encodeURIComponent(
+            response.data.results[0].title
+              .split(' - ')[0]
+              .replace(/(.+)\*$/, '$1')
+              .replace(/\s\(\d+\)/, '')
+          ),
+          checked: Date.now(),
+          img: response.data.results[0].thumb,
+          link: response.data.results[0].uri,
+          title: encodeURIComponent(
+            response.data.results[0].title.split(' - ')[1]
+          ),
+        }
+      : null
+
+    if (release) {
+      client.query(
+        q.Update(
+          q.Select('ref', q.Get(q.Match(q.Index('label_by_id'), labelId))),
+          { data: { release } }
+        )
+      )
+    }
+
     return {
+      body: JSON.stringify(release),
       statusCode: 200,
-      body: JSON.stringify({
-        release: response
-          ? {
-              artist: response.data.results[0].title
-                .split(' - ')[0]
-                .replace(/(.+)\*$/, '$1'),
-              img: response.data.results[0].thumb,
-              link: response.data.results[0].uri,
-              title: response.data.results[0].title.split(' - ')[1],
-            }
-          : null,
-      }),
     }
   } catch (e) {
     return {

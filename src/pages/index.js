@@ -1,9 +1,8 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get, post } from '../http'
+import { get } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
-import strip from '../../strip'
 import { navigate } from '@reach/router'
 
 const updateInterval = 3000
@@ -47,7 +46,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await get(`.netlify/functions/getUser?id=${userObject.id}`)
+        data = await get(`.netlify/functions/getLabels?user=${userObject.id}`)
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'
@@ -56,14 +55,7 @@ export default React.memo(() => {
         return
       }
 
-      const {
-        response: { labels: savedLabels, ref },
-      } = data
-
-      setUser(prevUser => {
-        prevUser.ref = ref
-        return prevUser
-      })
+      const { response: savedLabels } = data
 
       if (savedLabels.length) {
         setLabels(savedLabels)
@@ -73,28 +65,6 @@ export default React.memo(() => {
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (labels.length) {
-      runUpdater()
-    }
-
-    if (!user || !done) {
-      return
-    }
-
-    ;(async () => {
-      try {
-        await post('.netlify/functions/updateUser', {
-          data: { ref: user.ref, labels },
-        })
-      } catch (e) {
-        setError(
-          'Something went wrong while saving labels to your account. You can try again later.'
-        )
-      }
-    })()
-  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
-
   const logout = () => {
     setUpdating(false)
     clearTimeout(updater)
@@ -103,24 +73,28 @@ export default React.memo(() => {
     user.logout()
   }
 
-  const runUpdater = () => {
+  useEffect(() => {
+    if (!labels.length) {
+      return
+    }
+
     const label = labels.reduce((acc, curr) => {
-      if (!acc.checked) {
+      if (!acc.release.checked) {
         return acc
       }
 
-      if (!curr.checked) {
+      if (!curr.release.checked) {
         return curr
       }
 
-      return acc.checked > curr.checked ? curr : acc
+      return acc.release.checked > curr.release.checked ? curr : acc
     })
     const threeHours = 3 * 60 * 60 * 1000
-    const stale = label.checked + threeHours < Date.now()
+    const stale = label.release.checked + threeHours < Date.now()
 
     clearTimeout(updater)
 
-    if (!label.checked || stale) {
+    if (!label.release.checked || stale) {
       const delay = lastUpdated + updateInterval > Date.now()
 
       if (delay) {
@@ -129,7 +103,7 @@ export default React.memo(() => {
         update(label)
       }
     }
-  }
+  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = async label => {
     lastUpdated = Date.now()
@@ -137,10 +111,12 @@ export default React.memo(() => {
     setError(false)
     setUpdating(decodeURIComponent(label.name))
 
-    let latest
+    let data
 
     try {
-      latest = await get(`.netlify/functions/updateLabel?name=${label.name}`)
+      data = await get(
+        `.netlify/functions/updateLabel?id=${label.id}&name=${label.name}`
+      )
     } catch (e) {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
@@ -149,27 +125,12 @@ export default React.memo(() => {
       return
     }
 
-    const {
-      response: { release: data },
-    } = latest
+    const { response: release } = data
 
     setLabels(prevLabels =>
-      prevLabels.map(prevLabel => {
-        if (prevLabel.id !== label.id) {
-          return prevLabel
-        }
-
-        const release = data
-          ? {
-              artist: encodeURIComponent(strip(data.artist)),
-              img: data.img,
-              link: data.link,
-              title: encodeURIComponent(data.title),
-            }
-          : prevLabel.release
-
-        return { ...prevLabel, checked: Date.now(), release }
-      })
+      prevLabels.map(prevLabel =>
+        prevLabel.id === label.id ? { ...prevLabel, release } : prevLabel
+      )
     )
     setUpdating(false)
   }
