@@ -21,7 +21,7 @@ exports.handler = async event => {
           id: result.id,
           img: result.thumb,
           link: result.uri,
-          title: result.title,
+          name: encodeURIComponent(result.title.replace(/\s\(\d+\)/, '')),
         })),
       }),
     }

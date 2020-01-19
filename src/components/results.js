@@ -2,19 +2,13 @@ import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../../scale'
 import { post } from '../http'
-import strip from '../../strip'
 import State from '../context/state'
 
 export default React.memo(({ data, done, clear, searchError }) => {
   const { setLabels, user, setError } = useContext(State)
 
   const add = async result => {
-    const label = {
-      id: result.id,
-      link: result.link,
-      name: encodeURIComponent(strip(result.title)),
-      release: {},
-    }
+    const label = { ...result, release: {} }
 
     setLabels(prev => [...prev, label])
     clear()
@@ -100,7 +94,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
               width: 4.5em;
             `}
             ></div>
-            <div>{result.title}</div>
+            <div>{decodeURIComponent(result.name)}</div>
           </div>
         ))}
     </div>
