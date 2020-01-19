@@ -142,6 +142,7 @@ export default React.memo(() => {
         error,
         labels,
         logout,
+        setError,
         setLabels,
         updating,
         user,
