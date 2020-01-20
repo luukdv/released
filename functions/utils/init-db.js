@@ -1,6 +1,6 @@
 const fauna = require('faunadb')
 
-module.exports = {
+module.exports = () => ({
   client: new fauna.Client({ secret: process.env.FAUNADB }),
   error: e => ({
     body: JSON.stringify({
@@ -11,4 +11,4 @@ module.exports = {
     statusCode: e.requestResult ? e.requestResult.statusCode : 400,
   }),
   query: fauna.query,
-}
+})

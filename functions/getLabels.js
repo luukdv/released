@@ -1,7 +1,8 @@
-const db = require('./utils/db')
-const q = db.query
+const initDb = require('./utils/init-db')
 
 exports.handler = async event => {
+  const db = initDb()
+  const q = db.query
   const userId = event.queryStringParameters.user
 
   try {

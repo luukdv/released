@@ -1,5 +1,4 @@
-const db = require('./utils/db')
-const q = db.query
+const initDb = require('./utils/init-db')
 
 exports.handler = async event => {
   if (event.httpMethod !== 'POST') {
@@ -9,6 +8,8 @@ exports.handler = async event => {
     }
   }
 
+  const db = initDb()
+  const q = db.query
   const input = JSON.parse(event.body)
   const labelId = parseInt(input.label)
   const userId = input.user

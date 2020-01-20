@@ -1,11 +1,12 @@
 const api = require('./utils/api')
 const axios = require('axios')
 const currentYear = new Date().getFullYear()
-const db = require('./utils/db')
-const q = db.query
+const initDb = require('./utils/init-db')
 
 exports.handler = async event => {
   const labelId = parseInt(event.queryStringParameters.id)
+  const db = initDb()
+  const q = db.query
 
   const getParams = (type, year) =>
     Object.entries({
