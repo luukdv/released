@@ -115,7 +115,7 @@ export default React.memo(() => {
 
     try {
       data = await get(
-        `.netlify/functions/updateLabel?id=${label.id}&name=${label.name}`
+        `.netlify/functions/getLatestRelease?id=${label.id}&name=${label.name}`
       )
     } catch (e) {
       setError(
