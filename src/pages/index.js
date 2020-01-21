@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get } from '../http'
+import { get, post } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import { navigate } from '@reach/router'
@@ -133,6 +133,14 @@ export default React.memo(() => {
       )
     )
     setUpdating(false)
+
+    if (release) {
+      try {
+        await post('.netlify/functions/updateLabel', {
+          data: { label: label.id, release },
+        })
+      } catch (e) {}
+    }
   }
 
   return (
