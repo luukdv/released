@@ -25,18 +25,7 @@ export default React.memo(() => {
       >
         {updating ? `Checking ${updating}…` : 'Latest releases'}
       </h2>
-      {!onlyEmpty && (
-        <>
-          <div>
-            {nonEmpty
-              .sort((f, s) => (f.release.title > s.release.title ? 1 : -1))
-              .map(label => (
-                <Release key={label.id} data={label} />
-              ))}
-          </div>
-        </>
-      )}
-      {error && <Notice>{error}</Notice>}
+      {error && <Notice top>{error}</Notice>}
       {!error && !updating && (none || onlyEmpty) && (
         <p
           css={css`
@@ -47,6 +36,17 @@ export default React.memo(() => {
             ? "Nothing to show yet 💁‍♂️. Add some labels and we'll check their latest release."
             : "Nothing to show from this year so far 🤔. We'll keep checking for new releases."}
         </p>
+      )}
+      {!onlyEmpty && (
+        <>
+          <div>
+            {nonEmpty
+              .sort((f, s) => (f.release.title > s.release.title ? 1 : -1))
+              .map(label => (
+                <Release key={label.id} data={label} />
+              ))}
+          </div>
+        </>
       )}
     </>
   )
