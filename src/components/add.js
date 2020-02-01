@@ -34,7 +34,7 @@ export default React.memo(() => {
 
     try {
       data = await get(`.netlify/functions/searchLabel?query=${value}`, {
-        token: value,
+        identifier: value,
       })
     } catch (e) {
       setLoading(false)
@@ -45,7 +45,7 @@ export default React.memo(() => {
       return
     }
 
-    if (data.token === value) {
+    if (data.identifier === value) {
       setResults(
         data.response.results.filter(result => {
           return !labels.map(label => label.id).includes(result.id)

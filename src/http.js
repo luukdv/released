@@ -1,9 +1,16 @@
-const request = (type, url, options) => {
-  return new Promise((resolve, reject) => {
+let headers = {}
+
+export const get = (url, options = {}) => request('GET', url, options)
+export const post = (url, options = {}) => request('POST', url, options)
+export const setHeaders = pair => (headers = { ...headers, ...pair })
+
+const request = (type, url, options) =>
+  new Promise((resolve, reject) => {
     const r = new XMLHttpRequest()
-    const token = options.token ? options.token : null
+    const identifier = options.identifier ? options.identifier : null
 
     r.open(type, url)
+    Object.keys(headers).forEach(key => r.setRequestHeader(key, headers[key]))
     r.send(options.data ? JSON.stringify(options.data) : null)
 
     r.onreadystatechange = () => {
@@ -19,13 +26,9 @@ const request = (type, url, options) => {
       try {
         const parsed = JSON.parse(r.response)
 
-        resolve({ response: parsed, token })
+        resolve({ response: parsed, identifier })
       } catch (e) {
         reject(e)
       }
     }
   })
-}
-
-export const get = (url, options = {}) => request('GET', url, options)
-export const post = (url, options = {}) => request('POST', url, options)
