@@ -10,11 +10,7 @@ const request = (type, url, options) =>
     const identifier = options.identifier ? options.identifier : null
 
     r.open(type, url)
-
-    if (type === 'POST') {
-      Object.keys(headers).forEach(key => r.setRequestHeader(key, headers[key]))
-    }
-
+    Object.keys(headers).forEach(key => r.setRequestHeader(key, headers[key]))
     r.send(options.data ? JSON.stringify(options.data) : null)
 
     r.onreadystatechange = () => {

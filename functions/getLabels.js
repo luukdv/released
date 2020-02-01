@@ -1,6 +1,13 @@
 const initDb = require('./utils/init-db')
 
-exports.handler = async event => {
+exports.handler = async (event, context) => {
+  if (!context.clientContext.user) {
+    return {
+      body: JSON.stringify({ error: 'Not allowed' }),
+      statusCode: 405,
+    }
+  }
+
   const db = initDb()
   const q = db.query
   const userId = event.queryStringParameters.user
