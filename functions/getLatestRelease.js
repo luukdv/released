@@ -4,7 +4,6 @@ const currentYear = new Date().getFullYear()
 const initDb = require('./utils/init-db')
 
 exports.handler = async event => {
-  const labelId = parseInt(event.queryStringParameters.id)
   const db = initDb()
   const q = db.query
 
