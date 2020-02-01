@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get, post } from '../http'
+import { get, post, setHeaders } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import { navigate } from '@reach/router'
@@ -42,10 +42,12 @@ export default React.memo(() => {
 
       try {
         const token = await currentUser.jwt()
-        currentUser.token = token
         setUser(currentUser)
+        setHeaders({ Authorization: `Bearer ${token}` })
       } catch (e) {
-        setError('Something went wrong while retrieving your login. You can try again later.')
+        setError(
+          'Something went wrong while retrieving your login. You can try again later.'
+        )
         setUser(false)
         setDone(true)
         return
