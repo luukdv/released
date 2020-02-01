@@ -1,7 +1,7 @@
 const initDb = require('./utils/init-db')
 
-exports.handler = async event => {
-  if (event.httpMethod !== 'POST') {
+exports.handler = async (event, context) => {
+  if (event.httpMethod !== 'POST' || !context.clientContext.user) {
     return {
       body: JSON.stringify({ error: 'Not allowed' }),
       statusCode: 405,

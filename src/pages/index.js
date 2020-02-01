@@ -1,6 +1,6 @@
 import App from '../components/app'
 import auth, { getParams } from '../../auth'
-import { get, post } from '../http'
+import { get, post, setHeaders } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/state'
 import { navigate } from '@reach/router'
@@ -33,12 +33,22 @@ export default React.memo(() => {
       }
 
       const currentUser = auth.currentUser()
-      const userObject =
-        currentUser && currentUser.user_metadata ? currentUser : false
 
-      setUser(userObject)
+      if (!currentUser || !currentUser.user_metadata) {
+        setUser(false)
+        setDone(true)
+        return
+      }
 
-      if (!userObject) {
+      try {
+        const token = await currentUser.jwt()
+        setUser(currentUser)
+        setHeaders({ Authorization: `Bearer ${token}` })
+      } catch (e) {
+        setError(
+          'Something went wrong while retrieving your login. You can try again later.'
+        )
+        setUser(false)
         setDone(true)
         return
       }
@@ -46,7 +56,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await get(`.netlify/functions/getLabels?user=${userObject.id}`)
+        data = await get(`.netlify/functions/getLabels?user=${currentUser.id}`)
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'
