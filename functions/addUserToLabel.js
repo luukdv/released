@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
   const input = JSON.parse(event.body)
   const label = input.label
   const labelId = parseInt(label.id)
-  const userId = input.user
+  const userId = context.clientContext.user.sub
 
   try {
     await db.client.query(

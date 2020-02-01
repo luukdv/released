@@ -18,9 +18,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
     }
 
     try {
-      await post('.netlify/functions/addUserToLabel', {
-        data: { label, user: user.id },
-      })
+      await post('.netlify/functions/addUserToLabel', { data: { label } })
     } catch (e) {
       setError(
         'Something went wrong while saving data to your account. You can try again later.'

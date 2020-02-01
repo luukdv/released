@@ -56,7 +56,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await get(`.netlify/functions/getLabels?user=${currentUser.id}`)
+        data = await get(`.netlify/functions/getLabels`)
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'

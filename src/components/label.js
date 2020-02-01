@@ -15,7 +15,7 @@ export default React.memo(({ data }) => {
 
     try {
       await post('.netlify/functions/removeUserFromLabel', {
-        data: { label: data.id, user: user.id },
+        data: { label: data.id },
       })
     } catch (e) {
       setError(

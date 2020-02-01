@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
 
   const db = initDb()
   const q = db.query
-  const userId = event.queryStringParameters.user
+  const userId = context.clientContext.user.sub
 
   try {
     const response = await db.client.query(
