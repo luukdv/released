@@ -5,7 +5,7 @@
     "@emotion/core": "^10.0.27",
     "axios": "^0.19.2",
     "faunadb": "^2.11.1",
-    "gatsby": "^2.19.17",
+    "gatsby": "^2.19.18",
     "gatsby-plugin-emotion": "^4.1.22",
     "gatsby-plugin-netlify": "^2.1.32",
     "gatsby-plugin-react-helmet": "^3.1.22",
