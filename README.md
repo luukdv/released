@@ -1,1 +1,1 @@
-[![Released](static/screenshot.jpg)](https://released.netlify.com)
+[![Released](static/screenshot.jpg)](https://released.netlify.app)
