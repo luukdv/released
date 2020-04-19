@@ -1,4 +1,4 @@
-import scale from '../../scale'
+import scale from '../scale'
 import React from 'react'
 import { Global, css } from '@emotion/core'
 

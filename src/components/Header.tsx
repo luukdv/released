@@ -1,5 +1,5 @@
 import React from 'react'
-import scale from '../../scale'
+import scale from '../scale'
 import { css } from '@emotion/core'
 
 export default React.memo(() => (

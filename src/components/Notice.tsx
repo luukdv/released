@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import scale from '../../scale'
+import scale from '../scale'
 
 export default React.memo(({ children, styles, top }) => (
   <p

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { css } from '@emotion/core'
-import Notice from './notice'
-import State from '../context/state'
-import auth from '../../auth'
+import Notice from './Notice'
+import State from '../context/State'
+import auth from '../auth'
 
 export default React.memo(() => {
   const { user, done, logout } = useContext(State)

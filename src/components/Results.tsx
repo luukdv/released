@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/core'
-import scale from '../../scale'
+import scale from '../scale'
 import { post } from '../http'
-import State from '../context/state'
+import State from '../context/State'
 
 export default React.memo(({ data, done, clear, searchError }) => {
   const { setLabels, user, setError } = useContext(State)

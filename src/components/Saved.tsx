@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/core'
-import scale from '../../scale'
-import Label from './label'
-import State from '../context/state'
+import scale from '../scale'
+import Label from './Label'
+import State from '../context/State'
 
 export default React.memo(() => {
   const { labels } = useContext(State)

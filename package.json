@@ -14,13 +14,16 @@
     "react-helmet": "^6.0.0"
   },
   "devDependencies": {
+    "gatsby-plugin-typescript": "^2.3.3",
     "netlify-cli": "^2.47.0",
-    "prettier": "^2.0.4"
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "build": "gatsby build",
     "dev": "netlify dev",
     "format": "prettier --write '**/*.{js,json}'",
-    "start": "gatsby develop"
+    "start": "gatsby develop",
+    "typecheck": "tsc"
   }
 }

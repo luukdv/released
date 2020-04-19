@@ -3,5 +3,6 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-typescript',
   ],
 }

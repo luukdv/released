@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import scale from '../../scale'
+import scale from '../scale'
 import { css } from '@emotion/core'
-import Release from './release'
-import Notice from './notice'
-import State from '../context/state'
+import Release from './Release'
+import Notice from './Notice'
+import State from '../context/State'
 
 export default React.memo(() => {
   const { labels, updating, error } = useContext(State)

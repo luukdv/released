@@ -1,8 +1,8 @@
-import App from '../components/app'
-import auth, { getParams } from '../../auth'
+import App from '../components/App'
+import auth, { getParams } from '../auth'
 import { get, post, setHeaders } from '../http'
 import React, { useState, useEffect } from 'react'
-import State from '../context/state'
+import State from '../context/State'
 import { navigate } from '@reach/router'
 
 const updateInterval = 3000

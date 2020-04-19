@@ -1,12 +1,12 @@
 import React from 'react'
-import Styles from '../components/styles'
-import Wrap from '../components/wrap'
+import Styles from '../components/Styles'
+import Wrap from '../components/Wrap'
 
 export default () => (
   <>
     <Styles />
     <Wrap>
-      <h1>404</h1>
+      <h2>404</h2>
     </Wrap>
   </>
 )

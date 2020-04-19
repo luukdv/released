@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import scale from '../../scale'
+import scale from '../scale'
 import { css } from '@emotion/core'
 import { get } from '../http'
-import Loading from './loading'
-import Results from './results'
-import State from '../context/state'
+import Loading from './Loading'
+import Results from './Results'
+import State from '../context/State'
 
 let value = ''
 let delayed
