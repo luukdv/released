@@ -56,7 +56,7 @@ export default React.memo(() => {
       let data
 
       try {
-        data = await get(`.netlify/functions/getLabels`)
+        data = await get(`/.netlify/functions/getLabels`)
       } catch (e) {
         setError(
           'Something went wrong while retrieving your data. You can try again later.'
@@ -115,7 +115,7 @@ export default React.memo(() => {
     }
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const update = async label => {
+  const update = async (label) => {
     lastUpdated = Date.now()
 
     setError(false)
@@ -124,7 +124,9 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(`.netlify/functions/getLatestRelease?name=${label.name}`)
+      data = await get(
+        `/.netlify/functions/getLatestRelease?name=${label.name}`
+      )
     } catch (e) {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
@@ -135,8 +137,8 @@ export default React.memo(() => {
 
     const { response: release } = data
 
-    setLabels(prevLabels =>
-      prevLabels.map(prevLabel =>
+    setLabels((prevLabels) =>
+      prevLabels.map((prevLabel) =>
         prevLabel.id === label.id ? { ...prevLabel, release } : prevLabel
       )
     )
@@ -144,7 +146,7 @@ export default React.memo(() => {
 
     if (release) {
       try {
-        await post('.netlify/functions/updateLabel', {
+        await post('/.netlify/functions/updateLabel', {
           data: { label: label.id, release },
         })
       } catch (e) {}

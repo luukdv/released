@@ -48,7 +48,7 @@ const Button = ({ children, href, onClick }) => (
     onClick={onClick}
     rel="nofollow"
     tabIndex={0}
-    onKeyUp={e => (e.key === 13 || e.keyCode === 13) && onClick()}
+    onKeyUp={(e) => (e.key === 'Enter' || e.keyCode === 13) && onClick()}
     css={css`
       user-select: none;
       border-radius: 9em;

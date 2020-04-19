@@ -7,14 +7,14 @@ export default React.memo(({ data }) => {
   const { setLabels, user, setError } = useContext(State)
 
   const remove = async () => {
-    setLabels(prev => prev.filter(label => label.id !== data.id))
+    setLabels((prev) => prev.filter((label) => label.id !== data.id))
 
     if (!user) {
       return
     }
 
     try {
-      await post('.netlify/functions/removeUserFromLabel', {
+      await post('/.netlify/functions/removeUserFromLabel', {
         data: { label: data.id },
       })
     } catch (e) {
@@ -64,7 +64,7 @@ export default React.memo(({ data }) => {
       <div
         role="button"
         tabIndex={0}
-        onKeyUp={e => (e.key === 13 || e.keyCode === 13) && remove()}
+        onKeyUp={(e) => (e.key === 'Enter' || e.keyCode === 13) && remove()}
         onClick={remove}
         className="remove"
         css={css`

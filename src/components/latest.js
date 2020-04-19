@@ -10,7 +10,7 @@ export default React.memo(() => {
 
   const none = !labels.length
   const nonEmpty = labels.filter(
-    label => label.release.artist && label.release.title
+    (label) => label.release.artist && label.release.title
   )
   const onlyEmpty = !nonEmpty.length
 
@@ -42,7 +42,7 @@ export default React.memo(() => {
           <div>
             {nonEmpty
               .sort((f, s) => (f.release.title > s.release.title ? 1 : -1))
-              .map(label => (
+              .map((label) => (
                 <Release key={label.id} data={label} />
               ))}
           </div>

@@ -3,7 +3,7 @@ const axios = require('axios')
 const currentYear = new Date().getFullYear()
 const initDb = require('./utils/init-db')
 
-exports.handler = async event => {
+exports.handler = async (event) => {
   const db = initDb()
   const q = db.query
 
@@ -15,15 +15,15 @@ exports.handler = async event => {
       type,
       year,
     })
-      .map(p => p.join('='))
+      .map((p) => p.join('='))
       .join('&')
 
-  const isMainLabel = res =>
+  const isMainLabel = (res) =>
     res.data.results[0].label.length &&
     res.data.results[0].label[0].toLowerCase() ===
       event.queryStringParameters.name.toLowerCase()
 
-  const getLatestByYear = async year => {
+  const getLatestByYear = async (year) => {
     const master = await axios.get(`${api.base}?${getParams('master', year)}`)
 
     if (master.data.results.length && isMainLabel(master)) {

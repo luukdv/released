@@ -2,7 +2,7 @@ const fauna = require('faunadb')
 
 module.exports = () => ({
   client: new fauna.Client({ secret: process.env.FAUNADB }),
-  error: e => ({
+  error: (e) => ({
     body: JSON.stringify({
       error: e.requestResult
         ? e.requestResult.responseContent.errors[0].description

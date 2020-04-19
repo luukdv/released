@@ -17,7 +17,7 @@ export default React.memo(() => {
   const { labels } = useContext(State)
 
   useEffect(() => {
-    document.addEventListener('click', e => {
+    document.addEventListener('click', (e) => {
       if (!document.getElementById('add').contains(e.target)) {
         clear()
       }
@@ -33,7 +33,7 @@ export default React.memo(() => {
     let data
 
     try {
-      data = await get(`.netlify/functions/searchLabel?query=${value}`, {
+      data = await get(`/.netlify/functions/searchLabel?query=${value}`, {
         identifier: value,
       })
     } catch (e) {
@@ -47,8 +47,8 @@ export default React.memo(() => {
 
     if (data.identifier === value) {
       setResults(
-        data.response.results.filter(result => {
-          return !labels.map(label => label.id).includes(result.id)
+        data.response.results.filter((result) => {
+          return !labels.map((label) => label.id).includes(result.id)
         })
       )
       setLoading(false)
@@ -112,7 +112,7 @@ export default React.memo(() => {
               }
             `}
             type="text"
-            onChange={e => {
+            onChange={(e) => {
               value = e.target.value
               onChange()
             }}

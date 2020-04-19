@@ -1,31 +1,26 @@
 {
-  "name": "released",
-  "description": "Keep up with new music from your favorite labels 📡",
+  "private": true,
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "axios": "^0.19.2",
-    "faunadb": "^2.13.0",
-    "gatsby": "^2.19.45",
-    "gatsby-plugin-emotion": "^4.1.25",
-    "gatsby-plugin-netlify": "^2.1.35",
-    "gatsby-plugin-react-helmet": "^3.1.24",
+    "faunadb": "^2.13.1",
+    "gatsby": "^2.20.25",
     "gotrue-js": "^0.9.25",
-    "netlify-cli": "^2.40.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-helmet": "^5.2.1"
+    "gatsby-plugin-emotion": "^4.2.2",
+    "gatsby-plugin-netlify": "^2.2.3",
+    "gatsby-plugin-react-helmet": "^3.2.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.0.0"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "netlify-cli": "^2.47.0",
+    "prettier": "^2.0.4"
   },
   "scripts": {
     "build": "gatsby build",
+    "dev": "netlify dev",
     "format": "prettier --write '**/*.{js,json}'",
-    "start": "netlify dev -p 8888",
-    "dev": "gatsby develop"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/luukdv/released.git"
+    "start": "gatsby develop"
   }
 }

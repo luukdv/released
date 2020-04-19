@@ -2,7 +2,7 @@ let headers = {}
 
 export const get = (url, options = {}) => request('GET', url, options)
 export const post = (url, options = {}) => request('POST', url, options)
-export const setHeaders = pair => (headers = { ...headers, ...pair })
+export const setHeaders = (pair) => (headers = { ...headers, ...pair })
 
 const request = (type, url, options) =>
   new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ const request = (type, url, options) =>
     const identifier = options.identifier ? options.identifier : null
 
     r.open(type, url)
-    Object.keys(headers).forEach(key => r.setRequestHeader(key, headers[key]))
+    Object.keys(headers).forEach((key) => r.setRequestHeader(key, headers[key]))
     r.send(options.data ? JSON.stringify(options.data) : null)
 
     r.onreadystatechange = () => {

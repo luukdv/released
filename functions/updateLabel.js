@@ -1,6 +1,6 @@
 const initDb = require('./utils/init-db')
 
-exports.handler = async event => {
+exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       body: JSON.stringify({ error: 'Not allowed' }),

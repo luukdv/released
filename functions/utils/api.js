@@ -1,7 +1,7 @@
 module.exports = {
   base: 'https://api.discogs.com/database/search',
   token: process.env.API_TOKEN,
-  error: e => ({
+  error: (e) => ({
     body: JSON.stringify({
       error: e.response ? e.response.statusText : e.code,
     }),

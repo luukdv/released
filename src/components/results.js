@@ -7,10 +7,10 @@ import State from '../context/state'
 export default React.memo(({ data, done, clear, searchError }) => {
   const { setLabels, user, setError } = useContext(State)
 
-  const add = async result => {
+  const add = async (result) => {
     const label = { ...result, release: {} }
 
-    setLabels(prev => [...prev, label])
+    setLabels((prev) => [...prev, label])
     clear()
 
     if (!user) {
@@ -18,7 +18,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
     }
 
     try {
-      await post('.netlify/functions/addUserToLabel', { data: { label } })
+      await post('/.netlify/functions/addUserToLabel', { data: { label } })
     } catch (e) {
       setError(
         'Something went wrong while saving data to your account. You can try again later.'
@@ -77,7 +77,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
             `}
             key={result.id}
             onClick={() => add(result)}
-            onKeyUp={e => (e.key === 13 || e.keyCode === 13) && add(result)}
+            onKeyUp={(e) => (e.key === 'Enter' || e.keyCode === 13) && add(result)}
           >
             <div
               css={css`
