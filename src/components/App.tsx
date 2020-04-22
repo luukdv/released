@@ -13,7 +13,7 @@ import User from './User'
 import Wrap from './Wrap'
 import { css } from '@emotion/core'
 
-export default React.memo(() => {
+export default () => {
   const { done } = useContext(State)
 
   return (
@@ -40,6 +40,7 @@ export default React.memo(() => {
             </Wrap>
           ) : (
             <Wrap>
+              <>
               <div
                 css={css`
                   ${scale(4, 'margin-bottom')}
@@ -63,6 +64,7 @@ export default React.memo(() => {
                 <Saved />
                 <User />
               </div>
+              </>
             </Wrap>
           )}
         </div>
@@ -72,4 +74,4 @@ export default React.memo(() => {
       </div>
     </>
   )
-})
+}

@@ -4,7 +4,7 @@ import Notice from './Notice'
 import State from '../context/State'
 import auth from '../auth'
 
-export default React.memo(() => {
+export default () => {
   const { user, done, logout } = useContext(State)
   const [text, setText] = useState('Log in with Google')
   const [notice, setNotice] = useState(
@@ -12,12 +12,12 @@ export default React.memo(() => {
   )
 
   if (!done) {
-    return
+    return null
   }
 
   return user ? (
     <>
-      <Notice>You are logged in as {user.user_metadata.full_name}.</Notice>
+      <Notice><>You are logged in as {user.user_metadata.full_name}.</></Notice>
       <Button
         onClick={() => {
           setNotice('You are successfully logged out.')
@@ -40,13 +40,15 @@ export default React.memo(() => {
       </Button>
     </>
   )
-})
+}
 
-const Button = ({ children, href, onClick }) => (
+const Button = ({ children, onClick }: {
+  children: string
+  onClick: () => void
+}) => (
   <div
     role="button"
     onClick={onClick}
-    rel="nofollow"
     tabIndex={0}
     onKeyUp={(e) => (e.key === 'Enter' || e.keyCode === 13) && onClick()}
     css={css`

@@ -7,7 +7,7 @@ export const getParams = () => {
     ? hash
         .slice(1)
         .split('&')
-        .reduce((list, param) => {
+        .reduce((list: { [key: string]: string }, param) => {
           const [key, val] = param.split('=')
           list[key] = val
 

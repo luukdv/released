@@ -2,7 +2,7 @@ import React from 'react'
 import scale from '../scale'
 import { css } from '@emotion/core'
 
-export default React.memo(() => (
+export default () => (
   <div
     css={css`
       max-width: 1520px;
@@ -38,4 +38,4 @@ export default React.memo(() => (
       `}
     />
   </div>
-))
+)

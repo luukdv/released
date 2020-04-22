@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from '@emotion/core'
 import scale from '../scale'
 
-export default React.memo(() => (
+export default () => (
   <div
     css={css`
       color: rgb(80, 80, 80);
@@ -52,7 +52,7 @@ export default React.memo(() => (
       Contact
     </a>
   </div>
-))
+)
 
 const Dot = () => (
   <div

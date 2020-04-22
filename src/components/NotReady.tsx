@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default React.memo(() => (
+export default () => (
   <div
     css={css`
       text-align: center;
@@ -16,4 +16,4 @@ export default React.memo(() => (
       Checking login…
     </h2>
   </div>
-))
+)

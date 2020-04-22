@@ -1,7 +1,9 @@
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default React.memo(({ children }) => (
+export default ({ children }: {
+  children: React.ReactElement
+}) => (
   <div
     css={css`
       margin: 0 auto;
@@ -20,4 +22,4 @@ export default React.memo(({ children }) => (
   >
     {children}
   </div>
-))
+)

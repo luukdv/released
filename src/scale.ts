@@ -1,4 +1,4 @@
-export default (number, type) => `
+export default (number: number, type: string) => `
   ${type}: calc(${(number / 2.5).toFixed(1)}vw + ${(number / 1.6).toFixed(
   1
 )}rem);

@@ -1,8 +1,11 @@
 import scale from '../scale'
 import React from 'react'
 import { css } from '@emotion/core'
+import { Label } from '../types'
 
-export default React.memo(({ data }) => (
+export default ({ data }: {
+  data: Label
+}) => (
   <a
     href={`https://www.discogs.com${data.release.link}`}
     target="_blank"
@@ -118,4 +121,4 @@ export default React.memo(({ data }) => (
       {decodeURIComponent(data.release.artist)}
     </div>
   </a>
-))
+)

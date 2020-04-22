@@ -1,16 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext} from 'react'
 import { css } from '@emotion/core'
 import scale from '../scale'
 import { post } from '../http'
 import State from '../context/State'
+import { Labels, Label } from '../types'
 
-export default React.memo(({ data, done, clear, searchError }) => {
+export default ({ data, done, clear, searchError }: {
+  data: Label[]
+  done: boolean
+  clear: () => void
+  searchError: string
+}) => {
   const { setLabels, user, setError } = useContext(State)
 
-  const add = async (result) => {
+  const add = async (result: Label) => {
     const label = { ...result, release: {} }
 
-    setLabels((prev) => [...prev, label])
+    setLabels((prev: Labels) => [...prev, label])
     clear()
 
     if (!user) {
@@ -56,7 +62,7 @@ export default React.memo(({ data, done, clear, searchError }) => {
         </div>
       )}
       {!!data.length &&
-        data.map((result, i) => (
+        data.map((result) => (
           <div
             tabIndex={0}
             role="button"
@@ -97,4 +103,4 @@ export default React.memo(({ data, done, clear, searchError }) => {
         ))}
     </div>
   )
-})
+}

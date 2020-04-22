@@ -1,8 +1,12 @@
 import React from 'react'
-import { css } from '@emotion/core'
+import { css, Interpolation } from '@emotion/core'
 import scale from '../scale'
 
-export default React.memo(({ children, styles, top }) => (
+export default ({ children, styles, top }: {
+  children: string | React.ReactElement
+  styles?: Interpolation
+  top?: boolean
+}) => (
   <p
     css={[
       styles,
@@ -16,4 +20,4 @@ export default React.memo(({ children, styles, top }) => (
   >
     {children}
   </p>
-))
+)

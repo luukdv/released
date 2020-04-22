@@ -1,14 +1,18 @@
 import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../scale'
-import Label from './Label'
+import Tag from './Tag'
 import State from '../context/State'
+import { Label } from '../types'
 
-export default React.memo(() => {
+export default () => {
   const { labels } = useContext(State)
 
+  if (!labels.length) {
+    return null
+  }
+
   return (
-    !!labels.length && (
       <div
         css={css`
           ${scale(4, 'margin-top')}
@@ -24,12 +28,11 @@ export default React.memo(() => {
           `}
         >
           {labels
-            .sort((f, s) => (f.name > s.name ? 1 : -1))
-            .map((label) => (
-              <Label data={label} key={label.id} />
+            .sort((f: Label, s: Label) => (f.name > s.name ? 1 : -1))
+            .map((label: Label) => (
+              <Tag data={label} key={label.id} />
             ))}
         </div>
       </div>
     )
-  )
-})
+}

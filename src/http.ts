@@ -1,10 +1,19 @@
-let headers = {}
+let headers: {
+  [key: string]: string
+} = {}
 
-export const get = (url, options = {}) => request('GET', url, options)
-export const post = (url, options = {}) => request('POST', url, options)
-export const setHeaders = (pair) => (headers = { ...headers, ...pair })
+export const get = (url: string, options = {}) => request('GET', url, options)
+export const post = (url: string, options = {}) => request('POST', url, options)
+export const setHeaders = (pair: {}) => (headers = { ...headers, ...pair })
 
-const request = (type, url, options) =>
+const request = (
+  type: string,
+  url: string,
+  options: { identifier?: string; data?: {} }
+): Promise<{
+  response: any
+  identifier: string | null
+}> =>
   new Promise((resolve, reject) => {
     const r = new XMLHttpRequest()
     const identifier = options.identifier ? options.identifier : null

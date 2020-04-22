@@ -2,12 +2,15 @@ import React, { useContext } from 'react'
 import { post } from '../http'
 import { css } from '@emotion/core'
 import State from '../context/State'
+import { Label, Labels } from '../types'
 
-export default React.memo(({ data }) => {
+export default ({ data }: {
+  data: Label
+}) => {
   const { setLabels, user, setError } = useContext(State)
 
   const remove = async () => {
-    setLabels((prev) => prev.filter((label) => label.id !== data.id))
+    setLabels((prev: Labels) => prev.filter((label) => label.id !== data.id))
 
     if (!user) {
       return
@@ -91,4 +94,4 @@ export default React.memo(({ data }) => {
       </div>
     </div>
   )
-})
+}

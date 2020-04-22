@@ -2,7 +2,7 @@ import scale from '../scale'
 import React from 'react'
 import { Global, css } from '@emotion/core'
 
-export default React.memo(() => (
+export default () => (
   <Global
     styles={css`
       html {
@@ -48,4 +48,4 @@ export default React.memo(() => (
       }
     `}
   />
-))
+)

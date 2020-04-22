@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/core'
 
-export default React.memo(({ show }) => (
+export default ({ show = false }: { show: boolean }) => (
   <div
     css={css`
       right: 0;
@@ -34,4 +34,4 @@ export default React.memo(({ show }) => (
       `}
     ></div>
   </div>
-))
+)

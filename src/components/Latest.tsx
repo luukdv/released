@@ -4,13 +4,14 @@ import { css } from '@emotion/core'
 import Release from './Release'
 import Notice from './Notice'
 import State from '../context/State'
+import { Label } from '../types'
 
-export default React.memo(() => {
+export default () => {
   const { labels, updating, error } = useContext(State)
 
   const none = !labels.length
   const nonEmpty = labels.filter(
-    (label) => label.release.artist && label.release.title
+    (label: Label) => label.release.artist && label.release.title
   )
   const onlyEmpty = !nonEmpty.length
 
@@ -41,8 +42,8 @@ export default React.memo(() => {
         <>
           <div>
             {nonEmpty
-              .sort((f, s) => (f.release.title > s.release.title ? 1 : -1))
-              .map((label) => (
+              .sort((f: Label, s: Label) => (f.release.title > s.release.title ? 1 : -1))
+              .map((label: Label) => (
                 <Release key={label.id} data={label} />
               ))}
           </div>
@@ -50,4 +51,4 @@ export default React.memo(() => {
       )}
     </>
   )
-})
+}

@@ -5,28 +5,35 @@ import { get } from '../http'
 import Loading from './Loading'
 import Results from './Results'
 import State from '../context/State'
+import { Labels, Label } from '../types'
 
 let value = ''
-let delayed
+let delayed: NodeJS.Timeout | null
 
-export default React.memo(() => {
-  const [results, setResults] = useState([])
-  const [done, setDone] = useState()
-  const [searchError, setSearchError] = useState()
-  const [loading, setLoading] = useState()
+export default () => {
+  const [results, setResults] = useState<Labels>([])
+  const [done, setDone] = useState(false)
+  const [searchError, setSearchError] = useState('')
+  const [loading, setLoading] = useState(false)
   const { labels } = useContext(State)
 
   useEffect(() => {
     document.addEventListener('click', (e) => {
-      if (!document.getElementById('add').contains(e.target)) {
+      const add = document.getElementById('add')
+
+      if (add && !add.contains(e.target as HTMLInputElement)) {
         clear()
       }
     })
   }, [])
 
   const clear = () => {
-    document.getElementById('search').value = ''
-    setDone(false)
+    const search = document.getElementById('search') as HTMLInputElement
+
+    if (search) {
+      search.value = ''
+      setDone(false)
+    }
   }
 
   const search = async () => {
@@ -47,8 +54,8 @@ export default React.memo(() => {
 
     if (data.identifier === value) {
       setResults(
-        data.response.results.filter((result) => {
-          return !labels.map((label) => label.id).includes(result.id)
+        data.response.results.filter((result: Label) => {
+          return !labels.map((label: Label) => label.id).includes(result.id)
         })
       )
       setLoading(false)
@@ -58,7 +65,7 @@ export default React.memo(() => {
 
   const onChange = () => {
     setDone(false)
-    setSearchError(false)
+    setSearchError('')
 
     if (value.length > 2) {
       setLoading(true)
@@ -138,4 +145,4 @@ export default React.memo(() => {
       )}
     </>
   )
-})
+}

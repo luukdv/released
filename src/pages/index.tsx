@@ -4,17 +4,23 @@ import { get, post, setHeaders } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/State'
 import { navigate } from '@reach/router'
+import { Labels, Label } from '../types'
 
 const updateInterval = 3000
 let lastUpdated = 0
-let updater
+let updater: NodeJS.Timeout
 
-export default React.memo(() => {
-  const [done, setDone] = useState()
-  const [error, setError] = useState()
-  const [labels, setLabels] = useState([])
-  const [updating, setUpdating] = useState()
-  const [user, setUser] = useState()
+export default () => {
+  const [done, setDone] = useState(false)
+  const [error, setError] = useState('')
+  const [labels, setLabels] = useState<Labels>([])
+  const [updating, setUpdating] = useState('')
+  const [user, setUser] = useState<null | {
+    logout: () => void
+    user_metadata: {
+      full_name: string
+    }
+  }>(null)
 
   useEffect(() => {
     const params = getParams()
@@ -35,7 +41,6 @@ export default React.memo(() => {
       const currentUser = auth.currentUser()
 
       if (!currentUser || !currentUser.user_metadata) {
-        setUser(false)
         setDone(true)
         return
       }
@@ -48,7 +53,6 @@ export default React.memo(() => {
         setError(
           'Something went wrong while retrieving your login. You can try again later.'
         )
-        setUser(false)
         setDone(true)
         return
       }
@@ -76,11 +80,14 @@ export default React.memo(() => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const logout = () => {
-    setUpdating(false)
+    setUpdating('')
     clearTimeout(updater)
-    setUser(false)
+    setUser(null)
     setLabels([])
-    user.logout()
+
+    if (user) {
+      user.logout()
+    }
   }
 
   useEffect(() => {
@@ -88,7 +95,7 @@ export default React.memo(() => {
       return
     }
 
-    const label = labels.reduce((acc, curr) => {
+    const label = (labels as Label[]).reduce((acc, curr) => {
       if (!acc.release.checked) {
         return acc
       }
@@ -115,10 +122,10 @@ export default React.memo(() => {
     }
   }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const update = async (label) => {
+  const update = async (label: Label) => {
     lastUpdated = Date.now()
 
-    setError(false)
+    setError('')
     setUpdating(decodeURIComponent(label.name))
 
     let data
@@ -131,18 +138,18 @@ export default React.memo(() => {
       setError(
         "Something went wrong wile checking for new releases. We'll keep trying."
       )
-      setUpdating(false)
+      setUpdating('')
       return
     }
 
     const { response: release } = data
 
-    setLabels((prevLabels) =>
+    setLabels((prevLabels: Label[]) =>
       prevLabels.map((prevLabel) =>
         prevLabel.id === label.id ? { ...prevLabel, release } : prevLabel
       )
     )
-    setUpdating(false)
+    setUpdating('')
 
     if (release) {
       try {
@@ -169,4 +176,4 @@ export default React.memo(() => {
       <App />
     </State.Provider>
   )
-})
+}

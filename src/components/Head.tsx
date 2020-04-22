@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-export default React.memo(() => (
+export default () => (
   <Helmet>
     <title>Released</title>
     <meta
@@ -24,4 +24,4 @@ export default React.memo(() => (
       </script>
     )}
   </Helmet>
-))
+)
