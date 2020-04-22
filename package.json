@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "dev": "netlify dev",
+    "dev": "open http://localhost:8888/ && netlify dev",
     "format": "prettier --write '**/*.{js,json}'",
     "start": "gatsby develop",
     "typecheck": "tsc"
