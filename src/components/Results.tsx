@@ -3,7 +3,7 @@ import { css } from '@emotion/core'
 import scale from '../scale'
 import { post } from '../http'
 import State from '../context/State'
-import { Labels, Label } from '../types'
+import { Label } from '../types'
 
 export default ({ data, done, clear, searchError }: {
   data: Label[]
@@ -14,9 +14,7 @@ export default ({ data, done, clear, searchError }: {
   const { setLabels, user, setError } = useContext(State)
 
   const add = async (result: Label) => {
-    const label = { ...result, release: {} }
-
-    setLabels((prev: Labels) => [...prev, label])
+    setLabels((prev) => [...prev, result])
     clear()
 
     if (!user) {
@@ -24,7 +22,7 @@ export default ({ data, done, clear, searchError }: {
     }
 
     try {
-      await post('/.netlify/functions/addUserToLabel', { data: { label } })
+      await post('/.netlify/functions/addUserToLabel', { data: { label: result } })
     } catch (e) {
       setError(
         'Something went wrong while saving data to your account. You can try again later.'

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { post } from '../http'
 import { css } from '@emotion/core'
 import State from '../context/State'
-import { Label, Labels } from '../types'
+import { Label } from '../types'
 
 export default ({ data }: {
   data: Label
@@ -10,7 +10,7 @@ export default ({ data }: {
   const { setLabels, user, setError } = useContext(State)
 
   const remove = async () => {
-    setLabels((prev: Labels) => prev.filter((label) => label.id !== data.id))
+    setLabels((prev) => prev.filter((label) => label.id !== data.id))
 
     if (!user) {
       return

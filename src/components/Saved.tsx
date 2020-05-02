@@ -3,7 +3,6 @@ import { css } from '@emotion/core'
 import scale from '../scale'
 import Tag from './Tag'
 import State from '../context/State'
-import { Label } from '../types'
 
 export default () => {
   const { labels } = useContext(State)
@@ -28,8 +27,8 @@ export default () => {
           `}
         >
           {labels
-            .sort((f: Label, s: Label) => (f.name > s.name ? 1 : -1))
-            .map((label: Label) => (
+            .sort((f, s) => (f.name > s.name ? 1 : -1))
+            .map((label) => (
               <Tag data={label} key={label.id} />
             ))}
         </div>

@@ -7,6 +7,7 @@ export default createContext<{
   labels: Labels,
   logout: () => void,
   setError: Dispatch<SetStateAction<string>>
+  setLabels: Dispatch<SetStateAction<Labels>>
   updating: string,
   user: User,
 }>({
@@ -15,6 +16,7 @@ export default createContext<{
   labels: [],
   logout: () => undefined,
   setError: () => undefined,
+  setLabels: () => undefined,
   updating: '',
   user: null,
 })
