@@ -91,22 +91,22 @@ export default () => {
     }
 
     const label = (labels as Label[]).reduce((acc, curr) => {
-      if (!acc.release.checked) {
+      if (!acc.release) {
         return acc
       }
 
-      if (!curr.release.checked) {
+      if (!curr.release) {
         return curr
       }
 
       return acc.release.checked > curr.release.checked ? curr : acc
     })
     const sixHours = 6 * 60 * 60 * 1000
-    const stale = label.release.checked + sixHours < Date.now()
+    const stale = !label.release || (label.release.checked + sixHours < Date.now())
 
     clearTimeout(updater)
 
-    if (!label.release.checked || stale) {
+    if (stale) {
       const delay = lastUpdated + updateInterval > Date.now()
 
       if (delay) {

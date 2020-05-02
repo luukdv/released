@@ -7,7 +7,7 @@ export default ({ data }: {
   data: Label
 }) => (
   <a
-    href={`https://www.discogs.com${data.release.link}`}
+    href={`https://www.discogs.com${data.release!.link}`}
     target="_blank"
     rel="noreferrer noopener nofollow"
     css={css`
@@ -88,8 +88,8 @@ export default ({ data }: {
           border-radius: 3px;
           width: 100%;
           padding-bottom: 100%;
-          background: ${data.release.img
-            ? `url('${data.release.img}') rgb(230, 230, 230)`
+          background: ${data.release!.img
+            ? `url('${data.release!.img}') rgb(230, 230, 230)`
             : 'rgb(230, 230, 230)'};
           background-size: cover;
           background-position: 50%;
@@ -106,7 +106,7 @@ export default ({ data }: {
         }
       `}
     >
-      {decodeURIComponent(data.release.title)}
+      {decodeURIComponent(data.release!.title)}
     </div>
     <div
       css={css`
@@ -118,7 +118,7 @@ export default ({ data }: {
         }
       `}
     >
-      {decodeURIComponent(data.release.artist)}
+      {decodeURIComponent(data.release!.artist)}
     </div>
   </a>
 )
