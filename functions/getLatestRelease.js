@@ -1,15 +1,11 @@
 const api = require('./utils/api')
 const axios = require('axios')
 const currentYear = new Date().getFullYear()
-const initDb = require('./utils/init-db')
 
 exports.handler = async (event) => {
-  const db = initDb()
-  const q = db.query
-
   const getParams = (type, year) =>
     Object.entries({
-      label: event.queryStringParameters.name,
+      label: encodeURIComponent(event.queryStringParameters.name),
       per_page: 1,
       token: api.token,
       type,
