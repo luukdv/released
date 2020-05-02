@@ -55,7 +55,7 @@ export default () => {
     if (data.identifier === value) {
       setResults(
         data.response.results.filter((result: Label) => {
-          return !labels.map((label: Label) => label.id).includes(result.id)
+          return !(labels as Label[]).map((label) => label.id).includes(result.id)
         })
       )
       setLoading(false)
