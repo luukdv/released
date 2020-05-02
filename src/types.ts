@@ -13,3 +13,10 @@ export type Label = {
 }
 
 export type Labels = [] | Label[]
+
+export type User = null | {
+  logout: () => void
+  user_metadata: {
+    full_name: string
+  }
+}

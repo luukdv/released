@@ -4,7 +4,7 @@ import { get, post, setHeaders } from '../http'
 import React, { useState, useEffect } from 'react'
 import State from '../context/State'
 import { navigate } from '@reach/router'
-import { Labels, Label } from '../types'
+import { Labels, Label, User } from '../types'
 
 const updateInterval = 3000
 let lastUpdated = 0
@@ -15,12 +15,7 @@ export default () => {
   const [error, setError] = useState('')
   const [labels, setLabels] = useState<Labels>([])
   const [updating, setUpdating] = useState('')
-  const [user, setUser] = useState<null | {
-    logout: () => void
-    user_metadata: {
-      full_name: string
-    }
-  }>(null)
+  const [user, setUser] = useState<User>(null)
 
   useEffect(() => {
     const params = getParams()
