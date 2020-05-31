@@ -3,22 +3,22 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "axios": "^0.19.2",
-    "faunadb": "^2.13.1",
-    "gatsby": "^2.21.9",
-    "gatsby-plugin-emotion": "^4.3.0",
-    "gatsby-plugin-netlify": "^2.3.0",
-    "gatsby-plugin-react-helmet": "^3.3.0",
+    "faunadb": "^2.14.1",
+    "gatsby": "^2.22.15",
+    "gatsby-plugin-emotion": "^4.3.2",
+    "gatsby-plugin-netlify": "^2.3.3",
+    "gatsby-plugin-react-helmet": "^3.3.2",
     "gotrue-js": "^0.9.25",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0"
   },
   "devDependencies": {
-    "@types/react-helmet": "^5.0.15",
-    "gatsby-plugin-typescript": "^2.4.0",
-    "netlify-cli": "^2.48.0",
+    "@types/react-helmet": "^6.0.0",
+    "gatsby-plugin-typescript": "^2.4.3",
+    "netlify-cli": "^2.52.0",
     "prettier": "^2.0.5",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.3"
   },
   "scripts": {
     "build": "gatsby build",
