@@ -3,9 +3,7 @@ import React from 'react'
 import { css } from '@emotion/core'
 import { Label } from '../types'
 
-export default ({ data }: {
-  data: Label
-}) => (
+export default ({ data }: { data: Label }) => (
   <a
     href={`https://www.discogs.com${data.release!.link}`}
     target="_blank"
@@ -13,74 +11,27 @@ export default ({ data }: {
     css={css`
       align-items: center;
       display: flex;
+      line-height: 1.5;
       padding: 0.75em 0;
       position: relative;
       text-decoration: none;
+      transition: background-color 0.2s ease-out;
       ${scale(1.125, 'font-size')}
 
-      @media (min-width: 481px) {
-        padding: 0.67em 0;
-      }
-
-      &:hover .release-label {
-        opacity: 1;
-        pointer-events: auto;
+      &:hover {
+        background: rgb(240, 240, 240);
       }
 
       &:not(:last-of-type) {
         border-bottom: 2px solid rgb(220, 220, 220);
       }
-
-      &:first-of-type {
-        padding-top: 0;
-      }
-
-      &:last-of-type {
-        padding-bottom: 0;
-      }
-
-      > div {
-        flex: none;
-      }
     `}
   >
     <div
-      className="release-label"
       css={css`
-        background: rgb(235, 235, 235);
-        padding: 0 1.5em;
-        display: flex;
-        opacity: 0;
-        pointer-events: none;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        transition: opacity 0.2s ease-out;
-        will-change: opacity;
-        left: 0;
-        position: absolute;
-        top: 0;
-      `}
-    >
-      <div>
-        Release on{' '}
-        <span
-          css={css`
-            font-weight: 700;
-          `}
-        >
-          {decodeURIComponent(data.name)}
-        </span>
-      </div>
-    </div>
-    <div
-      css={css`
-        display: none;
-        width: 6%;
-
-        @media (min-width: 481px) {
-          display: block;
-        }
+        flex-shrink: 0;
+        ${scale(2, 'margin-right')}
+        ${scale(3.5, 'width')}
       `}
     >
       <div
@@ -98,27 +49,17 @@ export default ({ data }: {
     </div>
     <div
       css={css`
-        font-weight: 700;
-        width: 50%;
-
-        @media (min-width: 481px) {
-          padding-left: 1.5em;
-        }
+        flex-grow: 1;
       `}
     >
-      {decodeURIComponent(data.release!.title)}
-    </div>
-    <div
-      css={css`
-        padding-left: 1.5em;
-        width: ${100 - 50}%;
-
-        @media (min-width: 481px) {
-          width: ${100 - 50 - 6}%;
-        }
-      `}
-    >
-      {decodeURIComponent(data.release!.artist)}
+      <div
+        css={css`
+          font-weight: 700;
+        `}
+      >
+        {decodeURIComponent(data.release!.title)}
+      </div>
+      <div>{decodeURIComponent(data.release!.artist)}</div>
     </div>
   </a>
 )
