@@ -48,6 +48,7 @@ exports.handler = async (event) => {
       release.artist = encodeURIComponent(
         response.data.results[0].title
           .split(' - ')[0]
+          .split('%20%2F%20')[0]
           .replace(/\*$/, '')
           .replace(/\* /, ' ')
           .replace(/\s\(\d+\)/, '')
