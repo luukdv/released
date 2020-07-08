@@ -48,7 +48,8 @@ exports.handler = async (event) => {
       release.artist = encodeURIComponent(
         response.data.results[0].title
           .split(' - ')[0]
-          .replace(/(.+)\*$/, '$1')
+          .replace(/\*$/, '')
+          .replace(/\* /, ' ')
           .replace(/\s\(\d+\)/, '')
       )
       release.img = response.data.results[0].thumb
