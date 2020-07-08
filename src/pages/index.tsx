@@ -6,6 +6,7 @@ import State from '../context/State'
 import { navigate } from '@reach/router'
 import { Labels, Label, User } from '../types'
 
+const sixHours = 6 * 60 * 60 * 1000
 const updateInterval = 3000
 let lastUpdated = 0
 let updater: NodeJS.Timeout
@@ -101,7 +102,6 @@ export default () => {
 
       return acc.release.checked > curr.release.checked ? curr : acc
     })
-    const sixHours = 6 * 60 * 60 * 1000
     const stale =
       !label.release || label.release.checked + sixHours < Date.now()
 
