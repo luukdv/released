@@ -14,21 +14,23 @@ export default ({ data }: { data: Label }) => (
       }
     `}
   >
-    <a css={css`
-      align-items: center;
-      padding: 0.75em 1em 0.75em 0;
-      text-decoration: none;
-      display: flex;
-      flex-grow: 1;
-      transition: background-color 0.2s ease-out;
+    <a
+      css={css`
+        align-items: center;
+        padding: 0.75em 1em 0.75em 0;
+        text-decoration: none;
+        display: flex;
+        flex-grow: 1;
+        transition: background-color 0.2s ease-out;
 
-      &:hover {
-        background: rgb(240, 240, 240);
-      }
-    `}
-    href={`https://www.discogs.com${data.release!.link}`}
-    target="_blank"
-    rel="noreferrer noopener nofollow">
+        &:hover {
+          background: rgb(240, 240, 240);
+        }
+      `}
+      href={`https://www.discogs.com${data.release!.link}`}
+      target="_blank"
+      rel="noreferrer noopener nofollow"
+    >
       <div
         css={css`
           flex-shrink: 0;
@@ -80,17 +82,31 @@ export default ({ data }: { data: Label }) => (
         }
       `}
     >
-      <div css={css`
-        border-left: 1px solid rgb(220, 220, 220);
-        display: flex;
-        align-items: center;
-        padding: 0 1em;
-      `}>
-          <svg css={css`
+      <div
+        css={css`
+          border-left: 1px solid rgb(220, 220, 220);
+          display: flex;
+          align-items: center;
+          padding: 0 1em;
+        `}
+      >
+        <svg
+          css={css`
             height: 1em;
             width: 1em;
             display: block;
-          `} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+          `}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
       </div>
     </a>
   </div>
