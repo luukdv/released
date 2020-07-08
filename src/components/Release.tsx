@@ -34,7 +34,7 @@ export default ({ data }: { data: Label }) => (
       <div
         css={css`
           flex-shrink: 0;
-          ${scale(2, 'margin-right')}
+          ${scale(1.75, 'margin-right')}
           ${scale(3.5, 'width')}
         `}
       >
@@ -44,8 +44,8 @@ export default ({ data }: { data: Label }) => (
             width: 100%;
             padding-bottom: 100%;
             background: ${data.release!.img
-              ? `url('${data.release!.img}') rgb(230, 230, 230)`
-              : 'rgb(230, 230, 230)'};
+              ? `url('${data.release!.img}') rgb(220, 220, 220)`
+              : 'rgb(220, 220, 220)'};
             background-size: cover;
             background-position: 50%;
           `}
@@ -66,21 +66,31 @@ export default ({ data }: { data: Label }) => (
         </div>
         <div
           css={css`
-            align-items: center;
             display: flex;
+            flex-direction: column;
+
+            @media (min-width: 481px) {
+              align-items: center;
+              flex-direction: row;
+            }
           `}
         >
-          {decodeURIComponent(data.release!.artist)}
+          <div>{decodeURIComponent(data.release!.artist)}</div>
           <div
             css={css`
               color: rgb(120, 120, 120);
               display: flex;
               align-items: center;
-              margin-left: 1em;
+              margin-top: 0.25em;
+
+              @media (min-width: 481px) {
+                margin: 0 0 0 1em;
+              }
             `}
           >
             <svg
               css={css`
+                flex-shrink: 0;
                 height: 0.67em;
                 width: 0.67em;
                 display: block;

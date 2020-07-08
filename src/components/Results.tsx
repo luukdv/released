@@ -94,7 +94,7 @@ export default ({
           >
             <div
               css={css`
-              background: url('${result.img}') rgb(230, 230, 230);
+              background: url('${result.img}') rgb(220, 220, 220);
               border-radius: 3px;
               background-size: cover;
               background-position: 50%;
