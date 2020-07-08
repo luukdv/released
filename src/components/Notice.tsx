@@ -2,7 +2,11 @@ import React from 'react'
 import { css, Interpolation } from '@emotion/core'
 import scale from '../scale'
 
-export default ({ children, styles, top }: {
+export default ({
+  children,
+  styles,
+  top,
+}: {
   children: string | React.ReactElement
   styles?: Interpolation
   top?: boolean

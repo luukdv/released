@@ -17,7 +17,9 @@ export default () => {
 
   return user ? (
     <>
-      <Notice><>You are logged in as {user.user_metadata.full_name}.</></Notice>
+      <Notice>
+        <>You are logged in as {user.user_metadata.full_name}.</>
+      </Notice>
       <Button
         onClick={() => {
           setNotice('You are successfully logged out.')
@@ -42,7 +44,10 @@ export default () => {
   )
 }
 
-const Button = ({ children, onClick }: {
+const Button = ({
+  children,
+  onClick,
+}: {
   children: string
   onClick: () => void
 }) => (

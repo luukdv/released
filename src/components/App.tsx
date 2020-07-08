@@ -41,29 +41,29 @@ export default () => {
           ) : (
             <Wrap>
               <>
-              <div
-                css={css`
-                  ${scale(4, 'margin-bottom')}
+                <div
+                  css={css`
+                    ${scale(4, 'margin-bottom')}
 
-                  @media (min-width: 961px) {
-                    margin-bottom: 0;
-                    width: 55%;
-                  }
-                `}
-              >
-                <Latest />
-              </div>
-              <div
-                css={css`
-                  @media (min-width: 961px) {
-                    width: 37.5%;
-                  }
-                `}
-              >
-                <Add />
-                <Saved />
-                <User />
-              </div>
+                    @media (min-width: 961px) {
+                      margin-bottom: 0;
+                      width: 55%;
+                    }
+                  `}
+                >
+                  <Latest />
+                </div>
+                <div
+                  css={css`
+                    @media (min-width: 961px) {
+                      width: 37.5%;
+                    }
+                  `}
+                >
+                  <Add />
+                  <Saved />
+                  <User />
+                </div>
               </>
             </Wrap>
           )}

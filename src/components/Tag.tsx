@@ -4,9 +4,7 @@ import { css } from '@emotion/core'
 import State from '../context/State'
 import { Label } from '../types'
 
-export default ({ data }: {
-  data: Label
-}) => {
+export default ({ data }: { data: Label }) => {
   const { setLabels, user, setError } = useContext(State)
 
   const remove = async () => {

@@ -102,7 +102,8 @@ export default () => {
       return acc.release.checked > curr.release.checked ? curr : acc
     })
     const sixHours = 6 * 60 * 60 * 1000
-    const stale = !label.release || (label.release.checked + sixHours < Date.now())
+    const stale =
+      !label.release || label.release.checked + sixHours < Date.now()
 
     clearTimeout(updater)
 

@@ -1,11 +1,16 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import { css } from '@emotion/core'
 import scale from '../scale'
 import { post } from '../http'
 import State from '../context/State'
 import { Label } from '../types'
 
-export default ({ data, done, clear, searchError }: {
+export default ({
+  data,
+  done,
+  clear,
+  searchError,
+}: {
   data: Label[]
   done: boolean
   clear: () => void
@@ -22,7 +27,9 @@ export default ({ data, done, clear, searchError }: {
     }
 
     try {
-      await post('/.netlify/functions/addUserToLabel', { data: { label: result } })
+      await post('/.netlify/functions/addUserToLabel', {
+        data: { label: result },
+      })
     } catch (e) {
       setError(
         'Something went wrong while saving data to your account. You can try again later.'
@@ -81,7 +88,9 @@ export default ({ data, done, clear, searchError }: {
             `}
             key={result.id}
             onClick={() => add(result)}
-            onKeyUp={(e) => (e.key === 'Enter' || e.keyCode === 13) && add(result)}
+            onKeyUp={(e) =>
+              (e.key === 'Enter' || e.keyCode === 13) && add(result)
+            }
           >
             <div
               css={css`
