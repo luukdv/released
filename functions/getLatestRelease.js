@@ -49,6 +49,7 @@ exports.handler = async (event) => {
         response.data.results[0].title
           .split(' - ')[0]
           .split('%20%2F%20')[0]
+          .split(' Feat.')[0]
           .replace(/\*$/, '')
           .replace(/\* /, ' ')
           .replace(/\s\(\d+\)/, '')
