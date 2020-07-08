@@ -6,10 +6,10 @@ export default ({ children }: { children: React.ReactElement }) => (
     css={css`
       margin: 0 auto;
       max-width: 1600px;
-      padding: 0 20px;
+      padding: 0 16px;
 
       @media (min-width: 641px) {
-        padding: 0 40px;
+        padding: 0 32px;
       }
 
       @media (min-width: 961px) {
