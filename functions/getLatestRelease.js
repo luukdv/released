@@ -48,7 +48,6 @@ exports.handler = async (event) => {
       release.artist = encodeURIComponent(
         response.data.results[0].title
           .split(' - ')[0]
-          .split('%20%2F%20')[0]
           .split(' Feat.')[0]
           .replace(/\*$/, '')
           .replace(/\* /, ' ')
@@ -57,7 +56,10 @@ exports.handler = async (event) => {
       release.img = response.data.results[0].thumb
       release.link = response.data.results[0].uri
       release.title = encodeURIComponent(
-        response.data.results[0].title.split(' - ')[1].replace(' EP', '')
+        response.data.results[0].title
+          .split(' - ')[1]
+          .split(' / ')[0]
+          .replace(' EP', '')
       )
     }
 
