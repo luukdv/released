@@ -64,7 +64,47 @@ export default ({ data }: { data: Label }) => (
         >
           {decodeURIComponent(data.release!.title)}
         </div>
-        <div>{decodeURIComponent(data.release!.artist)}</div>
+        <div
+          css={css`
+            align-items: center;
+            display: flex;
+          `}
+        >
+          {decodeURIComponent(data.release!.artist)}
+          <div
+            css={css`
+              color: rgb(120, 120, 120);
+              display: flex;
+              align-items: center;
+              margin-left: 1em;
+            `}
+          >
+            <svg
+              css={css`
+                height: 0.67em;
+                width: 0.67em;
+                display: block;
+              `}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+            <div
+              css={css`
+                font-size: 0.67em;
+                margin-left: 0.25em;
+              `}
+            >
+              {decodeURIComponent(data.name)}
+            </div>
+          </div>
+        </div>
       </div>
     </a>
     <a
