@@ -55,7 +55,9 @@ exports.handler = async (event) => {
       release.img = response.data.results[0].thumb
       release.link = response.data.results[0].uri
       release.title = encodeURIComponent(
-        response.data.results[0].title.split(' - ')[1]
+        response.data.results[0].title
+          .split(' - ')[1]
+          .replace(' EP', '')
       )
     }
 
