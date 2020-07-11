@@ -47,7 +47,7 @@ export default () => {
         setHeaders({ Authorization: `Bearer ${token}` })
       } catch (e) {
         setError(
-          'Something went wrong while retrieving your login. You can try again later.'
+          'You have been logged out from Google, probably because your login was expired. You can log in again to see your releases.'
         )
         setDone(true)
         return
@@ -132,7 +132,7 @@ export default () => {
       )
     } catch (e) {
       setError(
-        "Something went wrong wile checking for new releases. We'll keep trying."
+        `Something went wrong wile checking for new releases from ${label.name}. We'll keep trying.`
       )
       setUpdating('')
       return
