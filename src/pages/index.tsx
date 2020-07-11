@@ -73,7 +73,15 @@ export default () => {
 
       setDone(true)
     })()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (!labels.length) {
+      return
+    }
+
+    updateBatch(labels)
+  }, [labels])
 
   const logout = () => {
     setUpdating('')
@@ -86,12 +94,8 @@ export default () => {
     }
   }
 
-  useEffect(() => {
-    if (!labels.length) {
-      return
-    }
-
-    const label = (labels as Label[]).reduce((acc, curr) => {
+  const updateBatch = (labels: Label[]) => {
+    const label = labels.reduce((acc, curr) => {
       if (!acc.release) {
         return acc
       }
@@ -111,48 +115,60 @@ export default () => {
       const delay = lastUpdated + updateInterval > Date.now()
 
       if (delay) {
-        updater = setTimeout(() => update(label), updateInterval)
+        updater = setTimeout(() => updateSingle(label), updateInterval)
       } else {
-        update(label)
+        updateSingle(label)
       }
     }
-  }, [labels]) // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
-  const update = async (label: Label) => {
+  const updateSingle = async (label: Label) => {
     lastUpdated = Date.now()
 
     setError('')
     setUpdating(decodeURIComponent(label.name))
 
-    let data
-
     try {
-      data = await get(
+      const data = await get(
         `/.netlify/functions/getLatestRelease?name=${label.name}`
       )
-    } catch (e) {
-      setError(
-        `Something went wrong wile checking for new releases from ${label.name}. We'll keep trying.`
-      )
+      const { response: release } = data
+
       setUpdating('')
-      return
-    }
+      setLabels((prevLabels: Label[]) =>
+        prevLabels.map((prevLabel) => {
+          if (prevLabel.id !== label.id) {
+            return prevLabel
+          }
 
-    const { response: release } = data
-
-    setLabels((prevLabels: Label[]) =>
-      prevLabels.map((prevLabel) =>
-        prevLabel.id === label.id ? { ...prevLabel, release } : prevLabel
+          return { ...prevLabel, release }
+        })
       )
-    )
-    setUpdating('')
 
-    if (release) {
-      try {
-        await post('/.netlify/functions/updateLabel', {
+      if (release) {
+        post('/.netlify/functions/updateLabel', {
           data: { label: label.id, release },
         })
-      } catch (e) {}
+      }
+    } catch (e) {
+      setError(
+        `Something went wrong wile checking for new releases from ${decodeURIComponent(
+          label.name
+        )}. We'll keep trying.`
+      )
+      setUpdating('')
+      setLabels((prevLabels: Label[]) =>
+        prevLabels.map((prevLabel) => {
+          if (prevLabel.id !== label.id) {
+            return prevLabel
+          }
+
+          return {
+            ...prevLabel,
+            release: { ...prevLabel.release, checked: Date.now() },
+          }
+        })
+      )
     }
   }
 

@@ -3,7 +3,7 @@ export type Label = {
   img: string
   link: string
   name: string
-  release?: {
+  release: {
     artist: string
     checked: number
     img: string
