@@ -1,7 +1,14 @@
 const api = require('./utils/api')
 const axios = require('axios')
 
-exports.handler = async (event) => {
+type Result = {
+  id: number,
+  uri: string,
+  thumb: string,
+  title: string,
+};
+
+exports.handler = async (event: any) => {
   const params = Object.entries({
     per_page: 10,
     q: encodeURIComponent(event.queryStringParameters.query),
@@ -17,7 +24,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        results: response.data.results.map((result) => ({
+        results: response.data.results.map((result: Result) => ({
           id: result.id,
           img: result.thumb,
           link: result.uri,

@@ -1,6 +1,6 @@
 const initDb = require('./utils/init-db')
 
-exports.handler = async (event, context) => {
+exports.handler = async (event: any, context: any) => {
   if (!context.clientContext.user) {
     return {
       body: JSON.stringify({ error: 'Not allowed' }),
@@ -23,7 +23,7 @@ exports.handler = async (event, context) => {
     )
 
     return {
-      body: JSON.stringify(response.data.map(({ users, ...rest }) => rest)),
+      body: JSON.stringify(response.data.map(({ users: [], ...rest }) => rest)),
       statusCode: 200,
     }
   } catch (e) {

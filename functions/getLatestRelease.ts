@@ -3,8 +3,10 @@ const axios = require('axios')
 const capitalize = require('./utils/capitalize')
 const currentYear = new Date().getFullYear()
 
-exports.handler = async (event) => {
-  const getParams = (type, year) =>
+type Data = { data: { results: [{ label: string, title: string, thumb: string, uri: string }] } };
+
+exports.handler = async (event: any) => {
+  const getParams = (type: string, year: number) =>
     Object.entries({
       label: encodeURIComponent(event.queryStringParameters.name),
       per_page: 1,
@@ -15,12 +17,12 @@ exports.handler = async (event) => {
       .map((p) => p.join('='))
       .join('&')
 
-  const isMainLabel = (res) =>
+  const isMainLabel = (res: Data) =>
     res.data.results[0].label.length &&
     res.data.results[0].label[0].toLowerCase() ===
       event.queryStringParameters.name.toLowerCase()
 
-  const getLatestByYear = async (year) => {
+  const getLatestByYear = async (year: number) => {
     const master = await axios.get(`${api.base}?${getParams('master', year)}`)
 
     if (master.data.results.length && isMainLabel(master)) {
@@ -35,7 +37,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    let response
+    let response: null|Data
 
     response = await getLatestByYear(currentYear)
 
@@ -43,33 +45,37 @@ exports.handler = async (event) => {
       response = await getLatestByYear(currentYear - 1)
     }
 
-    const release = { checked: Date.now() }
+    const getRelease = () => {
+      if (!response) {
+        return { checked: Date.now() }
+      }
 
-    if (response) {
-      release.artist = encodeURIComponent(
-        capitalize(
-          response.data.results[0].title
-            .split(' - ')[0]
-            .split(' Feat.')[0]
-            .replace(/\*$/, '')
-            .replace(/\* /, ' ')
-            .replace(/\s\(\d+\)/, '')
-        )
-      )
-      release.img = response.data.results[0].thumb
-      release.link = response.data.results[0].uri
-      release.title = encodeURIComponent(
-        capitalize(
-          response.data.results[0].title
-            .split(' - ')[1]
-            .split(' / ')[0]
-            .replace(' EP', '')
-        )
-      )
+      return {
+        artist: encodeURIComponent(
+          capitalize(
+            response.data.results[0].title
+              .split(' - ')[0]
+              .split(' Feat.')[0]
+              .replace(/\*$/, '')
+              .replace(/\* /, ' ')
+              .replace(/\s\(\d+\)/, '')
+          )
+        ),
+        img: response.data.results[0].thumb,
+        link: response.data.results[0].uri,
+        title: encodeURIComponent(
+          capitalize(
+            response.data.results[0].title
+              .split(' - ')[1]
+              .split(' / ')[0]
+              .replace(' EP', '')
+          )
+        ),
+      }
     }
 
     return {
-      body: JSON.stringify(release),
+      body: JSON.stringify(getRelease()),
       statusCode: 200,
     }
   } catch (e) {

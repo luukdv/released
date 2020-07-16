@@ -1,1 +1,1 @@
-module.exports = (text) => text.charAt(0).toUpperCase() + text.slice(1)
+module.exports = (text: string) => text.charAt(0).toUpperCase() + text.slice(1)
