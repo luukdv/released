@@ -1,5 +1,6 @@
 .cache
 .DS_Store
 .netlify
+functions/*.js
 node_modules
 public
