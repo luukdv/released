@@ -30,3 +30,5 @@ exports.handler = async (event, context) => {
     return db.error(e)
   }
 }
+
+export {}

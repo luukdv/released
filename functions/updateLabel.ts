@@ -36,3 +36,5 @@ exports.handler = async (event) => {
     return db.error(e)
   }
 }
+
+export {}

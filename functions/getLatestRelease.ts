@@ -76,3 +76,5 @@ exports.handler = async (event) => {
     return api.error(e)
   }
 }
+
+export {}
