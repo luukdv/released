@@ -1,5 +1,6 @@
 const api = require('./utils/api')
 const axios = require('axios')
+const capitalize = require('./utils/capitalize')
 const currentYear = new Date().getFullYear()
 
 exports.handler = async (event) => {
@@ -46,20 +47,24 @@ exports.handler = async (event) => {
 
     if (response) {
       release.artist = encodeURIComponent(
-        response.data.results[0].title
-          .split(' - ')[0]
-          .split(' Feat.')[0]
-          .replace(/\*$/, '')
-          .replace(/\* /, ' ')
-          .replace(/\s\(\d+\)/, '')
+        capitalize(
+          response.data.results[0].title
+            .split(' - ')[0]
+            .split(' Feat.')[0]
+            .replace(/\*$/, '')
+            .replace(/\* /, ' ')
+            .replace(/\s\(\d+\)/, '')
+        )
       )
       release.img = response.data.results[0].thumb
       release.link = response.data.results[0].uri
       release.title = encodeURIComponent(
-        response.data.results[0].title
-          .split(' - ')[1]
-          .split(' / ')[0]
-          .replace(' EP', '')
+        capitalize(
+          response.data.results[0].title
+            .split(' - ')[1]
+            .split(' / ')[0]
+            .replace(' EP', '')
+        )
       )
     }
 
