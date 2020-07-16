@@ -17,14 +17,18 @@
     "@types/react-helmet": "^6.0.0",
     "gatsby-plugin-typescript": "^2.4.15",
     "netlify-cli": "^2.58.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "typescript": "^3.9.6"
   },
   "scripts": {
-    "build": "gatsby build",
-    "dev": "open http://localhost:8888/ && netlify dev",
+    "dev": "run-p dev:src dev:functions",
+    "dev:src": "open http://localhost:8888/ && netlify dev",
+    "dev:functions": "npm run ts:functions -- -w",
+    "build": "npm run ts:functions && gatsby build",
     "format": "prettier --write '**/*.{js,json,ts,tsx}'",
-    "start": "gatsby develop",
-    "typecheck": "tsc"
+    "ts": "tsc",
+    "ts:functions": "tsc -p tsconfig.functions.json",
+    "start": "gatsby develop"
   }
 }

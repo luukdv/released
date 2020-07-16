@@ -6,5 +6,5 @@
     "noEmit": true,
     "strict": true
   },
-  "include": ["functions", "src"]
+  "include": ["src"]
 }
