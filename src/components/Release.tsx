@@ -118,7 +118,7 @@ export default ({ data }: { data: Label }) => (
       </div>
     </a>
     <a
-      href={`itmss://music.apple.com/search?term=${data.release!.artist.toLowerCase()}%20${data.release!.title.toLowerCase()}`}
+      href={`https://music.apple.com/search?term=${data.release!.artist.toLowerCase()}%20${data.release!.title.toLowerCase()}`}
       target="_blank"
       rel="noreferrer noopener nofollow"
       css={css`
