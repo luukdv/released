@@ -1,7 +1,15 @@
+type Err = {
+  code: number
+  response?: {
+    status: number
+    statusText: string
+  }
+}
+
 module.exports = {
   base: 'https://api.discogs.com/database/search',
   token: process.env.API_TOKEN,
-  error: (e) => ({
+  error: (e: Err) => ({
     body: JSON.stringify({
       error: e.response ? e.response.statusText : e.code,
     }),

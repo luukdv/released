@@ -3,7 +3,11 @@ const axios = require('axios')
 const capitalize = require('./utils/capitalize')
 const currentYear = new Date().getFullYear()
 
-type Data = { data: { results: [{ label: string, title: string, thumb: string, uri: string }] } };
+type Data = {
+  data: {
+    results: [{ label: string; title: string; thumb: string; uri: string }]
+  }
+}
 
 exports.handler = async (event: any) => {
   const getParams = (type: string, year: number) =>
@@ -37,7 +41,7 @@ exports.handler = async (event: any) => {
   }
 
   try {
-    let response: null|Data
+    let response: null | Data
 
     response = await getLatestByYear(currentYear)
 

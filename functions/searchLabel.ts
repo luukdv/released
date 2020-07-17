@@ -2,11 +2,11 @@ const api = require('./utils/api')
 const axios = require('axios')
 
 type Result = {
-  id: number,
-  uri: string,
-  thumb: string,
-  title: string,
-};
+  id: number
+  uri: string
+  thumb: string
+  title: string
+}
 
 exports.handler = async (event: any) => {
   const params = Object.entries({
