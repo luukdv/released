@@ -50,11 +50,14 @@ exports.handler = async (event: any) => {
     }
 
     const getRelease = () => {
+      const base = { checked: Date.now() }
+
       if (!response) {
-        return { checked: Date.now() }
+        return base
       }
 
       return {
+        ...base,
         artist: encodeURIComponent(
           capitalize(
             response.data.results[0].title
