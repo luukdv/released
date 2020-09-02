@@ -3,7 +3,7 @@ import auth, { getParams } from './auth'
 import { get, post, setHeaders } from './http'
 import React, { useState, useEffect } from 'react'
 import State from './context/State'
-import { Labels, Label, User } from './types'
+import type { Labels, Label, User } from './types'
 import { render } from 'react-dom'
 
 const sixHours = 6 * 60 * 60 * 1000

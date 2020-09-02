@@ -3,7 +3,7 @@ import { css } from '@emotion/core'
 import scale from '../scale'
 import { post } from '../http'
 import State from '../context/State'
-import { Label } from '../types'
+import type { Label } from '../types'
 
 export default ({
   data,
