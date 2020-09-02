@@ -94,16 +94,16 @@ export default ({
           >
             <div
               css={css`
-              background: url('${result.img}') rgb(220, 220, 220);
-              border-radius: 3px;
-              background-size: cover;
-              background-position: 50%;
-              height: 1.5em;
-              flex-shrink: 0;
-              flex-grow: 0;
-              margin-right: 1em;
-              width: 4.5em;
-            `}
+                background: url('${result.img}') rgb(220, 220, 220);
+                border-radius: 3px;
+                background-size: cover;
+                background-position: 50%;
+                height: 1.5em;
+                flex-shrink: 0;
+                flex-grow: 0;
+                margin-right: 1em;
+                width: 4.5em;
+              `}
             ></div>
             <div>{decodeURIComponent(result.name)}</div>
           </div>
