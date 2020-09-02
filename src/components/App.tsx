@@ -1,6 +1,5 @@
 import Add from './Add'
 import Footer from './Footer'
-import Head from './Head'
 import Header from '../components/Header'
 import Latest from './Latest'
 import NotReady from './NotReady'
@@ -18,7 +17,6 @@ export default () => {
 
   return (
     <>
-      <Head />
       <Styles />
       <div
         css={css`
