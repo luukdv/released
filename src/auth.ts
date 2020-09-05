@@ -17,6 +17,6 @@ export const getParams = () => {
 }
 
 export default new gotrue({
-  APIUrl: `${process.env.GATSBY_URL}/.netlify/identity`,
+  APIUrl: 'https://released.netlify.app/.netlify/identity',
   setCookie: true,
 })

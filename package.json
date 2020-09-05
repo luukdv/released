@@ -12,7 +12,7 @@
     "@snowpack/app-scripts-react": "^1.10.0",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
-    "netlify-cli": "^2.59.3",
+    "netlify-cli": "^2.61.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "react-refresh": "^0.8.3",
@@ -21,13 +21,12 @@
   },
   "private": true,
   "scripts": {
-    "dev:ntl": "ntl dev",
-    "dev:functions": "npm run ts:functions -- -w",
     "build": "npm run ts:functions && snowpack build",
     "format": "prettier --write '**/*.{js,json,ts,tsx}'",
-    "ts": "run-p ts:src ts:functions",
-    "ts:src": "tsc",
+    "functions": "npm run ts:functions -- -w",
+    "start": "ntl dev",
     "ts:functions": "tsc -p tsconfig.functions.json",
-    "start": "ntl dev"
+    "ts:src": "tsc",
+    "ts": "run-p ts:src ts:functions"
   }
 }
