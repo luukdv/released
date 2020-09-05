@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   base: 'https://api.discogs.com/database/search',
   token: process.env.API_TOKEN,
   error: (e: {

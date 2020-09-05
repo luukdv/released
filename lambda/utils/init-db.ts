@@ -1,7 +1,7 @@
-const fauna = require('faunadb')
+import fauna from 'faunadb'
 
-module.exports = () => ({
-  client: new fauna.Client({ secret: process.env.FAUNADB }),
+export default () => ({
+  client: new fauna.Client({ secret: process.env.FAUNADB || '' }),
   error: (e: {
     message: string
     requestResult?: {

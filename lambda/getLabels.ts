@@ -1,4 +1,4 @@
-const initDb = require('./utils/init-db')
+import initDb from './utils/init-db'
 
 exports.handler = async (event: any, context: any) => {
   if (!context.clientContext.user) {
@@ -30,5 +30,3 @@ exports.handler = async (event: any, context: any) => {
     return db.error(e)
   }
 }
-
-export {}
