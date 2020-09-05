@@ -21,14 +21,13 @@
   },
   "private": true,
   "scripts": {
-    "dev:src": "snowpack dev",
-    "dev:netlify": "netlify dev",
+    "dev:ntl": "ntl dev",
     "dev:functions": "npm run ts:functions -- -w",
     "build": "npm run ts:functions && snowpack build",
     "format": "prettier --write '**/*.{js,json,ts,tsx}'",
     "ts": "run-p ts:src ts:functions",
     "ts:src": "tsc",
     "ts:functions": "tsc -p tsconfig.functions.json",
-    "start": "run-p dev:netlify dev:src dev:functions"
+    "start": "ntl dev"
   }
 }
