@@ -1,4 +1,5 @@
 .DS_Store
 .netlify
 build
+functions
 node_modules
