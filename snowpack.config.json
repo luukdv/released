@@ -1,5 +1,6 @@
 {
   "extends": "@snowpack/app-scripts-react",
   "install": ["@emotion/css"],
-  "proxy": { "/.netlify": "http://localhost:8888/.netlify" }
+  "proxy": { "/.netlify": "http://localhost:8888/.netlify" },
+  "plugins": ["@snowpack/plugin-webpack"]
 }
