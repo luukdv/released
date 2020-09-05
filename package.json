@@ -13,6 +13,7 @@
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "netlify-cli": "^2.61.0",
+    "netlify-lambda": "^2.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "react-refresh": "^0.8.3",
@@ -21,12 +22,9 @@
   },
   "private": true,
   "scripts": {
-    "build": "npm run ts:functions && snowpack build",
+    "build": "netlify-lambda build lambda && snowpack build",
     "format": "prettier --write '**/*.{js,json,ts,tsx}'",
-    "functions": "npm run ts:functions -- -w",
     "start": "ntl dev",
-    "ts:functions": "tsc -p tsconfig.functions.json",
-    "ts:src": "tsc",
-    "ts": "run-p ts:src ts:functions"
+    "ts": "tsc"
   }
 }

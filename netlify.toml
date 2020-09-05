@@ -2,3 +2,6 @@
   command = "snowpack dev"
   framework = "#custom"
   targetPort = 8080
+
+[build]
+  functions = "functions"
