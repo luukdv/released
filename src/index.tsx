@@ -1,22 +1,27 @@
-import App from '../components/App'
-import auth, { getParams } from '../auth'
-import { get, post, setHeaders } from '../http'
+import App from './components/App'
+import auth, { getParams } from './auth'
+import { get, post, setHeaders } from './http'
 import React, { useState, useEffect } from 'react'
-import State from '../context/State'
-import { navigate } from '@reach/router'
-import { Labels, Label, User } from '../types'
+import State from './context/State'
+import type { Labels, Label, User } from './types'
+import { render } from 'react-dom'
+import { initAnalytics } from './analytics'
 
 const sixHours = 6 * 60 * 60 * 1000
 const updateInterval = 3000
 let lastUpdated = 0
 let updater: NodeJS.Timeout
 
-export default () => {
+const Provider = () => {
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
   const [labels, setLabels] = useState<Labels>([])
   const [updating, setUpdating] = useState('')
   const [user, setUser] = useState<User>(null)
+
+  useEffect(() => {
+    initAnalytics()
+  }, [])
 
   useEffect(() => {
     const params = getParams()
@@ -31,7 +36,7 @@ export default () => {
           )
         }
 
-        navigate('/', { replace: true })
+        window.history.replaceState(null, '', '/')
       }
 
       const currentUser = auth.currentUser()
@@ -189,3 +194,5 @@ export default () => {
     </State.Provider>
   )
 }
+
+render(<Provider />, document.getElementById('root'))

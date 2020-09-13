@@ -1,6 +1,7 @@
-const api = require('./utils/api')
-const axios = require('axios')
-const capitalize = require('./utils/capitalize')
+import api from './utils/api'
+import capitalize from '../src/capitalize'
+import axios from 'axios'
+
 const currentYear = new Date().getFullYear()
 
 type Data = {
@@ -9,7 +10,7 @@ type Data = {
   }
 }
 
-exports.handler = async (event: any) => {
+export async function handler(event: any) {
   const getParams = (type: string, year: number) =>
     Object.entries({
       label: encodeURIComponent(event.queryStringParameters.name),
@@ -89,5 +90,3 @@ exports.handler = async (event: any) => {
     return api.error(e)
   }
 }
-
-export {}

@@ -1,10 +1,4 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "jsx": "react",
-    "moduleResolution": "Node",
-    "noEmit": true,
-    "strict": true
-  },
+  "extends": "@snowpack/app-scripts-react/tsconfig.base.json",
   "include": ["src"]
 }

@@ -1,0 +1,9 @@
+[dev]
+  command = "snowpack dev"
+  framework = "#custom"
+  targetPort = 8080
+
+[build]
+  command = "npm run build"
+  functions = "functions"
+  publish = "build"

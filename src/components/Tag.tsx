@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { post } from '../http'
 import { css } from '@emotion/core'
 import State from '../context/State'
-import { Label } from '../types'
+import type { Label } from '../types'
 
 export default ({ data }: { data: Label }) => {
   const { setLabels, user, setError } = useContext(State)

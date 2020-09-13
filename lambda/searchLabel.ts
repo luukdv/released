@@ -1,5 +1,5 @@
-const api = require('./utils/api')
-const axios = require('axios')
+import api from './utils/api'
+import axios from 'axios'
 
 type Result = {
   id: number
@@ -8,7 +8,7 @@ type Result = {
   title: string
 }
 
-exports.handler = async (event: any) => {
+export async function handler(event: any) {
   const params = Object.entries({
     per_page: 10,
     q: encodeURIComponent(event.queryStringParameters.query),
@@ -36,5 +36,3 @@ exports.handler = async (event: any) => {
     return api.error(e)
   }
 }
-
-export {}

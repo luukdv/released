@@ -1,7 +1,7 @@
 import scale from '../scale'
 import React from 'react'
 import { css } from '@emotion/core'
-import { Label } from '../types'
+import type { Label } from '../types'
 
 export default ({ data }: { data: Label }) => (
   <div

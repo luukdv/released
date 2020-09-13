@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react'
-import { Labels, User } from '../types'
+import type { Labels, User } from '../types'
 
 export default createContext<{
   done: boolean

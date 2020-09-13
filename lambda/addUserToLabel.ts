@@ -1,7 +1,7 @@
-const initDb = require('./utils/init-db')
+import initDb from './utils/init-db'
 
-exports.handler = async (event: any) => {
-  if (event.httpMethod !== 'POST') {
+exports.handler = async (event: any, context: any) => {
+  if (event.httpMethod !== 'POST' || !context.clientContext.user) {
     return {
       body: JSON.stringify({ error: 'Not allowed' }),
       statusCode: 405,
@@ -11,8 +11,9 @@ exports.handler = async (event: any) => {
   const db = initDb()
   const q = db.query
   const input = JSON.parse(event.body)
-  const labelId = parseInt(input.label)
-  const release = input.release
+  const label = input.label
+  const labelId = parseInt(label.id)
+  const userId = context.clientContext.user.sub
 
   try {
     await db.client.query(
@@ -21,9 +22,16 @@ exports.handler = async (event: any) => {
         q.If(
           q.Exists(q.Var('match')),
           q.Update(q.Select('ref', q.Get(q.Var('match'))), {
-            data: { release },
+            data: {
+              users: q.Union(
+                q.Select(['data', 'users'], q.Get(q.Var('match'))),
+                [userId]
+              ),
+            },
           }),
-          null
+          q.Create(q.Collection('labels'), {
+            data: { ...label, users: [userId] },
+          })
         )
       )
     )
@@ -36,5 +44,3 @@ exports.handler = async (event: any) => {
     return db.error(e)
   }
 }
-
-export {}

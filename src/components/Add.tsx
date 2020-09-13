@@ -5,7 +5,7 @@ import { get } from '../http'
 import Loading from './Loading'
 import Results from './Results'
 import State from '../context/State'
-import { Labels, Label } from '../types'
+import type { Labels, Label } from '../types'
 
 let value = ''
 let delayed: NodeJS.Timeout | null
