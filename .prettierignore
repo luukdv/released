@@ -1,1 +1,4 @@
+.netlify
+build
+functions
 package-lock.json
