@@ -1,4 +1,8 @@
 {
+  "browserslist": [
+    "defaults",
+    "not ie <= 11"
+  ],
   "dependencies": {
     "@emotion/core": "^10.0.35",
     "axios": "^0.20.0",
