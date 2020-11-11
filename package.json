@@ -4,7 +4,7 @@
     "not ie <= 11"
   ],
   "dependencies": {
-    "@emotion/core": "^10.0.35",
+    "@emotion/core": "^10.1.1",
     "axios": "^0.21.0",
     "faunadb": "^3.0.1",
     "gotrue-js": "^0.9.27",
@@ -12,19 +12,19 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@emotion/babel-preset-css-prop": "^10.2.1",
     "@snowpack/app-scripts-react": "^1.12.5",
     "@snowpack/plugin-webpack": "^2.0.17",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
     "encoding": "^0.1.13",
-    "netlify-cli": "^2.65.7",
+    "netlify-cli": "^2.68.3",
     "netlify-lambda": "^2.0.1",
     "prettier": "^2.1.2",
     "react-refresh": "^0.9.0",
     "serve": "^11.3.2",
     "snowpack": "^2.15.1",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.5"
   },
   "private": true,
   "scripts": {
